@@ -34,7 +34,7 @@ Nephele is a complete solution to enterprise multimedia needs. Go is one of the 
 
 * [Functions](#functions)
 
-* [Struct](#struct)
+* [Lock](#lock)
 
 
 ## How to Import Package
@@ -303,4 +303,31 @@ So in branch file, we integrate functions into a single struct, PROBABLY a struc
     }
 ```
 
+## Lock
+
+Use sync package instead of channel.
+
+
+**Example:**
+```go
+    var lock_foo sync_p.Mutex
+
+    func foo() {
+        lock_foo.Lock()
+        ...
+        lock_foo.Unlock()
+    }
+```
+
+
+**Not:**
+```go
+    var lock_foo chan int = make(chan int, 1)
+
+    func foo() {
+        lock_foo<-0
+        ...
+        <-lock_foo
+    }
+```
 
