@@ -1,28 +1,46 @@
-# Nephele Go Style Guide
+# Nephele团队代码风格指南。
 
-This style guide outlines the coding conventions of Nephele team.
+## 背景
 
-## Background
+Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用的编程语言。Go语言简单，强大。其官方提供了大量值得参考遵循的规范。但Go始终是一门相对年轻，受众相对小的语言，会在一部分场景因缺乏相应约束造成代码可读性低下，形成学习壁垒，阻碍团队效率的进一步提升。
 
-Nephele is a complete solution to enterprise multimedia needs. Go is one of the main development language used by most of Nephele team members. The very go language is simple, powerful and probably a most officially restricted language, yet still used in a relatively smaller range. Thus in some common cases, we still lack rules and conventions intended to prevent obstacles of team efficiency and barriers to learning.
+## 目标
 
-## Goals of the Style Guide
+一部分的目标不会有具体实例，但它们将作为一种理念被保留。
 
-**No conflict with go fmt tool**
+**与go fmt tool无冲突**
 
-**Optimize for the reader, not the writer**
+遵循该指南的代码经由go fmt tool格式化之后将依然遵循该指南。
 
-**Avoid tricky realization**
+**更在乎阅读者的体验**
 
-**Be mindful of scale**
+可以要求开发者完成一些额外的编码工作，这些工作对于功能的完成而言可能是不必要的，但有利于阅读者的学习。
 
-**No impact on interface**
+**代码拒绝小聪明**
 
-**Concede to optimization when necessary**
+将提倡直白的编码方式。
 
-## Table of Contents
+**注释拒绝浪漫**
 
-* [How to Import Package](#how-to-import-package)
+将提倡严肃呆板的注释风格。
+
+**清晰的作用范围**
+
+可以通过制定命名的约定，限制变量和函数的调用与声明，达到可以快速判断变量函数出处的目的。
+
+**最小化对于接口的冲击**
+
+现有工程的改造需要一个循序渐进的过程。
+该指南提供的规则将尽可能达到这样的效果：
+不遵循该指南的代码被更改为遵循该指南之后，其调用方的代码结构无需变动。
+
+**顺从不可避免的性能优化**
+
+一些引发质变的性能优化可能引入部分含蓄的代码，这些代码是被允许并鼓励的。
+
+## 目录
+
+* [Import Package](#import-package)
 
 * [Indent](#indent)
 
@@ -42,14 +60,6 @@ Nephele is a complete solution to enterprise multimedia needs. Go is one of the 
 **For example:**
 ```go
     import (
-        time_p "time"
-        http_p "net/http"
-    )
-```
-
-**Not:**
-```go
-    import (
         "time"
         "net/http"
     )
@@ -63,11 +73,11 @@ Nephele is a complete solution to enterprise multimedia needs. Go is one of the 
 
 ## Indent
 
-Indentation MUST use tabs.
+缩进请务必使用tab。
 
 ## Blank line
 
-Blank line between variable, function, interface and struct.
+在变量(variable)，方法(function)，接口(interface)，结构体(struct)之间插入空行。
 
 **For example:**
 ```go
@@ -93,26 +103,13 @@ Blank line between variable, function, interface and struct.
     }
 ```
 
-
-
 ## Naming
 
-Basically we use Camel-Case.
+使用驼峰命名法，并有一些额外的要求：
 
-ALSO PROBABLY
-
-**No preposition:**
+**没有介词:**
 ```go
-    func getUsername() {
-        ...
-    }
-
-
-    func GetUsername() {
-        ...
-    }
-
-    func (name *Username) TryGet() string {
+    func SetUsername() {
         ...
     }
 
@@ -123,15 +120,7 @@ ALSO PROBABLY
 
 **Not:**
 ```go
-    func GetNameOfUser() {
-        ...
-    }
-
-    func GetTheNameOfUser() {
-        ...
-    }
-
-    func (name *Username) TryToGet() string {
+    func SetNameOfUser() {
         ...
     }
 
@@ -140,68 +129,105 @@ ALSO PROBABLY
     }
 ```
 
-**Adorned nouns and verbs regarded as one:**
+**带有修饰词的名词与动词视为一个单词:**
 ```go
-    func GetUsername() {
+    func SetUsername() {
         ...
     }
 
-    func QuicklygetUsername() {
-    }
-```
-
-**Not:**
-```go
-    func QuicklyGetUserName() {
+    func SetClientcode() {
         ...
     }
-```
 
-**Verb before noun:**
-```go
-    func GetName() {
+    func httpget() {
         ...
     }
 ```
 
 **Not:**
 ```go
-    func NameGet() {
+    func SetUserName() {
+        ...
+    }
+
+    func SetClientCode() {
+        ...
+    }
+
+    func httpGet() {
+        ...
+    }
+```
+
+**动词在名词之前:**
+```go
+    func SetName() {
+        ...
+    }
+```
+
+**Not:**
+```go
+    func NameSet() {
         ...
     }
 ```
 
 ## Variables
 
-A suffixed filename is needed for global private variable or const.
+We name the file whose name is the same as its package name "core file" and the others "branch file".
+
+In branch file, public variables are banned.
 
 **For example:**
 ```go
+    package foo
     //foo.go
 
-    var a_foo int
-    const b_foo = 1
+    var A int
+```
 
-    func c() {
-        ...
-    }
+**Banned:**
+```go
+    package foo
+    //goo.go
+
+    var A int
+```
+
+In branch file, a preffixed filename is needed for global private variable or const.
+
+**For example:**
+```go
+    package foo
+    //goo.go
+
+    var gooA int
+    const gooB = 1
 ```
 
 **Not:**
 ```go
-    //foo.go
+    package foo
+    //goo.go
 
     var a int
     const b = 1
-
-    func c() {
-        ...
-    }
 ```
+
+**Not:**
+```go
+    package foo
+    //goo.go
+
+    var gooa int
+    const goob = 1
+```
+
+In practice, its found out that a well designed branch file name is important.
 
 ## Functions
 
-We name the file whose name is the same as its package name "the core file" and the others "the branch file".
 Global functions are only allowed in core files.
 
 **Allowed:**
@@ -223,11 +249,11 @@ Global functions are only allowed in core files.
     package foo
     //goo.go
 
-    func B() {
+    func b() {
         ...
     }
 
-    func b() {
+    func B() {
         ...
     }
 ```
@@ -243,13 +269,13 @@ So in branch file, we integrate functions into a single struct, PROBABLY a struc
         a int
     }
     
-    const a_goo = 0
-    const b_goo = 1
+    const gooA = 0
+    const gooB = 1
 
-    var c_goo int = 2
-    var d_goo int = 3
+    var gooC int = 2
+    var gooD int = 3
 
-    var instance_goo *goo = &goo{}
+    var gooInstance *goo = &goo{}
 
     func (g goo) step1() {
         ...
@@ -307,27 +333,24 @@ So in branch file, we integrate functions into a single struct, PROBABLY a struc
 
 Use sync package instead of channel.
 
-
 **Example:**
 ```go
-    var lock_foo sync_p.Mutex
+    var fooLock sync.Mutex
 
     func foo() {
-        lock_foo.Lock()
+        fooLock.Lock()
         ...
-        lock_foo.Unlock()
+        fooLock.Unlock()
     }
 ```
-
 
 **Not:**
 ```go
-    var lock_foo chan int = make(chan int, 1)
+    var fooLock chan int = make(chan int, 1)
 
     func foo() {
-        lock_foo<-0
+        fooLock<-0
         ...
-        <-lock_foo
+        <-fooLock
     }
 ```
-
