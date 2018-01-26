@@ -42,6 +42,8 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
 
 * [Import Package](#import-package)
 
+* [Package](#package)
+
 * [Indent](#indent)
 
 * [Blank line](#blank-line)
@@ -55,7 +57,7 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
 * [Lock](#lock)
 
 
-## How to Import Package
+## Import Package
 
 **For example:**
 ```go
@@ -70,6 +72,10 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
     import "time"
     import "net/http"
 ```
+
+## Package
+
+一个包下面必须有一个与包同名的文件。为了方便，这里称之为主文件(master file)，其他的与包不同名的文件，这里称之为分支文件(branch file)。
 
 ## Indent
 
@@ -175,9 +181,7 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
 
 ## Variables
 
-We name the file whose name is the same as its package name "core file" and the others "branch file".
-
-In branch file, public variables are banned.
+禁止在分支文件中声明公用变量。
 
 **For example:**
 ```go
@@ -195,7 +199,7 @@ In branch file, public variables are banned.
     var A int
 ```
 
-In branch file, a preffixed filename is needed for global private variable or const.
+在分支文件中, 全局私有变量名必须带上与分之文件名相同的前缀。该前缀不视为修饰词，前缀之后的单词首字母需要大写。
 
 **For example:**
 ```go
@@ -224,11 +228,11 @@ In branch file, a preffixed filename is needed for global private variable or co
     const goob = 1
 ```
 
-In practice, its found out that a well designed branch file name is important.
+在实践中我们会发现, 分支文件命名的好坏和代码可读性强弱有着相当大的关系。可以说分之文件名是需要着重设计的。
 
 ## Functions
 
-Global functions are only allowed in core files.
+全局函数只能在主文件中定义。
 
 **Allowed:**
 ```go
@@ -258,7 +262,7 @@ Global functions are only allowed in core files.
     }
 ```
 
-So in branch file, we integrate functions into a single struct, PROBABLY a struct whose name is the same as the branch file name.
+原本在分支文件中定义的函数，通常会以如下形式再现。
 
 **For example:**
 ```go
@@ -331,7 +335,7 @@ So in branch file, we integrate functions into a single struct, PROBABLY a struc
 
 ## Lock
 
-Use sync package instead of channel.
+用go sdk提供的sync包。别用channel。
 
 **Example:**
 ```go
