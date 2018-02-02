@@ -111,9 +111,10 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
 
 ## Naming
 
-使用驼峰命名法，并有一些额外的要求：
+包名全部小写。
+其他使用驼峰命名法，并有一些额外的要求：
 
-**没有介词:**
+**尽可能少的介词:**
 ```go
     func SetUsername() {
         ...
@@ -135,17 +136,13 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
     }
 ```
 
-**带有修饰词的名词与动词视为一个单词:**
+**既可以视为两个单词又可以视为一个单词的视为一个单词，以谷歌翻译为准:**
 ```go
     func SetUsername() {
         ...
     }
 
-    func SetClientcode() {
-        ...
-    }
-
-    func httpget() {
+    func SetClientCode() {
         ...
     }
 ```
@@ -156,11 +153,7 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
         ...
     }
 
-    func SetClientCode() {
-        ...
-    }
-
-    func httpGet() {
+    func SetClientcode() {
         ...
     }
 ```
@@ -177,6 +170,62 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
     func NameSet() {
         ...
     }
+```
+
+形参使用完整词，函数内可以使用简写变量:
+
+**Example:**
+```go
+    func SetUsername(username string) {
+        u := username
+        ...
+    }
+
+    func SetClientcode(clientCode string) {
+        cc := clientCode
+        ...
+    }
+```
+
+**Not:**
+```go
+    func SetUsername(u string) {
+        ...
+    }
+
+    func SetClientcode(cc string) {
+        ...
+    }
+```
+
+字母变量尽可能使用原变量名首字母组合，避免由类型演变的简写:
+
+**Not:**
+```go
+    func SetUsername(username string) {
+        var s string
+        ...
+    }
+
+    func SetUsername(username string) {
+        var str string
+        ...
+    }
+
+```
+
+面对类型转换或数据解析时需要区分类型或格式的，将类型或格式完整名作为后缀，
+这里建议一个数据都是在同一类型或格式下参与业务计算，该类型或格式下的数据变量名可以没有后缀：
+
+**Example:**
+```go
+    //var usernameBytes []byte
+    username := string(usernameBytes)
+
+    //var dataJson []byte
+    //var data Data
+    //dataJson := json.Marshal(data)
+    json.Unmarshal(dataJson, &data)
 ```
 
 ## Variables
