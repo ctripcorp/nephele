@@ -221,11 +221,13 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
 ```go
     //var usernameBytes []byte
     username := string(usernameBytes)
+    //do something with username
 
     //var dataJson []byte
     //var data Data
     //dataJson := json.Marshal(data)
     json.Unmarshal(dataJson, &data)
+    //do something with data
 ```
 
 ## Variables
