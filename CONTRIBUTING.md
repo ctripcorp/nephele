@@ -8,7 +8,10 @@ Contributing to Nephele
 
 Code of Conduct
 -----------
-[开发者公约](https://github.com/ctirpcorp/nephele/CODE_OF_CONDUCT)
+[开发者公约](https://github.com/ctripcorp/nephele/blob/master/CODE_OF_CONDUCT.md)
 
 Bug reports
 -----------
+如果你在阅读或使用过程中发现Nephele存在BUG，那么你要做的第一步应该是确认一个这个BUG是否已经在最新版本中被修复了。如果没有，那么你还要做一步，那就是在[issues list](https://github.com/ctripcorp/nephele/issues)中搜索一下，看看有没有类似的已经打开issue。
+
+读到这里，相信你们是确实抓到Nephele的小把柄了，不要着急，参阅一下[issue template](https://github.com/ctripcorp/nephele/blob/master/ISSUE_TEMPLATE.md)。
