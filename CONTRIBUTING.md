@@ -14,4 +14,4 @@ Bug reports
 -----------
 如果你在阅读或使用过程中发现Nephele存在BUG，那么你要做的第一步应该是确认一个这个BUG是否已经在最新版本中被修复了。如果没有，那么你还要做一步，那就是在[问题列表](https://github.com/ctripcorp/nephele/issues)中搜索一下，看看有没有类似的已经打开的issue。
 
-读到这里，相信你是确实抓到Nephele的小把柄了，那么参阅一下[问题模板](https://github.com/ctripcorp/nephele/blob/master/ISSUE_TEMPLATE.md)并[提交你的发现](https://github.com/ctripcorp/nephele/issues/new)吧。
+读到这里，相信你是确实抓到Nephele的小把柄了，那么根据[问题模板](https://github.com/ctripcorp/nephele/blob/master/ISSUE_TEMPLATE.md)[提交你的发现](https://github.com/ctripcorp/nephele/issues/new)吧。
