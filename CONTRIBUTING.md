@@ -10,7 +10,7 @@ Code of Conduct
 -----------
 [开发者公约](https://github.com/ctripcorp/nephele/blob/master/CODE_OF_CONDUCT.md)
 
-Bug Reports
+Report Bugs
 -----------
 如果你在阅读或使用过程中发现Nephele存在BUG，那么你要做的第一步应该是确认一个这个BUG是否已经在最新版本中被修复了。如果没有，那么你还要做一步，那就是在[问题列表](https://github.com/ctripcorp/nephele/issues)中搜索一下，看看有没有类似的已经打开的issue。
 
