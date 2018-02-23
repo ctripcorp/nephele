@@ -9,12 +9,12 @@
 # 一、总体设计
 
 ## 1.1 基础模型
-![basic-architecture](https://github.com/ctripcorp/nephele/blob/master/doc/images/nephele_basic.png)
+![basic-architecture](https://github.com/ctripcorp/nephele/blob/master/docs/images/nephele_basic.png)
 
 如果需要把图片服务暴露到公网，我们建议首要考虑引入CDN，因为国内CDN不仅能把回源率降到5%以下，这样做能极大减小对服务器的压力，并且也能解决用户最后一公里问题。
 
 ## 1.2 架构模块
-![overall-architecture](https://github.com/ctripcorp/apollo/blob/master/doc/images/nephele_overall.png)
+![overall-architecture](https://github.com/ctripcorp/nephele/blob/master/docs/images/nephele_overall.png)
 
 ## 1.3 各模块概要介绍
 
@@ -49,7 +49,7 @@
 
 下面展示了图片服务各模块之间的关系.
 
-![overall-architecture](https://github.com/ctripcorp/apollo/blob/master/doc/images/nephele_module.png)
+![overall-architecture](https://github.com/ctripcorp/nephele/blob/master/docs/images/nephele_module.png)
 
 1. 图片服务包含多个过滤器，分别提供限流，认证，跨域，缓存时效，埋点等功能。
 2. 采用异步模式处理图片，发送队列用于控制图片处理并行度，返回队列用于阻塞图片处理响应直到超时时间过期，启动快速失败想响应客户端。

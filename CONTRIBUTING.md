@@ -10,8 +10,26 @@ Code of Conduct
 -----------
 [开发者公约](https://github.com/ctripcorp/nephele/blob/master/CODE_OF_CONDUCT.md)
 
-Bug reports
+Report Bugs
 -----------
 如果你在阅读或使用过程中发现Nephele存在BUG，那么你要做的第一步应该是确认一个这个BUG是否已经在最新版本中被修复了。如果没有，那么你还要做一步，那就是在[问题列表](https://github.com/ctripcorp/nephele/issues)中搜索一下，看看有没有类似的已经打开的issue。
 
-读到这里，相信你是确实抓到Nephele的小把柄了，那么根据[问题模板](https://github.com/ctripcorp/nephele/blob/master/ISSUE_TEMPLATE.md)[提交你的发现](https://github.com/ctripcorp/nephele/issues/new)吧。
+如果还是没有，那么你可以通过[Open a new issue](https://github.com/ctripcorp/nephele/issues/new)告诉我们你的发现。
+
+#### 如何更好的(在issue中)描述一个BUG
+
+* 你需要一个「简洁清晰的标题」。简洁的意思很简单，在于字数不要太多。而清晰的意义则在于这个标题可以让这个BUG比较容易的区别于其他BUG(而不是强求每一个寥寥数字的标题都能够完整的概括一个BUG)。
+
+* 你最好能够复现BUG，并给出具体的「环境」与「步骤」。比如，你是在什么系统上运行的，你做了怎样的配置，用什么样的命令启动了Nephele，调用了什么功能，又或者你用一些间接的方式触发了怎样的环境变化，等等，越具体越好。有时候生硬的文字描述可以不如代码来的直观，所以你也可以把这些步骤做成测试脚本并附以相应的文档说明上传至github上并把链接提供给我们。
+
+* 你可以简单描述一下具体步骤做完之后，你「预期的结果」，并给出你这样预期的根据。(比如你可以附上某个文档的链接，并告诉我们这个文档是这样这样写的。)
+
+* 你最好详细描述一下具体步骤做完之后，「实际发生的结果」。这包括与你使用的功能点直接相关的结果，也包括你观察到的一些间接的状态(比如CPU的占用率等等)。
+
+* 对于这个BUG，你最好能有「自己的观点」。如果是面对一些令人头疼的现象，你可以做一些猜测。当然如果你已经望眼欲穿了，那就直截了当的告诉我们为什么好了。
+
+* 会有一些BUG是用固定的模板无法描述的，可能你也无法用具体的步骤复现。如果是那样的话，也尽可能的按照[问题模板](https://github.com/ctripcorp/nephele/blob/master/ISSUE_TEMPLATE.md)来提交吧。
+
+Suggesting Enhancements
+-----------------------
+
