@@ -2,7 +2,7 @@
 
 ## Log Suite & Log Interface
 
-Designed to be a compelete solution, Nephele provide a log suite compatible with ES(https://www.elastic.co/products/elasticsearch) and CAT(https://github.com/dianping/CAT). The log suite has two parts: develop kit and sync agent.
+Designed to be a compelete solution, Nephele provide a log suite compatible with [ES](https://www.elastic.co/products/elasticsearch) and [CAT](https://github.com/dianping/CAT). The log suite has two parts: develop kit and sync agent.
 
 The log develop kit is a go package providing nephele log programming interface, abbreviated as NLPI. Calling NLPI from your code forces your program to dump log files within some given constraints: specific alignment, particular layout, mangling names, etc. All these details are called the Nephele Log Binary interface, or NLBI. And when the moment is ripe, a background program will collect and decompose theses dumped log files. And that is the sync agent. It translates the content of log files into corresponding log units(CAT message or ES document or something similar) and send them to the target servers.
 
