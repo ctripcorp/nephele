@@ -2,6 +2,7 @@ package store
 
 import "github.com/nephele/context"
 
+// Storage represents where to get or write image.
 type Store interface {
 	Read(ctx context.Context, path string) ([]byte, error)
 	Write(ctx context.Context, blob []byte, path string) error
