@@ -24,32 +24,3 @@ type Config interface {
 	// Return logger config.
 	Logger() logger.Config
 }
-
-// Define default configuration for demo app
-type DemoConfig struct {
-}
-
-// Implementation to parse config.
-func (conf *DemoConfig) From(path string) error {
-	return nil
-}
-
-// Return demo service config.
-func (conf *DemoConfig) Service() service.Config {
-	return service.Config{}
-}
-
-// Return demo logger config.
-func (conf *DemoConfig) Logger() logger.Config {
-	return logger.Config{}
-}
-
-// Return demo storage config.
-func (conf *DemoConfig) Store() store.Config {
-	return nil
-}
-
-// Return demo codec config.
-func (conf *DemoConfig) Codec() codec.Config {
-	return nil
-}

@@ -5,6 +5,15 @@ import (
 	"github.com/nephele/transform"
 )
 
+type Type string
+
+const (
+	GIF  Type = "gif"
+	PNG  Type = "png"
+	JPEG Type = "jpeg"
+	WEBP Type = "webp"
+)
+
 type Image struct {
 	blob        []byte
 	meta        *Meta

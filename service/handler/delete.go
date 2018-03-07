@@ -5,7 +5,7 @@ import "github.com/nephele/context"
 type DeleteImageHandler struct {
 }
 
-func (h DeleteImageHandler) Handler() Func {
+func (h DeleteImageHandler) Handler() HandlerFunc {
 	return func(ctx *context.Context) {
 
 	}

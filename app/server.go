@@ -6,18 +6,18 @@ import (
 )
 
 // Define server initialization function type.
-type InitializeFunc func(*Server) error
+type ServerInitializeFunc func(*Server) error
 
 // Server represents holder for services and
 // is the entry for all components to initialize, open or close.
 type Server struct {
-	init    InitializeFunc
+	init    ServerInitializeFunc
 	logger  *logger.Logger
 	service *service.Service
 }
 
 // Call to make external initialization.
-func (s *Server) Init(init InitializeFunc) error {
+func (s *Server) Init(init ServerInitializeFunc) error {
 	return nil
 }
 

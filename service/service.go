@@ -18,7 +18,7 @@ type Service struct {
 	conf    Config
 	image   *ImageService
 	router  *gin.Engine
-	factory *handler.Factory
+	factory *handler.HandlerFactory
 }
 
 // Return service with given context and config.
@@ -32,32 +32,32 @@ func New(ctx *context.Context, conf Config) *Service {
 }
 
 // Register http GET handler.
-func (s *Service) GET(relativePath string, handlers ...handler.Func) {
+func (s *Service) GET(relativePath string, handlers ...handler.HandlerFunc) {
 	s.router.GET(relativePath, s.factory.BuildMany(handlers...)...)
 }
 
 // Register http POST handler.
-func (s *Service) POST(relativePath string, handlers ...handler.Func) {
+func (s *Service) POST(relativePath string, handlers ...handler.HandlerFunc) {
 	s.router.POST(relativePath, s.factory.BuildMany(handlers...)...)
 }
 
 // Register http DELETE handler.
-func (s *Service) DELETE(relativePath string, handlers ...handler.Func) {
+func (s *Service) DELETE(relativePath string, handlers ...handler.HandlerFunc) {
 	s.router.DELETE(relativePath, s.factory.BuildMany(handlers...)...)
 }
 
 // Register http PUT handler.
-func (s *Service) PUT(relativePath string, handlers ...handler.Func) {
+func (s *Service) PUT(relativePath string, handlers ...handler.HandlerFunc) {
 	s.router.PUT(relativePath, s.factory.BuildMany(handlers...)...)
 }
 
 // Register http OPTIONS handler.
-func (s *Service) OPTIONS(relativePath string, handlers ...handler.Func) {
+func (s *Service) OPTIONS(relativePath string, handlers ...handler.HandlerFunc) {
 	s.router.OPTIONS(relativePath, s.factory.BuildMany(handlers...)...)
 }
 
 // Register htt HEAD handler.
-func (s *Service) HEAD(relativePath string, handlers ...handler.Func) {
+func (s *Service) HEAD(relativePath string, handlers ...handler.HandlerFunc) {
 	s.router.HEAD(relativePath, s.factory.BuildMany(handlers...)...)
 }
 
