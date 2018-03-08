@@ -1,11 +1,11 @@
-##Nephele GraphicsMagick安装指南
+## Nephele GraphicsMagick安装指南
 
 
-###安装：
+#### 安装：
 * unix系统（centos,ubuntu,debian）,执行setup_unix.sh
 * windows系统（win7及以上），执行setup_windows.bat
 
-###检查安装：
+### 检查安装：
   在命令窗口输入gm,看到类似如下结果代表安装成功，
 ```
 GraphicsMagick 1.3.21 2015-02-28 Q8 http://www.GraphicsMagick.org/
@@ -30,7 +30,7 @@ Where commands include:
     montage - create a composite image (in a grid) from separate images
        time - time one of the other commands
     version - obtain release version
-    ```
+```
 
- ###安装失败怎么办？
+ ### 安装失败怎么办？
  如果通过脚本未能成功安装，可通过源码编译安装，http://www.graphicsmagick.org/README.html
