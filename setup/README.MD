@@ -1,7 +1,7 @@
 ## Nephele GraphicsMagick安装指南
 
 
-#### 安装：
+### 安装：
 * unix系统（centos,ubuntu,debian）,执行setup_unix.sh
 * windows系统（win7及以上），执行setup_windows.bat
 
