@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "6DWOerinnlDPZ++cyyUH56rBHxc=",
+			"path": "github.com/happysheeps/gmagick",
+			"revision": "6aafcccbf1fa55b3d438954e4033e4b4ddb71d35",
+			"revisionTime": "2017-07-10T05:21:54Z"
+		},
+		{
+			"checksumSHA1": "uZCfwR7Fe37TrWBSZbBzqIEi1dA=",
+			"path": "github.com/happysheeps/gmagick/types",
+			"revision": "6aafcccbf1fa55b3d438954e4033e4b4ddb71d35",
+			"revisionTime": "2017-07-10T05:21:54Z"
+		}
+	],
+	"rootPath": "img4go/gm"
+}
