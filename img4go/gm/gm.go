@@ -15,7 +15,7 @@ func NewMagickWand(blob []byte) (*MagickWand, error) {
 	// In our practice, GM will throw coder error in decoding some png files.
 	// This can be solved by recoding image use Go's image/png package.
 	if err != nil && exceptionType(err) == "ERROR_CODER" {
-		if newBlob, e := pngDeEncode(blob); e == nil {
+		if newBlob, e := recodePNG(blob); e == nil {
 			err = mw.mw.ReadImageBlob(newBlob)
 		}
 	}

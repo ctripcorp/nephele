@@ -5,8 +5,8 @@ import (
 	"image/png"
 )
 
-// pngDeEncode do a decode and encode routine of src image blob
-func pngDeEncode(blob []byte) ([]byte, error) {
+// recodePNG do a decode and encode routine of src image blob
+func recodePNG(blob []byte) ([]byte, error) {
 	img, err := png.Decode(bytes.NewBuffer(blob))
 	if err != nil {
 		return nil, err
