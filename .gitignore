@@ -9,9 +9,6 @@
 _obj
 _test
 
-!vendor
-vendor/*
-!vendor/vendor.json
 
 # executables
 *.test
