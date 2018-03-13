@@ -2,10 +2,13 @@
 *.o
 *.a
 *.so
+*.jpg
+*.png
 
 # Folders
 _obj
 _test
+
 
 # executables
 *.test
@@ -16,3 +19,8 @@ _test
 # log file
 
 # config file
+
+# img4go
+/img4go/vendor/*
+!/img4go/vendor/vendor.json
+
