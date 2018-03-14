@@ -283,7 +283,7 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
 
 ## Functions
 
-非方法的函数只能在主文件中定义。
+非方法的公有函数只能在主文件中定义。
 
 **Allowed:**
 ```go
@@ -293,10 +293,6 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
     func A() {
         ...
     }
-
-    func a() {
-        ...
-    }
 ```
 
 **Banned:**
@@ -304,15 +300,12 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
     package foo
     //goo.go
 
-    func b() {
-        ...
-    }
-
     func B() {
         ...
     }
 ```
 
+在分支文件中, 非方法的私有函数名必须带上与分之文件名相同的前缀。该前缀不视为修饰词，前缀之后的单词首字母需要大写。
 原本在分支文件中定义的函数，通常会以如下形式再现。
 
 **For example:**
@@ -346,6 +339,25 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
     }
 ```
 
+**or:**
+```go
+    package foo
+    //goo.go
+
+    func gooStep1() {
+        ...
+    }
+
+    func gooStep2() {
+        ...
+    }
+
+    func gooDo() {
+        gooStep1()
+        gooStep2()
+    }
+```
+
 **Not:**
 ```go
     package foo
@@ -362,25 +374,6 @@ Nephele是一套企业级的图片解决方案。Go是Nephele团队主要使用�
     func do() {
         step1()
         step2()
-    }
-```
-
-**Not:**
-```go
-    package foo
-    //goo.go
-
-    func gooStep1() {
-        ...
-    }
-
-    func gooStep2() {
-        ...
-    }
-
-    func gooDo() {
-        gooStep1()
-        gooStep2()
     }
 ```
 
