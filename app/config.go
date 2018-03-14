@@ -2,17 +2,17 @@ package app
 
 import (
 	"github.com/nephele/codec"
-	"github.com/nephele/logger"
+	"github.com/nephele/log"
 	"github.com/nephele/service"
 	"github.com/nephele/store"
 )
 
 // Config represents configuration for all components
 type Config interface {
-	// Implements how to parse config.
-	From(path string) error
+	// Return current environment
+	Env() string
 
-	// Return store config.
+	// Returns store config.
 	Store() store.Config
 
 	// Return codec config.
@@ -22,5 +22,8 @@ type Config interface {
 	Service() service.Config
 
 	// Return logger config.
-	Logger() logger.Config
+	Logger() log.Config
+
+	// Implements how to parse config.
+	LoadFrom(env, path string) error
 }

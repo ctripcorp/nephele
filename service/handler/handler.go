@@ -36,19 +36,24 @@ func (f *HandlerFactory) BuildMany(handlers ...HandlerFunc) []gin.HandlerFunc {
 }
 
 // Create image get handler.
-func (f *HandlerFactory) CreateGetImageHandler() gin.HandlerFunc {
+func (f *HandlerFactory) CreateGetImageHandler() HandlerFunc {
 	h := GetImageHandler{}
-	return f.Build(h.Handler())
+	return h.Handler()
 }
 
 // Create image upload handler.
-func (f *HandlerFactory) CreateUploadImageHandler() gin.HandlerFunc {
+func (f *HandlerFactory) CreateUploadImageHandler() HandlerFunc {
 	h := UploadImageHandler{}
-	return f.Build(h.Handler())
+	return h.Handler()
 }
 
 // Create image delete handler.
-func (f *HandlerFactory) CreateDeleteImageHandler() gin.HandlerFunc {
+func (f *HandlerFactory) CreateDeleteImageHandler() HandlerFunc {
 	h := DeleteImageHandler{}
-	return f.Build(h.Handler())
+	return h.Handler()
+}
+
+func (f *HandlerFactory) CreateHealthcheckHandler() HandlerFunc {
+	h := HealthCheckHandler{}
+	return h.Handler()
 }

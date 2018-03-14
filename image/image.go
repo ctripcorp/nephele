@@ -42,7 +42,7 @@ func (img *Image) Use(transformer transform.Transformer) *Image {
 }
 
 // Transform image with given context.
-func (img *Image) Transform(ctx context.Context) error {
+func (img *Image) Transform(ctx *context.Context) error {
 	var err error
 	var blob []byte
 	if blob, err = img.transformer.Transform(ctx, img.blob); err == nil {

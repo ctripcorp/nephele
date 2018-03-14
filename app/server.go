@@ -1,34 +1,42 @@
 package app
 
 import (
-	"github.com/nephele/logger"
 	"github.com/nephele/service"
 )
 
 // Define server initialization function type.
 type ServerInitializeFunc func(*Server) error
 
-// Server represents holder for services and
-// is the entry for all components to initialize, open or close.
+// Server represents holder for service and
+// is the entry for all components to initialize, open or quit.
 type Server struct {
 	init    ServerInitializeFunc
-	logger  *logger.Logger
 	service *service.Service
 }
 
 // Call to make external initialization.
-func (s *Server) Init(init ServerInitializeFunc) error {
-	return nil
+func (s *Server) Init(init ServerInitializeFunc) {
+	s.init = init
 }
 
-// Open services and other components.
-func (s *Server) Open() error {
-	s.init(s)
-	return nil
+// Open service and other components.
+func (s *Server) Open() <-chan error {
+	c := make(chan error)
+
+	if err := s.init(s); err != nil {
+		c <- err
+		return c
+	}
+
+	go func() {
+		c <- s.service.Open()
+	}()
+
+	return c
 }
 
-// Close services and other components elegantly.
-func (s *Server) Close() error {
+// Quit service and other components gracefully.
+func (s *Server) Quit() error {
 	return nil
 }
 
