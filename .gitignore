@@ -14,7 +14,8 @@ _test
 *.test
 *.exe
 *.tmp
-/demo/demo
+/demo/*
+!/demo/*.go
 
 # log file
 
