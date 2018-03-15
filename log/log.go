@@ -1,22 +1,20 @@
 package log
 
-import (
-	"go.uber.org/zap"
-)
-
-type Config struct {
+type Config interface {
+    BuildLogger() (Logger, error)
 }
 
-type Logger struct {
-	*zap.Logger
-}
+var instance Logger
 
-var logger Logger
+func Init(conf Config) (err error) {
+    instance, err = conf.BuildLogger()
+    return
+}
 
 func DefaultConfig() (Config, error) {
-	return Config{}, nil
+	return nil, nil
 }
 
-func Init(conf Config) error {
-	return nil
+func Infof(format string, values ...interface{}) {
+    instance.Infof(format, values...)
 }
