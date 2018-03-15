@@ -7,18 +7,18 @@ import (
 type Disk struct {
 }
 
-type DiskConfig struct {
-	Dir string `toml:"dir"`
-}
-
 func (d *Disk) Read(ctx context.Context, path string) ([]byte, error) {
 	return nil, nil
 }
 
-func (d *Disk) Write(ctx context.Context, blob []byte, path string) error {
+func (d *Disk) Delete(ctx context.Context, path string) error {
 	return nil
 }
 
-func (d *Disk) Delete(ctx context.Context, path string) error {
+func (d *Disk) Write(ctx context.Context, path string, blob []byte) error {
+	return nil
+}
+
+func (d *Disk) WriteOffset(ctx context.Context, path string, blob []byte, offset int64) error {
 	return nil
 }
