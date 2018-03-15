@@ -1,3 +1,3 @@
 package log
 
-type Tracer interface {}
+type Tracer interface{}

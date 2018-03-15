@@ -1,14 +1,14 @@
 package log
 
 type Config interface {
-    BuildLogger() (Logger, error)
+	BuildLogger() (Logger, error)
 }
 
 var instance Logger
 
 func Init(conf Config) (err error) {
-    instance, err = conf.BuildLogger()
-    return
+	instance, err = conf.BuildLogger()
+	return
 }
 
 func DefaultConfig() (Config, error) {
@@ -16,5 +16,5 @@ func DefaultConfig() (Config, error) {
 }
 
 func Infof(format string, values ...interface{}) {
-    instance.Infof(format, values...)
+	instance.Infof(format, values...)
 }
