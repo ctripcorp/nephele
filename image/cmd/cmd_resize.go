@@ -21,16 +21,15 @@ func (r *ResizeCommand) Exec(ctx context.Context) error {
 	if r.Width > r.Wand.Width() && r.Height > r.Wand.Height() && r.Limit == 0 {
 		return nil
 	}
+	var w, h uint
 	if r.Percentage != 0 {
-		w, h := r.percentage(ctx, r.Wand)
-		return cmd_resize(ctx, r.Wand, w, h)
+		w, h = r.percentage(ctx, r.Wand)
 	}
 	if strings.ToUpper(r.Method) == "FIXED" {
-		w, h := r.fixed(ctx, r.Wand)
-		return cmd_resize(ctx, r.Wand, w, h)
+		w, h = r.fixed(ctx, r.Wand)
 	}
-	w, h := r.lfit(ctx, r.Wand)
-	return cmd_resize(ctx, r.Wand, w, h)
+	w, h = r.lfit(ctx, r.Wand)
+	return r.Wand.LanczosResize(w, h)
 }
 
 //Lfit: 等比缩略
@@ -90,8 +89,4 @@ func (r *ResizeCommand) percentage(ctx context.Context, img *gm.MagickWand) (uin
 	r.Width = uint(int(img.Width()) * r.Percentage / 100)
 	r.Height = uint(int(img.Height()) * r.Percentage / 100)
 	return r.Width, r.Height
-}
-
-func cmd_resize(ctx context.Context, img *gm.MagickWand, w, h uint) error {
-	return img.LanczosResize(w, h)
 }
