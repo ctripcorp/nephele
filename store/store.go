@@ -27,7 +27,7 @@ func Init(conf Config) error {
 	return err
 }
 
-func NewDiskConfig() (*DiskConfig, error) {
+func DefaultConfig() (*DiskConfig, error) {
 	var err error
 	var homeDir string
 

@@ -35,9 +35,9 @@ func New(ctx *context.Context, conf Config) *Service {
 }
 
 // Return an instance of Config with reasonable defaults.
-func NewConfig() (Config, error) {
+func DefaultConfig() (Config, error) {
 	return Config{
-		Address:        ":80",
+		Address:        ":8080",
 		BufferSize:     200,
 		RequestTimeout: 3000,
 		MaxConcurrency: runtime.NumCPU(),
@@ -81,6 +81,7 @@ func (s *Service) Image() *ImageService {
 
 // Open image http service.
 func (s *Service) Open() error {
+	s.image.init()
 	s.image.registerAll()
 	return s.router.Run(s.conf.Address)
 }

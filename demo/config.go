@@ -49,19 +49,19 @@ func (conf *DemoConfig) LoadFrom(env, path string) error {
 	// give default configuration
 	conf.env = env
 
-	if conf.service, err = service.NewConfig(); err != nil {
+	if conf.service, err = service.DefaultConfig(); err != nil {
 		return err
 	}
 
-	if conf.store, err = store.NewDiskConfig(); err != nil {
+	if conf.store, err = store.DefaultConfig(); err != nil {
 		return err
 	}
 
-	if conf.logger, err = log.NewConfig(); err != nil {
+	if conf.logger, err = log.DefaultConfig(); err != nil {
 		return err
 	}
 
-	if conf.codec, err = v1.NewCodecConfig(); err != nil {
+	if conf.codec, err = v1.DefaultConfig(); err != nil {
 		return err
 	}
 

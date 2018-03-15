@@ -19,5 +19,6 @@ func (h GetImageHandler) Handler() HandlerFunc {
 
 			}
 		*/
+		ctx.HTTP().String(200, "hello.world")
 	}
 }

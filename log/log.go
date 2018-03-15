@@ -13,7 +13,7 @@ type Logger struct {
 
 var logger Logger
 
-func NewConfig() (Config, error) {
+func DefaultConfig() (Config, error) {
 	return Config{}, nil
 }
 

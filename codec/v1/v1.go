@@ -12,7 +12,7 @@ type Codec struct {
 type Config struct {
 }
 
-func NewCodecConfig() (*Config, error) {
+func DefaultConfig() (*Config, error) {
 	return new(Config), nil
 }
 

@@ -121,6 +121,7 @@ func (app *App) stop() error {
 	return nil
 }
 
+// Initialize components with given configuration.
 func (app *App) initComponents(conf Config) error {
 	var err error
 
@@ -142,7 +143,7 @@ func (app *App) initComponents(conf Config) error {
 	return err
 }
 
-// Build a new server and make initialization with given configuration.
+// Build a new server.
 func (app *App) buildServer(conf Config) *Server {
 	// create root context.
 	ctx := context.New(conf.Env(), time.Duration(conf.Service().RequestTimeout))

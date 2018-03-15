@@ -10,8 +10,8 @@ type ServerInitializeFunc func(*Server) error
 // Server represents holder for service and
 // is the entry for all components to initialize, open or quit.
 type Server struct {
-	init    ServerInitializeFunc
 	service *service.Service
+	init    ServerInitializeFunc
 }
 
 // Call to make external initialization.
@@ -23,9 +23,11 @@ func (s *Server) Init(init ServerInitializeFunc) {
 func (s *Server) Open() <-chan error {
 	c := make(chan error)
 
-	if err := s.init(s); err != nil {
-		c <- err
-		return c
+	if s.init != nil {
+		if err := s.init(s); err != nil {
+			c <- err
+			return c
+		}
 	}
 
 	go func() {
