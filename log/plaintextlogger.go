@@ -1,9 +1,9 @@
 package log
 
 type PlainTextLogger interface {
-	Debugf(format string, keysAndValues ...interface{})
-	Infof(format string, keysAndValues ...interface{})
-	Warnf(format string, keysAndValues ...interface{})
-	Errorf(format string, keysAndValues ...interface{})
-	Fatalf(format string, keysAndValues ...interface{})
+	Debugf(format string, args ...interface{})
+	Infof(format string, args ...interface{})
+	Warnf(format string, args ...interface{})
+	Errorf(format string, args ...interface{})
+	Fatalf(format string, args ...interface{})
 }
