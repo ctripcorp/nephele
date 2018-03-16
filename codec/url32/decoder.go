@@ -1,4 +1,4 @@
-package v1
+package url32
 
 import (
 	"strings"
