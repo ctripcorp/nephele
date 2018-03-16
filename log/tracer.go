@@ -1,15 +1,11 @@
 package log
 
 import (
-	"time"
+	"github.com/ctripcorp/nephele/context"
 )
 
 type Tracer interface {
-	TraceBegin(keysAndValues ...interface{}) TracerNeedATime
-	TraceEnd(state interface{}, message ...string) TracerNeedATime
-	TraceEndRoot(state interface{}, message ...string) TracerNeedATime
-}
-
-type TracerNeedATime interface {
-	WithTime(moment time.Time)
+	TraceBegin(ctx context.Context, keysAndValues ...interface{})
+	TraceEnd(ctx context.Context, state interface{}, message ...string)
+	TraceEndRoot(ctx context.Context, state interface{}, message ...string)
 }

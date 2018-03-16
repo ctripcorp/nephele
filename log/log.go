@@ -1,5 +1,9 @@
 package log
 
+import (
+	"github.com/ctripcorp/nephele/context"
+)
+
 type Config interface {
 	BuildLogger() (Logger, error)
 }
@@ -15,54 +19,54 @@ func DefaultConfig() (Config, error) {
 	return nil, nil
 }
 
-func Debugf(format string, values ...interface{}) {
-	instance.Debugf(format, values...)
+func Debugf(ctx context.Context, format string, values ...interface{}) {
+	instance.Debugf(ctx, format, values...)
 }
 
-func Infof(format string, values ...interface{}) {
-	instance.Infof(format, values...)
+func Infof(ctx context.Context, format string, values ...interface{}) {
+	instance.Infof(ctx, format, values...)
 }
 
-func Warnf(format string, values ...interface{}) {
-	instance.Warnf(format, values...)
+func Warnf(ctx context.Context, format string, values ...interface{}) {
+	instance.Warnf(ctx, format, values...)
 }
 
-func Errorf(format string, values ...interface{}) {
-	instance.Errorf(format, values...)
+func Errorf(ctx context.Context, format string, values ...interface{}) {
+	instance.Errorf(ctx, format, values...)
 }
 
-func Fatalf(format string, values ...interface{}) {
-	instance.Fatalf(format, values...)
+func Fatalf(ctx context.Context, format string, values ...interface{}) {
+	instance.Fatalf(ctx, format, values...)
 }
 
-func Debugw(message string, keysAndValues ...interface{}) {
-	instance.Debugw(message, keysAndValues...)
+func Debugw(ctx context.Context, message string, keysAndValues ...interface{}) {
+	instance.Debugw(ctx, message, keysAndValues...)
 }
 
-func Infow(message string, keysAndValues ...interface{}) {
-	instance.Infow(message, keysAndValues...)
+func Infow(ctx context.Context, message string, keysAndValues ...interface{}) {
+	instance.Infow(ctx, message, keysAndValues...)
 }
 
-func Warnw(message string, keysAndValues ...interface{}) {
-	instance.Warnw(message, keysAndValues...)
+func Warnw(ctx context.Context, message string, keysAndValues ...interface{}) {
+	instance.Warnw(ctx, message, keysAndValues...)
 }
 
-func Errorw(message string, keysAndValues ...interface{}) {
-	instance.Errorw(message, keysAndValues...)
+func Errorw(ctx context.Context, message string, keysAndValues ...interface{}) {
+	instance.Errorw(ctx, message, keysAndValues...)
 }
 
-func Fatalw(message string, keysAndValues ...interface{}) {
-	instance.Fatalw(message, keysAndValues...)
+func Fatalw(ctx context.Context, message string, keysAndValues ...interface{}) {
+	instance.Fatalw(ctx, message, keysAndValues...)
 }
 
-func TraceBegin(keysAndValues ...interface{}) TracerNeedATime {
-	return instance.TraceBegin(keysAndValues...)
+func TraceBegin(ctx context.Context, keysAndValues ...interface{}) {
+	instance.TraceBegin(ctx, keysAndValues...)
 }
 
-func TraceEnd(state interface{}, message ...string) TracerNeedATime {
-	return instance.TraceEnd(state, message...)
+func TraceEnd(ctx context.Context, state interface{}, message ...string) {
+	instance.TraceEnd(ctx, state, message...)
 }
 
-func TraceEndRoot(state interface{}, message ...string) TracerNeedATime {
-	return instance.TraceEndRoot(state, message...)
+func TraceEndRoot(ctx context.Context, state interface{}, message ...string) {
+	instance.TraceEndRoot(ctx, state, message...)
 }
