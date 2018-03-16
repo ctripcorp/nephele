@@ -2,12 +2,8 @@ package app
 
 import (
 	"fmt"
-	_ "fmt"
-	"github.com/nephele/codec"
 	"github.com/nephele/context"
-	"github.com/nephele/log"
 	"github.com/nephele/service"
-	"github.com/nephele/store"
 	"github.com/urfave/cli"
 	"os"
 	"os/signal"
@@ -91,16 +87,26 @@ func (app *App) open(ctx *cli.Context, configure Configurator) error {
 		return err
 	}
 
-	if err = app.initComponents(conf); err != nil {
+	s := app.buildServer(conf)
+	if err = s.init(); err != nil {
 		return err
 	}
 
+	// register signal to c.
+	// when syscall.SIGINT is received, error log should be written.
+	// when syscall.SIGHUP is received, app should be reopened.
+	// when syscall.SIGTERM is received, server should quit gracefully.
 	c := make(chan os.Signal)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGHUP, syscall.SIGTERM)
 	select {
 	case sig := <-c:
-		fmt.Println(sig)
-	case err = <-app.buildServer(conf).Open():
+		switch sig {
+		case syscall.SIGHUP:
+		case syscall.SIGTERM:
+		case syscall.SIGINT:
+			err = fmt.Errorf("app closed unexpectedly for receving signal:%s", sig.String())
+		}
+	case err = <-s.Open():
 	}
 
 	return err
@@ -121,34 +127,13 @@ func (app *App) stop() error {
 	return nil
 }
 
-// Initialize components with given configuration.
-func (app *App) initComponents(conf Config) error {
-	var err error
-
-	// init storage.
-	if err = store.Init(conf.Store()); err != nil {
-		return err
-	}
-
-	// init codec to encode or decode image request URL.
-	if err = codec.Init(conf.Codec()); err != nil {
-		return err
-	}
-
-	// init logger
-	if err = log.Init(conf.Logger()); err != nil {
-		return err
-	}
-
-	return err
-}
-
 // Build a new server.
 func (app *App) buildServer(conf Config) *Server {
 	// create root context.
 	ctx := context.New(conf.Env(), time.Duration(conf.Service().RequestTimeout))
 
 	return &Server{
+		conf:    conf,
 		service: service.New(ctx, conf.Service()),
 	}
 }
