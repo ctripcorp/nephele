@@ -1,19 +1,21 @@
 package index
 
-import "image"
+import (
+	"image"
 
+	"github.com/nephele/store"
+)
+
+//SimpleIndex simple index
 type SimpleIndex struct {
+	Path string
 }
 
-// FindBy Find image quicklly with given key.
-// usually we can use local disk cache, memory cache or distributed storage system
-// to cache handled image. that's a performance concern. also varnish or squid is a
-// better choice.
-func (s *SimpleIndex) FindBy(key string) (*image.Image, error) {
-	return nil, nil
-}
-
-// FindOriginalBy Find original image for further handling.
-func (s *SimpleIndex) FindOriginalBy(key string) (*image.Image, error) {
-	return nil, nil
+// FindOriginalImage Find original image for further handling.
+func (s *SimpleIndex) FindOriginalImage(key string) (*image.Image, error) {
+	blob, err := store.Storage().Read(ctx, s.Path)
+	if err != nil {
+		return nil, err
+	}
+	return image.New(blob), nil
 }

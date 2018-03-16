@@ -1,6 +1,9 @@
 package transform
 
-import "github.com/nephele/context"
+import (
+	"github.com/nephele/context"
+	"github.com/nephele/process"
+)
 
 // Transformer represents how to transform image with given commands
 type Transformer interface {
