@@ -14,8 +14,14 @@ _test
 *.test
 *.exe
 *.tmp
+
+#main
 /demo/*
 !/demo/*.go
+
+#vendor
+/vendor/*
+!/vendor/vendor.json
 
 # log file
 

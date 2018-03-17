@@ -9,18 +9,13 @@ import (
 	"github.com/nephele/process"
 )
 
-//NewTransformer create transform
-func NewTransformer(processes []process.Process) Transformer {
-	return transformer{Processes: processes}
-}
-
 // Transformer represents how to transform image with given commands
 type Transformer struct {
 	Processes []process.Process
 }
 
 //Transform original image blob to expected blob.
-func (t *Transformer) Transform(ctx context.Context, blob []byte) ([]byte, error) {
+func (t *Transformer) Transform(ctx *context.Context, blob []byte) ([]byte, error) {
 	wand, err := gm.NewMagickWand(blob)
 	if err != nil {
 		return nil, err
@@ -31,13 +26,13 @@ func (t *Transformer) Transform(ctx context.Context, blob []byte) ([]byte, error
 			continue
 		}
 		c := f(proc.Param, wand)
-		if err := c.Exec(ctx); err != nil {
+		if err := c.Exec(*ctx); err != nil {
 			return nil, err
 		}
 	}
 	for _, f := range defaultCmdMap {
 		c := f(wand)
-		if err := c.Exec(ctx); err != nil {
+		if err := c.Exec(*ctx); err != nil {
 			return nil, err
 		}
 	}
@@ -45,49 +40,49 @@ func (t *Transformer) Transform(ctx context.Context, blob []byte) ([]byte, error
 }
 
 //CmdCreateMap Cmd list and create func
-var CmdCreateMap = map[process.Cmd]func(map[string]string, *gm.MagickWand) *cmd.Cmd{
-	Resize:     creatResizeCommand,
-	Crop:       nil,
-	Rotate:     nil,
-	AutoOrient: nil,
-	Format:     nil,
-	Quality:    nil,
-	Watermark:  nil,
-	Sharpen:    nil,
-	Style:      nil,
-	Panorama:   nil,
+var CmdCreateMap = map[process.Cmd]func(map[process.Key]string, *gm.MagickWand) cmd.Cmd{
+	process.Resize:     createResizeCommand,
+	process.Crop:       nil,
+	process.Rotate:     nil,
+	process.AutoOrient: nil,
+	process.Format:     nil,
+	process.Quality:    nil,
+	process.Watermark:  nil,
+	process.Sharpen:    nil,
+	process.Style:      nil,
+	process.Panorama:   nil,
 }
 
-var defaultCmdMap = []func(*gm.MagickWand) *cmd.Cmd{
+var defaultCmdMap = []func(*gm.MagickWand) cmd.Cmd{
 	createStripCommand,
 }
 
-func createResizeCommand(m map[string]string, wand *gm.MagickWand) *cmd.Cmd {
+func createResizeCommand(m map[process.Key]string, wand *gm.MagickWand) cmd.Cmd {
 	resize := &cmd.ResizeCommand{Wand: wand}
-	w, isExists := m[process.ParamWidth]
-	if isExist {
+	w, isExists := m[process.KeyW]
+	if isExists {
 		width, _ := strconv.Atoi(w)
 		resize.Width = uint(width)
 	}
-	h, isExists := m[process.ParamHeight]
+	h, isExists := m[process.KeyH]
 	if isExists {
 		height, _ := strconv.Atoi(h)
-		resize.height = uint(Height)
+		resize.Height = uint(height)
 	}
-	resize.Method = m[process.ParamMethod]
+	resize.Method = m[process.KeyM]
 	if resize.Method == "" {
 		resize.Method = process.ResizeMethodLfit
 	}
-	if m[process.ParamL] == "1" {
+	if m[process.KeyL] == "1" {
 		resize.Limit = 1
 	} else {
 		resize.Limit = 0
 	}
-	percent, _ := strconv.Atoi(m[process.ParamPercent])
+	percent, _ := strconv.Atoi(m[process.KeyP])
 	resize.Percentage = percent
 	return resize
 }
 
-func createStripCommand(wand *gm.MagickWand) *cmd.Cmd {
+func createStripCommand(wand *gm.MagickWand) cmd.Cmd {
 	return &cmd.StripCommand{Wand: wand}
 }

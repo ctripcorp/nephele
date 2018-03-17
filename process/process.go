@@ -9,7 +9,7 @@ import (
 // Process uri process info
 type Process struct {
 	Name  Cmd
-	Param map[string]string
+	Param map[Key]string
 }
 
 //BuildProcesses parse uri and create process array
@@ -33,13 +33,13 @@ func parseURI(uri string) ([]Process, error) {
 					continue
 				}
 				arr := strings.Split(cmd, ",")
-				paramMap := make(map[string]string)
+				paramMap := make(map[Key]string)
 				for index := 1; index < len(arr); index++ {
 					kv := strings.Split(arr[index], "_")
 					if len(kv) != 2 {
 						continue
 					}
-					paramMap[kv[0]] = kv[1]
+					paramMap[Key(kv[0])] = kv[1]
 				}
 				processes = append(processes, Process{Name: Cmd(arr[0]), Param: paramMap})
 			}
@@ -64,7 +64,7 @@ func checkParam(procs []Process) ([]Process, error) {
 }
 
 //CmdCheckMap Cmd list and check func
-var CmdCheckMap = map[Cmd]func(map[string]string) error{
+var CmdCheckMap = map[Cmd]func(map[Key]string) error{
 	Resize:     checkResizeParam,
 	Crop:       checkCropParam,
 	Rotate:     checkRotateParam,
@@ -96,25 +96,25 @@ const (
 )
 
 //Param cmd param
-type Param string
+type Key string
 
 //param key
 const (
-	ParamValue    Param = "v"
-	ParamWidth    Param = "w"
-	ParamHeight   Param = "h"
-	ParamMethod   Param = "m"
-	ParamL        Param = "l"
-	ParamPercent  Param = "p"
-	ParamX        Param = "x"
-	ParamY        Param = "y"
-	ParamAIO      Param = "aio"
-	ParamName     Param = "n"
-	ParamDissolve Param = "d"
-	ParamMW       Param = "mw"
-	ParamMH       Param = "mh"
-	ParamR        Param = "r"
-	ParamS        Param = "s"
+	KeyV   Key = "v"
+	KeyW   Key = "w"
+	KeyH   Key = "h"
+	KeyM   Key = "m"
+	KeyL   Key = "l"
+	KeyP   Key = "p"
+	KeyX   Key = "x"
+	KeyY   Key = "y"
+	KeyAIO Key = "aio"
+	KeyN   Key = "n"
+	KeyD   Key = "d"
+	KeyMW  Key = "mw"
+	KeyMH  Key = "mh"
+	KeyR   Key = "r"
+	KeyS   Key = "s"
 )
 
 //resize m value
@@ -164,21 +164,20 @@ const (
 )
 
 //procs = append(procs, Process{Name:  })
-func checkResizeParam(m map[string]string) error {
+func checkResizeParam(m map[Key]string) error {
 	for k, v := range m {
-		p := Param(k)
-		if p == ParamWidth || p == ParamHeight {
+		if k == KeyW || k == KeyH {
 			if _, e := strconv.Atoi(v); e != nil {
 				return fmt.Errorf(infoFormat, v, k)
 			}
 		}
-		if p == ParamMethod && v != ResizeMethodFixed && v != ResizeMethodLfit {
+		if k == KeyM && v != ResizeMethodFixed && v != ResizeMethodLfit {
 			return fmt.Errorf(infoFormat, v, k)
 		}
-		if p == ParamL && v != "0" && v != "1" {
+		if k == KeyL && v != "0" && v != "1" {
 			return fmt.Errorf(infoFormat, v, k)
 		}
-		if p == ParamPercent {
+		if k == KeyP {
 			i, e := strconv.Atoi(v)
 			if e != nil || i < 0 || i > 10000 {
 				return fmt.Errorf(infoFormat, v, k)
@@ -188,10 +187,9 @@ func checkResizeParam(m map[string]string) error {
 	return nil
 }
 
-func checkCropParam(m map[string]string) error {
+func checkCropParam(m map[Key]string) error {
 	for k, v := range m {
-		p := Param(k)
-		if p == ParamMethod &&
+		if k == KeyM &&
 			v != CropMethodBottom &&
 			v != CropMethodCenter &&
 			v != CropMethodCrop &&
@@ -204,16 +202,16 @@ func checkCropParam(m map[string]string) error {
 			return fmt.Errorf(infoFormat, v, k)
 		}
 
-		if p == ParamL && v != "0" && v != "1" {
+		if k == KeyL && v != "0" && v != "1" {
 			return fmt.Errorf(infoFormat, v, k)
 		}
-		if p == ParamPercent {
+		if k == KeyP {
 			i, e := strconv.Atoi(v)
 			if e != nil || i < 0 || i > 10000 {
 				return fmt.Errorf(infoFormat, v, k)
 			}
 		}
-		if p == ParamHeight || p == ParamWidth || p == ParamX || p == ParamY {
+		if k == KeyH || k == KeyW || k == KeyX || k == KeyY {
 			if _, e := strconv.Atoi(v); e != nil {
 				return fmt.Errorf(infoFormat, v, k)
 			}
@@ -222,10 +220,9 @@ func checkCropParam(m map[string]string) error {
 	return nil
 }
 
-func checkRotateParam(m map[string]string) error {
+func checkRotateParam(m map[Key]string) error {
 	for k, v := range m {
-		p := Param(k)
-		if p == ParamValue {
+		if k == KeyV {
 			value, e := strconv.Atoi(v)
 			if e != nil || value < 1 || value > 360 {
 				return fmt.Errorf(infoFormat, v, k)
@@ -235,10 +232,9 @@ func checkRotateParam(m map[string]string) error {
 	return nil
 }
 
-func checkFormatParam(m map[string]string) error {
+func checkFormatParam(m map[Key]string) error {
 	for k, v := range m {
-		p := Param(k)
-		if p == ParamValue &&
+		if k == KeyV &&
 			v != FormatGIF &&
 			v != FormatJPG &&
 			v != FormatPNG &&
@@ -249,32 +245,30 @@ func checkFormatParam(m map[string]string) error {
 	return nil
 }
 
-func checkQualityParam(m map[string]string) error {
+func checkQualityParam(m map[Key]string) error {
 	for k, v := range m {
-		p := Param(k)
-		if p == ParamValue {
+		if k == KeyV {
 			value, e := strconv.Atoi(v)
 			if e != nil || value < 1 || value > 100 {
 				return fmt.Errorf(infoFormat, v, k)
 			}
 		}
-		if p == ParamAIO && v != "1" && v != "0" {
+		if k == KeyAIO && v != "1" && v != "0" {
 			return fmt.Errorf(infoFormat, v, k)
 		}
 	}
 	return nil
 }
 
-func checkWatermarkParam(m map[string]string) error {
+func checkWatermarkParam(m map[Key]string) error {
 	for k, v := range m {
-		p := Param(k)
-		if p == ParamDissolve {
+		if k == KeyD {
 			value, e := strconv.Atoi(v)
 			if e != nil || value < 1 || value > 100 {
 				return fmt.Errorf(infoFormat, v, k)
 			}
 		}
-		if p == ParamL &&
+		if k == KeyL &&
 			v != WaterMarkLocationCenter &&
 			v != WaterMarkLocationEast &&
 			v != WaterMarkLocationNE &&
@@ -286,7 +280,7 @@ func checkWatermarkParam(m map[string]string) error {
 			v != WaterMarkLocationWest {
 			return fmt.Errorf(infoFormat, v, k)
 		}
-		if p == ParamX || p == ParamY || p == ParamMW || p == ParamMH {
+		if k == KeyX || k == KeyY || k == KeyMW || k == KeyMH {
 			if _, e := strconv.Atoi(v); e != nil {
 				return fmt.Errorf(infoFormat, v, k)
 			}
@@ -295,10 +289,9 @@ func checkWatermarkParam(m map[string]string) error {
 	return nil
 }
 
-func checkStyleParam(m map[string]string) error {
+func checkStyleParam(m map[Key]string) error {
 	for k, v := range m {
-		p := Param(k)
-		if p == ParamValue &&
+		if k == KeyV &&
 			v != StyleLOMO &&
 			v != StyleOIL {
 			return fmt.Errorf(infoFormat, v, k)

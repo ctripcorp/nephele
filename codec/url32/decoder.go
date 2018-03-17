@@ -5,8 +5,10 @@ import (
 
 	"github.com/nephele/context"
 	"github.com/nephele/index"
+	simpleIndex "github.com/nephele/index/simple"
 	"github.com/nephele/process"
 	"github.com/nephele/transform"
+	"github.com/nephele/transform/simple"
 )
 
 //Decoder represents decoder
@@ -29,10 +31,10 @@ func (e *Decoder) Decode(uri string) error {
 
 //CreateIndex create index
 func (e *Decoder) CreateIndex() index.Index {
-	return index.SimpleIndex{}
+	return &simpleIndex.Index{Ctx: e.ctx, Path: e.path}
 }
 
 //CreateTransformer create transformer
 func (e *Decoder) CreateTransformer() transform.Transformer {
-	return simple.NewTransformer(e.processes)
+	return &simple.Transformer{Processes: e.processes}
 }

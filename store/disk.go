@@ -1,14 +1,34 @@
 package store
 
 import (
+	"io/ioutil"
+	"strings"
+
 	"github.com/nephele/context"
 )
 
 type Disk struct {
+	Dir string
 }
 
 func (d *Disk) Read(ctx context.Context, path string) ([]byte, error) {
-	return nil, nil
+	if strings.HasPrefix(path, "\\") {
+		path = strings.Replace(path, "/", "\\", -1)
+	}
+	if strings.HasPrefix(path, "/") {
+		path = strings.Replace(path, "\\", "/", -1)
+	}
+	if strings.HasSuffix(d.Dir, "/") {
+		path = d.Dir + path
+	} else {
+		path = d.Dir + "/" + path
+	}
+
+	buff, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	return buff, nil
 }
 
 func (d *Disk) Delete(ctx context.Context, path string) error {
