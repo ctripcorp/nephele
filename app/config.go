@@ -26,4 +26,7 @@ type Config interface {
 
 	// Implements how to parse config.
 	LoadFrom(env, path string) error
+
+	// Reload
+	Reload() error
 }

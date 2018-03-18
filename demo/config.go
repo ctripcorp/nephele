@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/nephele/codec"
 	"github.com/nephele/codec/v1"
 	"github.com/nephele/log"
@@ -69,4 +70,10 @@ func (conf *DemoConfig) LoadFrom(env, path string) error {
 	conf.env = env
 
 	return err
+}
+
+// Reload configuration
+func (conf *DemoConfig) Reload() error {
+	fmt.Println("reload")
+	return nil
 }
