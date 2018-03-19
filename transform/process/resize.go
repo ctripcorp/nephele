@@ -1,4 +1,4 @@
-package cmd
+package process
 
 import (
 	"math"
@@ -27,12 +27,13 @@ func (r *ResizeCommand) Exec(ctx context.Context) error {
 	}
 	if strings.ToUpper(r.Method) == "FIXED" {
 		w, h = r.fixed(ctx, r.Wand)
+	} else {
+		w, h = r.lfit(ctx, r.Wand)
 	}
-	w, h = r.lfit(ctx, r.Wand)
 	return r.Wand.LanczosResize(w, h)
 }
 
-//Lfit: 等比缩略
+//Lfit: Geometric thumbnail
 func (r *ResizeCommand) lfit(ctx context.Context, img *gm.MagickWand) (uint, uint) {
 	var width, height uint
 	width = img.Width()
@@ -65,7 +66,7 @@ func (r *ResizeCommand) lfit(ctx context.Context, img *gm.MagickWand) (uint, uin
 	return w, h
 }
 
-//Fixed: 固定宽高，强制缩略
+//Fixed: fix width and height,force thumbnail
 func (r *ResizeCommand) fixed(ctx context.Context, img *gm.MagickWand) (uint, uint) {
 	if r.Width < 1 && r.Height < 1 {
 		return r.Width, r.Height
@@ -84,7 +85,7 @@ func (r *ResizeCommand) fixed(ctx context.Context, img *gm.MagickWand) (uint, ui
 	return r.Width, r.Height
 }
 
-//倍数百分比。
+//multiple percentage
 func (r *ResizeCommand) percentage(ctx context.Context, img *gm.MagickWand) (uint, uint) {
 	r.Width = uint(int(img.Width()) * r.Percentage / 100)
 	r.Height = uint(int(img.Height()) * r.Percentage / 100)
