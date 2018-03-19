@@ -1,7 +1,7 @@
 package index
 
 import (
-	"github.com/nephele/image"
+	"github.com/ctripcorp/nephele/image"
 )
 
 // Quicklly fetch image from index. index is built from image request url.

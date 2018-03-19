@@ -1,11 +1,8 @@
 package handler
 
-import "github.com/nephele/context"
+import "github.com/ctripcorp/nephele/context"
 
-type UploadImageHandler struct {
-}
-
-func (h UploadImageHandler) Handler() HandlerFunc {
+func uploadImageHandler() HandlerFunc {
 	return func(ctx *context.Context) {
 
 	}

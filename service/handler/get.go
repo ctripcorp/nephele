@@ -3,14 +3,11 @@ package handler
 import (
 	"strings"
 
-	"github.com/nephele/codec"
-	"github.com/nephele/context"
+	"github.com/ctripcorp/nephele/codec"
+	"github.com/ctripcorp/nephele/context"
 )
 
-type GetImageHandler struct {
-}
-
-func (h GetImageHandler) Handler() HandlerFunc {
+func getImageHandler() HandlerFunc {
 	return func(ctx *context.Context) {
 		decoder := codec.GetDecoder(ctx)
 		decoder.Decode(strings.TrimPrefix(ctx.HTTP().Request.RequestURI, "/image/"))

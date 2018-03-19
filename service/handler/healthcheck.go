@@ -1,11 +1,8 @@
 package handler
 
-import "github.com/nephele/context"
+import "github.com/ctripcorp/nephele/context"
 
-type HealthCheckHandler struct {
-}
-
-func (h *HealthCheckHandler) Handler() HandlerFunc {
+func healthcheckHandler() HandlerFunc {
 	return func(ctx *context.Context) {
 
 	}

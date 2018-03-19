@@ -1,8 +1,8 @@
 package store
 
 import (
-	"github.com/nephele/context"
-	"github.com/nephele/util"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/util"
 	"path/filepath"
 )
 

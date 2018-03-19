@@ -1,9 +1,9 @@
 package codec
 
 import (
-	"github.com/nephele/context"
-	"github.com/nephele/index"
-	"github.com/nephele/transform"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/index"
+	"github.com/ctripcorp/nephele/transform"
 )
 
 // Codec represents how to encode and decode image file name or its commands.

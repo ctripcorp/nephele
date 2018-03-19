@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/nephele/app"
+	"github.com/ctripcorp/nephele/app"
 )
 
 // Demo app starts a powerful image server with minimal components

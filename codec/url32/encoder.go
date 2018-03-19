@@ -1,6 +1,6 @@
 package url32
 
-import "github.com/nephele/context"
+import "github.com/ctripcorp/nephele/context"
 
 // represents v1 encoder
 type Encoder struct {

@@ -1,8 +1,8 @@
 package url32
 
 import (
-	"github.com/nephele/codec"
-	"github.com/nephele/context"
+	"github.com/ctripcorp/nephele/codec"
+	"github.com/ctripcorp/nephele/context"
 )
 
 //Represents as v1 codec

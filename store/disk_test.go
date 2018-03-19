@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/nephele/context"
+	"github.com/ctripcorp/nephele/context"
 )
 
 func Test_DiskRead(t *testing.T) {

@@ -1,9 +1,9 @@
 package index
 
 import (
-	"github.com/nephele/context"
-	"github.com/nephele/image"
-	"github.com/nephele/store"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/image"
+	"github.com/ctripcorp/nephele/store"
 )
 
 //Index  index

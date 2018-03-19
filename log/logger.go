@@ -1,7 +1,7 @@
 package log
 
 import (
-	"github.com/nephele/context"
+	"github.com/ctripcorp/nephele/context"
 )
 
 type Logger interface {
