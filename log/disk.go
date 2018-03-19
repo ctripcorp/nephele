@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/ctripcorp/nephele/context"
+	"github.com/nephele/context"
 )
 
 type diskLogger struct {

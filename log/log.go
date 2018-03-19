@@ -3,9 +3,10 @@ package log
 import (
 	"fmt"
 
-	"github.com/ctripcorp/nephele/context"
-	"github.com/ctripcorp/nephele/util"
 	"path/filepath"
+
+	"github.com/nephele/context"
+	"github.com/nephele/util"
 )
 
 type Config interface {

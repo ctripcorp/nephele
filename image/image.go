@@ -22,7 +22,7 @@ type Image struct {
 
 // Return image with body filled.
 func New(blob []byte) *Image {
-	return nil
+	return &Image{blob: blob}
 }
 
 // Return image meta.

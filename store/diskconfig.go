@@ -5,5 +5,5 @@ type DiskConfig struct {
 }
 
 func (conf *DiskConfig) BuildStore() (Store, error) {
-	return nil, nil
+	return &Disk{Dir: conf.Dir}, nil
 }
