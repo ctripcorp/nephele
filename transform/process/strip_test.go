@@ -1,4 +1,4 @@
-package cmd
+package process
 
 import (
 	"fmt"
@@ -13,11 +13,11 @@ func TestExecStrip(t *testing.T) {
 	var r StripCommand
 	bt, err := ioutil.ReadFile("200j.jpg")
 	if err != nil {
-		return
+		t.Error()
 	}
 	r.Wand, err = gm.NewMagickWand(bt)
 	if err != nil {
-		fmt.Println("gm", err.Error())
+		t.Error()
 	}
 
 	var ctx context.Context
@@ -27,6 +27,7 @@ func TestExecStrip(t *testing.T) {
 	bt1, err := r.Wand.WriteBlob()
 	if err != nil {
 		fmt.Println(err.Error())
+		t.Error()
 	}
 	ioutil.WriteFile("newStrip.jpg", bt1, 0777)
 }

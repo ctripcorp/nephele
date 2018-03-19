@@ -6,6 +6,7 @@ import (
 	"github.com/nephele/log"
 	"github.com/nephele/service"
 	"github.com/nephele/store"
+	"github.com/nephele/util"
 )
 
 // Define configuration for demo app
@@ -47,16 +48,12 @@ func (conf *DemoConfig) LoadFrom(env, path string) error {
 	var err error
 
 	// give default configuration
-	conf.env = env
-
 	if conf.service, err = service.DefaultConfig(); err != nil {
 		return err
 	}
-
 	if conf.store, err = store.DefaultConfig(); err != nil {
 		return err
 	}
-
 	if conf.logger, err = log.DefaultConfig(); err != nil {
 		return err
 	}
@@ -65,5 +62,12 @@ func (conf *DemoConfig) LoadFrom(env, path string) error {
 		return err
 	}
 
-	return nil
+	if len(path) != 0 {
+		if err = util.FromToml(path, conf); err != nil {
+			return err
+		}
+	}
+	conf.env = env
+
+	return err
 }

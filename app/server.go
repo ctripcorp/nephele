@@ -1,7 +1,10 @@
 package app
 
 import (
+	"github.com/nephele/codec"
+	"github.com/nephele/log"
 	"github.com/nephele/service"
+	"github.com/nephele/store"
 )
 
 // Define server initialization function type.
@@ -10,26 +13,19 @@ type ServerInitializeFunc func(*Server) error
 // Server represents holder for service and
 // is the entry for all components to initialize, open or quit.
 type Server struct {
-	service *service.Service
-	init    ServerInitializeFunc
+	conf     Config
+	service  *service.Service
+	initFunc ServerInitializeFunc
 }
 
 // Call to make external initialization.
 func (s *Server) Init(init ServerInitializeFunc) {
-	s.init = init
+	s.initFunc = init
 }
 
-// Open service and other components.
+// Open image service
 func (s *Server) Open() <-chan error {
 	c := make(chan error)
-
-	if s.init != nil {
-		if err := s.init(s); err != nil {
-			c <- err
-			return c
-		}
-	}
-
 	go func() {
 		c <- s.service.Open()
 	}()
@@ -45,4 +41,30 @@ func (s *Server) Quit() error {
 // Return service to register router or modify image handler path.
 func (s *Server) Service() *service.Service {
 	return s.service
+}
+
+// Initialize components and call external init func.
+func (s *Server) init() error {
+	var err error
+
+	// init storage.
+	if err = store.Init(s.conf.Store()); err != nil {
+		return err
+	}
+
+	// init codec to encode or decode image request URL.
+	if err = codec.Init(s.conf.Codec()); err != nil {
+		return err
+	}
+
+	// init logger
+	if err = log.Init(s.conf.Logger()); err != nil {
+		return err
+	}
+
+	if s.initFunc != nil {
+		err = s.initFunc(s)
+	}
+
+	return err
 }

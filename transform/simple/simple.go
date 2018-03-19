@@ -4,9 +4,9 @@ import (
 	"strconv"
 
 	"github.com/nephele/context"
-	"github.com/nephele/image/cmd"
 	"github.com/nephele/img4go/gm"
 	"github.com/nephele/process"
+	ps "github.com/nephele/transform/process"
 )
 
 // Transformer represents how to transform image with given commands
@@ -40,7 +40,7 @@ func (t *Transformer) Transform(ctx *context.Context, blob []byte) ([]byte, erro
 }
 
 //CmdCreateMap Cmd list and create func
-var CmdCreateMap = map[process.Cmd]func(map[process.Key]string, *gm.MagickWand) cmd.Cmd{
+var CmdCreateMap = map[process.Cmd]func(map[process.Key]string, *gm.MagickWand) ps.Cmd{
 	process.Resize:     createResizeCommand,
 	process.Crop:       nil,
 	process.Rotate:     nil,
@@ -53,12 +53,12 @@ var CmdCreateMap = map[process.Cmd]func(map[process.Key]string, *gm.MagickWand) 
 	process.Panorama:   nil,
 }
 
-var defaultCmdMap = []func(*gm.MagickWand) cmd.Cmd{
+var defaultCmdMap = []func(*gm.MagickWand) ps.Cmd{
 	createStripCommand,
 }
 
-func createResizeCommand(m map[process.Key]string, wand *gm.MagickWand) cmd.Cmd {
-	resize := &cmd.ResizeCommand{Wand: wand}
+func createResizeCommand(m map[process.Key]string, wand *gm.MagickWand) ps.Cmd {
+	resize := &ps.ResizeCommand{Wand: wand}
 	w, isExists := m[process.KeyW]
 	if isExists {
 		width, _ := strconv.Atoi(w)
@@ -83,6 +83,6 @@ func createResizeCommand(m map[process.Key]string, wand *gm.MagickWand) cmd.Cmd 
 	return resize
 }
 
-func createStripCommand(wand *gm.MagickWand) cmd.Cmd {
-	return &cmd.StripCommand{Wand: wand}
+func createStripCommand(wand *gm.MagickWand) ps.Cmd {
+	return &ps.StripCommand{Wand: wand}
 }
