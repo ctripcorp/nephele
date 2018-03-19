@@ -1,4 +1,4 @@
-package cmd
+package process
 
 import (
 	"fmt"
@@ -9,23 +9,16 @@ import (
 	"github.com/nephele/img4go/gm"
 )
 
-// type ResizeCommand struct {
-// 	Wand              *gm.MagickWand
-// 	Width             uint
-// 	Height            uint
-// 	Method            string //Lfit/Fixed
-// 	Limit, Percentage int
-// }
-
 func TestExec(t *testing.T) {
 	var r ResizeCommand
 	bt, err := ioutil.ReadFile("200j.jpg")
 	if err != nil {
-		return
+		t.Error()
 	}
 	r.Wand, err = gm.NewMagickWand(bt)
 	if err != nil {
 		fmt.Println("gm", err.Error())
+		t.Error()
 	}
 	r.Width = uint(1000)
 	r.Height = uint(300)
@@ -34,26 +27,23 @@ func TestExec(t *testing.T) {
 	r.Percentage = 500
 
 	var ctx context.Context
-
 	r.Exec(ctx)
-
-	bt1, err := r.Wand.WriteBlob()
-	if err != nil {
-		fmt.Println(err.Error())
+	if r.Wand.Width() != 4000 || r.Wand.Height() != 2625 {
+		println(r.Wand.Width(), r.Wand.Height())
+		t.Fail()
 	}
-	ioutil.WriteFile("new.jpg", bt1, 0777)
-
 }
 
 func TestExec1(t *testing.T) {
 	var r ResizeCommand
 	bt, err := ioutil.ReadFile("200j.jpg")
 	if err != nil {
-		return
+		t.Error()
 	}
 	r.Wand, err = gm.NewMagickWand(bt)
 	if err != nil {
 		fmt.Println("gm", err.Error())
+		t.Error()
 	}
 	r.Width = uint(1000)
 	r.Height = uint(300)
@@ -62,25 +52,24 @@ func TestExec1(t *testing.T) {
 	r.Percentage = 50
 
 	var ctx context.Context
-
 	r.Exec(ctx)
 
-	bt1, err := r.Wand.WriteBlob()
-	if err != nil {
-		fmt.Println(err.Error())
+	if r.Wand.Width() != 399 || r.Wand.Height() != 262 {
+		println(r.Wand.Width(), r.Wand.Height())
+		t.Fail()
 	}
-	ioutil.WriteFile("new1.jpg", bt1, 0777)
 }
 
 func TestExec2(t *testing.T) {
 	var r ResizeCommand
 	bt, err := ioutil.ReadFile("200j.jpg")
 	if err != nil {
-		return
+		t.Error()
 	}
 	r.Wand, err = gm.NewMagickWand(bt)
 	if err != nil {
 		fmt.Println("gm", err.Error())
+		t.Error()
 	}
 	r.Width = uint(100)
 	r.Height = uint(300)
@@ -89,12 +78,10 @@ func TestExec2(t *testing.T) {
 	r.Percentage = 0
 
 	var ctx context.Context
-
 	r.Exec(ctx)
 
-	bt1, err := r.Wand.WriteBlob()
-	if err != nil {
-		fmt.Println(err.Error())
+	if r.Wand.Width() != 100 || r.Wand.Height() != 65 {
+		println(r.Wand.Width(), r.Wand.Height())
+		t.Fail()
 	}
-	ioutil.WriteFile("new2.jpg", bt1, 0777)
 }

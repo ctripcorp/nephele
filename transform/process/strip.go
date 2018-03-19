@@ -1,4 +1,4 @@
-package cmd
+package process
 
 import (
 	"github.com/nephele/context"
@@ -9,6 +9,7 @@ type StripCommand struct {
 	Wand *gm.MagickWand
 }
 
+// strip
 func (s *StripCommand) Exec(ctx context.Context) error {
 	//log here
 	println("test strip")
