@@ -2,38 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b843041b-d7bd-4b97-aef9-e9e91db443bf" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/app.go" afterPath="$PROJECT_DIR$/app/app.go" />
-      <change beforePath="$PROJECT_DIR$/app/config.go" afterPath="$PROJECT_DIR$/app/config.go" />
-      <change beforePath="$PROJECT_DIR$/app/server.go" afterPath="$PROJECT_DIR$/app/server.go" />
-      <change beforePath="$PROJECT_DIR$/codec/codec.go" afterPath="$PROJECT_DIR$/codec/codec.go" />
-      <change beforePath="$PROJECT_DIR$/codec/url32/codec.go" afterPath="$PROJECT_DIR$/codec/url32/codec.go" />
-      <change beforePath="$PROJECT_DIR$/codec/url32/decoder.go" afterPath="$PROJECT_DIR$/codec/url32/decoder.go" />
-      <change beforePath="$PROJECT_DIR$/codec/url32/encoder.go" afterPath="$PROJECT_DIR$/codec/url32/encoder.go" />
-      <change beforePath="$PROJECT_DIR$/demo/config.go" afterPath="$PROJECT_DIR$/demo/config.go" />
-      <change beforePath="$PROJECT_DIR$/demo/main.go" afterPath="$PROJECT_DIR$/demo/main.go" />
-      <change beforePath="$PROJECT_DIR$/image/image.go" afterPath="$PROJECT_DIR$/image/image.go" />
-      <change beforePath="$PROJECT_DIR$/index/index.go" afterPath="$PROJECT_DIR$/index/index.go" />
-      <change beforePath="$PROJECT_DIR$/index/simple/index.go" afterPath="$PROJECT_DIR$/index/simple/index.go" />
-      <change beforePath="$PROJECT_DIR$/log/disk.go" afterPath="$PROJECT_DIR$/log/disk.go" />
-      <change beforePath="$PROJECT_DIR$/log/log.go" afterPath="$PROJECT_DIR$/log/log.go" />
-      <change beforePath="$PROJECT_DIR$/log/logger.go" afterPath="$PROJECT_DIR$/log/logger.go" />
-      <change beforePath="$PROJECT_DIR$/service/handler/delete.go" afterPath="$PROJECT_DIR$/service/handler/delete.go" />
-      <change beforePath="$PROJECT_DIR$/service/handler/get.go" afterPath="$PROJECT_DIR$/service/handler/get.go" />
-      <change beforePath="$PROJECT_DIR$/service/handler/handler.go" afterPath="$PROJECT_DIR$/service/handler/handler.go" />
-      <change beforePath="$PROJECT_DIR$/service/handler/healthcheck.go" afterPath="$PROJECT_DIR$/service/handler/healthcheck.go" />
-      <change beforePath="$PROJECT_DIR$/service/handler/upload.go" afterPath="$PROJECT_DIR$/service/handler/upload.go" />
-      <change beforePath="$PROJECT_DIR$/service/service.go" afterPath="$PROJECT_DIR$/service/service.go" />
-      <change beforePath="$PROJECT_DIR$/store/disk.go" afterPath="$PROJECT_DIR$/store/disk.go" />
-      <change beforePath="$PROJECT_DIR$/store/disk_test.go" afterPath="$PROJECT_DIR$/store/disk_test.go" />
-      <change beforePath="$PROJECT_DIR$/store/store.go" afterPath="$PROJECT_DIR$/store/store.go" />
-      <change beforePath="$PROJECT_DIR$/transform/process/cmd.go" afterPath="$PROJECT_DIR$/transform/process/cmd.go" />
-      <change beforePath="$PROJECT_DIR$/transform/process/resize.go" afterPath="$PROJECT_DIR$/transform/process/resize.go" />
-      <change beforePath="$PROJECT_DIR$/transform/process/resize_test.go" afterPath="$PROJECT_DIR$/transform/process/resize_test.go" />
-      <change beforePath="$PROJECT_DIR$/transform/process/strip.go" afterPath="$PROJECT_DIR$/transform/process/strip.go" />
-      <change beforePath="$PROJECT_DIR$/transform/process/strip_test.go" afterPath="$PROJECT_DIR$/transform/process/strip_test.go" />
-      <change beforePath="$PROJECT_DIR$/transform/simple/simple.go" afterPath="$PROJECT_DIR$/transform/simple/simple.go" />
-      <change beforePath="$PROJECT_DIR$/transform/transform.go" afterPath="$PROJECT_DIR$/transform/transform.go" />
+      <change beforePath="$PROJECT_DIR$/vendor/vendor.json" afterPath="$PROJECT_DIR$/vendor/vendor.json" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,7 +13,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="server.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/server.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="249">
@@ -52,6 +21,16 @@
               <folding>
                 <element signature="e#13#175#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vendor.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/vendor/vendor.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="6" column="47" lean-forward="false" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="47" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -73,6 +52,7 @@
       <find>uuid</find>
       <find>default</find>
       <find>github.com/nephele/</find>
+      <find>toml</find>
     </findStrings>
     <replaceStrings>
       <replace>github.com/ctripcorp/nephele/</replace>
@@ -180,6 +160,11 @@
               <item name="nephele" type="b2602c69:ProjectViewProjectNode" />
               <item name="nephele" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="nephele" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nephele" type="462c0819:PsiDirectoryNode" />
+              <item name="vendor" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -256,8 +241,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.253125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.253125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -534,14 +520,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/vendor.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2124">
-          <caret line="118" column="9" lean-forward="true" selection-start-line="118" selection-start-column="9" selection-end-line="118" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/demo/config.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
@@ -587,6 +565,14 @@
           <folding>
             <element signature="e#13#175#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/vendor.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="47" lean-forward="false" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>
