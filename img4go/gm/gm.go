@@ -80,8 +80,7 @@ func (mw *MagickWand) Width() uint {
 
 // Size returns the size associated with the magick wand.
 func (mw *MagickWand) Size() (columns, rows uint, err error) {
-	columns, rows, err = mw.mw.GetSize()
-	return
+	return mw.Width(), mw.Height(), nil
 }
 
 // PreserveJPEGSamplingFactor will use "sampling-factor" settings as the input file
