@@ -1,6 +1,7 @@
 package process
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -165,9 +166,19 @@ const (
 
 //procs = append(procs, Process{Name:  })
 func checkResizeParam(m map[Key]string) error {
+	var w, h, p int
 	for k, v := range m {
-		if k == KeyW || k == KeyH {
-			if _, e := strconv.Atoi(v); e != nil {
+		if k == KeyW {
+			var e error
+			w, e = strconv.Atoi(v)
+			if e != nil {
+				return fmt.Errorf(infoFormat, v, k)
+			}
+		}
+		if k == KeyH {
+			var e error
+			h, e = strconv.Atoi(v)
+			if e != nil {
 				return fmt.Errorf(infoFormat, v, k)
 			}
 		}
@@ -178,11 +189,17 @@ func checkResizeParam(m map[Key]string) error {
 			return fmt.Errorf(infoFormat, v, k)
 		}
 		if k == KeyP {
-			i, e := strconv.Atoi(v)
-			if e != nil || i < 0 || i > 10000 {
+			p, e := strconv.Atoi(v)
+			if e != nil || p < 0 || p > 10000 {
 				return fmt.Errorf(infoFormat, v, k)
 			}
 		}
+	}
+	if m[KeyM] == ResizeMethodFixed && (w < 1 || h < 1) {
+		return errors.New("m, w, h is invalid.")
+	}
+	if w < 1 && h < 1 && p < 1 {
+		return errors.New("w,h,p is invalid.")
 	}
 	return nil
 }
