@@ -3,10 +3,10 @@ package simple
 import (
 	"strconv"
 
-	"github.com/nephele/context"
-	"github.com/nephele/img4go/gm"
-	"github.com/nephele/process"
-	ps "github.com/nephele/transform/process"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/img4go/gm"
+	"github.com/ctripcorp/nephele/process"
+	ps "github.com/ctripcorp/nephele/transform/process"
 )
 
 // Transformer represents how to transform image with given commands

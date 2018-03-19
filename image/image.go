@@ -1,8 +1,8 @@
 package image
 
 import (
-	"github.com/nephele/context"
-	"github.com/nephele/transform"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/transform"
 )
 
 type Type string

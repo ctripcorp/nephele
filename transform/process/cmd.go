@@ -1,6 +1,6 @@
 package process
 
-import "github.com/nephele/context"
+import "github.com/ctripcorp/nephele/context"
 
 type Cmd interface {
 	Exec(ctx context.Context) error

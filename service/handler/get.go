@@ -3,8 +3,8 @@ package handler
 import (
 	"strings"
 
-	"github.com/nephele/codec"
-	"github.com/nephele/context"
+	"github.com/ctripcorp/nephele/codec"
+	"github.com/ctripcorp/nephele/context"
 )
 
 func getImageHandler() HandlerFunc {

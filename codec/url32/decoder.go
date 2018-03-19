@@ -3,12 +3,12 @@ package url32
 import (
 	"strings"
 
-	"github.com/nephele/context"
-	"github.com/nephele/index"
-	simpleIndex "github.com/nephele/index/simple"
-	"github.com/nephele/process"
-	"github.com/nephele/transform"
-	"github.com/nephele/transform/simple"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/index"
+	simpleIndex "github.com/ctripcorp/nephele/index/simple"
+	"github.com/ctripcorp/nephele/process"
+	"github.com/ctripcorp/nephele/transform"
+	"github.com/ctripcorp/nephele/transform/simple"
 )
 
 //Decoder represents decoder

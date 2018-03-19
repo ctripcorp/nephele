@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/nephele/context"
+	"github.com/ctripcorp/nephele/context"
 )
 
 type Disk struct {

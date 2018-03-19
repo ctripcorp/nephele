@@ -2,9 +2,9 @@ package service
 
 import (
 	quit "context"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/service/handler"
 	"github.com/gin-gonic/gin"
-	"github.com/nephele/context"
-	"github.com/nephele/service/handler"
 	"net/http"
 	"runtime"
 	"time"

@@ -2,8 +2,8 @@ package app
 
 import (
 	"fmt"
-	"github.com/nephele/context"
-	"github.com/nephele/service"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/service"
 	"github.com/urfave/cli"
 	"log"
 	"os"

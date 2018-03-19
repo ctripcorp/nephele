@@ -1,8 +1,8 @@
 package process
 
 import (
-	"github.com/nephele/context"
-	"github.com/nephele/img4go/gm"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/img4go/gm"
 )
 
 type StripCommand struct {

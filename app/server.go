@@ -1,10 +1,10 @@
 package app
 
 import (
-	"github.com/nephele/codec"
-	"github.com/nephele/log"
-	"github.com/nephele/service"
-	"github.com/nephele/store"
+	"github.com/ctripcorp/nephele/codec"
+	"github.com/ctripcorp/nephele/log"
+	"github.com/ctripcorp/nephele/service"
+	"github.com/ctripcorp/nephele/store"
 )
 
 // Define server initialization function type.

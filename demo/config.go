@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/nephele/codec"
-	"github.com/nephele/codec/url32"
-	"github.com/nephele/log"
-	"github.com/nephele/service"
-	"github.com/nephele/store"
-	"github.com/nephele/util"
+	"github.com/ctripcorp/nephele/codec"
+	"github.com/ctripcorp/nephele/codec/url32"
+	"github.com/ctripcorp/nephele/log"
+	"github.com/ctripcorp/nephele/service"
+	"github.com/ctripcorp/nephele/store"
+	"github.com/ctripcorp/nephele/util"
 )
 
 // Define configuration for demo app
