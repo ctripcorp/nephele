@@ -6,6 +6,7 @@ import (
 
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/img4go/gm"
+	"github.com/ctripcorp/nephele/log"
 )
 
 type ResizeCommand struct {
@@ -17,7 +18,8 @@ type ResizeCommand struct {
 }
 
 func (r *ResizeCommand) Exec(ctx context.Context) error {
-	println("w", r.Wand.Width(), "h", r.Wand.Height())
+	log.TraceBegin(ctx, "resize exec", "URL.Command", "resize")
+	defer log.TraceEnd(ctx, nil)
 	if r.Width > r.Wand.Width() && r.Height > r.Wand.Height() && r.Limit == 0 {
 		return nil
 	}

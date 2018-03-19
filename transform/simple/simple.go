@@ -5,6 +5,7 @@ import (
 
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/img4go/gm"
+	"github.com/ctripcorp/nephele/log"
 	"github.com/ctripcorp/nephele/process"
 	ps "github.com/ctripcorp/nephele/transform/process"
 )
@@ -26,6 +27,14 @@ func (t *Transformer) Transform(ctx *context.Context, blob []byte) ([]byte, erro
 			continue
 		}
 		c := f(proc.Param, wand)
+		log.Debugw(*ctx, string(proc.Name))
+
+		start
+		err := c.Exec(*ctx)
+		end
+
+		return err
+
 		if err := c.Exec(*ctx); err != nil {
 			return nil, err
 		}

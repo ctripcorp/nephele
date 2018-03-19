@@ -10,7 +10,10 @@ import (
 func getImageHandler() HandlerFunc {
 	return func(ctx *context.Context) {
 		decoder := codec.GetDecoder(ctx)
-		decoder.Decode(strings.TrimPrefix(ctx.HTTP().Request.RequestURI, "/image/"))
+		if err := decoder.Decode(strings.TrimPrefix(ctx.HTTP().Request.RequestURI, "/image/")); err != nil {
+			ctx.HTTP().String(400, err.Error())
+			return
+		}
 		image, err := decoder.CreateIndex().FindOriginalImage()
 		if err != nil {
 			ctx.HTTP().String(400, err.Error())
