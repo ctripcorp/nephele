@@ -85,7 +85,7 @@ func (r *ResizeCommand) fixed(ctx context.Context, img *gm.MagickWand) (uint, ui
 	return r.Width, r.Height
 }
 
-//Percentage isotropic scaling with a multiplicator(%)
+//Percentage: isotropic scaling by multiplicator(%)
 func (r *ResizeCommand) percentage(ctx context.Context, img *gm.MagickWand) (uint, uint) {
 	r.Width = uint(int(img.Width()) * r.Percentage / 100)
 	r.Height = uint(int(img.Height()) * r.Percentage / 100)
