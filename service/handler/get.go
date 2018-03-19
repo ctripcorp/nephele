@@ -5,10 +5,7 @@ import (
 	"github.com/nephele/context"
 )
 
-type GetImageHandler struct {
-}
-
-func (h GetImageHandler) Handler() HandlerFunc {
+func getImageHandler() HandlerFunc {
 	return func(ctx *context.Context) {
 		//todo:
 		/*

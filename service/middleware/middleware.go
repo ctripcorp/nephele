@@ -1,0 +1,5 @@
+package middleware
+
+func Middleware() {
+
+}

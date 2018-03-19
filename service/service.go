@@ -91,6 +91,7 @@ func (s *Service) Image() *ImageService {
 
 // Open image http service.
 func (s *Service) Open() error {
+	s.useFilters()
 	s.image.init()
 	s.image.registerAll()
 	return s.internal.ListenAndServe()
@@ -100,4 +101,8 @@ func (s *Service) Quit() error {
 	ctx, cancel := quit.WithTimeout(quit.Background(), time.Duration(s.conf.QuitTimeout)*time.Millisecond)
 	defer cancel()
 	return s.internal.Shutdown(ctx)
+}
+
+func (s *Service) useFilters() {
+	gin.Recovery()
 }

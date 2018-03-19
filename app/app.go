@@ -94,9 +94,8 @@ func (app *App) open(ctx *cli.Context, configure Configurator) error {
 	return err
 }
 
-// Reload server configuration.
 func (app *App) reload() error {
-	return nil
+	return app.conf.Reload()
 }
 
 // Close server gracefully.
@@ -128,7 +127,7 @@ func (app *App) acceptSignals() <-chan error {
 		sig := <-sc
 		switch sig {
 		case syscall.SIGHUP:
-			if err := app.conf.Reload(); err != nil {
+			if err := app.reload(); err != nil {
 				c <- fmt.Errorf("app closed unexpectedly for reload failed. error:%s", err.Error())
 			}
 		case syscall.SIGTERM:
