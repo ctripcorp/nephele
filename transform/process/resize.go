@@ -33,7 +33,7 @@ func (r *ResizeCommand) Exec(ctx context.Context) error {
 	return r.Wand.LanczosResize(w, h)
 }
 
-//Lfit: Geometric thumbnail
+//Lfit: isotropic scaling with fixed width and height, which tends to disable one of the inputs(width or height) to feed a larger aspect ratio
 func (r *ResizeCommand) lfit(ctx context.Context, img *gm.MagickWand) (uint, uint) {
 	var width, height uint
 	width = img.Width()
@@ -66,7 +66,7 @@ func (r *ResizeCommand) lfit(ctx context.Context, img *gm.MagickWand) (uint, uin
 	return w, h
 }
 
-//Fixed: fix width and height,force thumbnail
+//Fixed: forced scaling with fixed width and height
 func (r *ResizeCommand) fixed(ctx context.Context, img *gm.MagickWand) (uint, uint) {
 	if r.Width < 1 && r.Height < 1 {
 		return r.Width, r.Height
@@ -85,7 +85,7 @@ func (r *ResizeCommand) fixed(ctx context.Context, img *gm.MagickWand) (uint, ui
 	return r.Width, r.Height
 }
 
-//multiple percentage
+//Percentage isotropic scaling with a multiplicator(%)
 func (r *ResizeCommand) percentage(ctx context.Context, img *gm.MagickWand) (uint, uint) {
 	r.Width = uint(int(img.Width()) * r.Percentage / 100)
 	r.Height = uint(int(img.Height()) * r.Percentage / 100)
