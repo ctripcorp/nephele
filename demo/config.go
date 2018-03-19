@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/nephele/codec"
-	"github.com/nephele/codec/v1"
+	"github.com/nephele/codec/url32"
 	"github.com/nephele/log"
 	"github.com/nephele/service"
 	"github.com/nephele/store"
@@ -58,7 +58,8 @@ func (conf *DemoConfig) LoadFrom(env, path string) error {
 	if conf.logger, err = log.DefaultConfig(); err != nil {
 		return err
 	}
-	if conf.codec, err = v1.DefaultConfig(); err != nil {
+
+	if conf.codec, err = url32.DefaultConfig(); err != nil {
 		return err
 	}
 

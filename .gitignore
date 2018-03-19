@@ -4,6 +4,7 @@
 *.so
 *.jpg
 *.png
+*.log
 
 # Folders
 _obj
