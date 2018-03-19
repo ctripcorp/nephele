@@ -27,14 +27,7 @@ func (t *Transformer) Transform(ctx *context.Context, blob []byte) ([]byte, erro
 			continue
 		}
 		c := f(proc.Param, wand)
-		log.Debugw(*ctx, string(proc.Name))
-
-		start
-		err := c.Exec(*ctx)
-		end
-
-		return err
-
+		log.Debugw(ctx, string(proc.Name))
 		if err := c.Exec(*ctx); err != nil {
 			return nil, err
 		}

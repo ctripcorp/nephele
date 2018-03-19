@@ -18,8 +18,8 @@ type ResizeCommand struct {
 }
 
 func (r *ResizeCommand) Exec(ctx context.Context) error {
-	log.TraceBegin(ctx, "resize exec", "URL.Command", "resize")
-	defer log.TraceEnd(ctx, nil)
+	log.TraceBegin(&ctx, "resize exec", "URL.Command", "resize")
+	defer log.TraceEnd(&ctx, nil)
 	if r.Width > r.Wand.Width() && r.Height > r.Wand.Height() && r.Limit == 0 {
 		return nil
 	}
