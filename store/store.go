@@ -1,12 +1,22 @@
 package store
 
-import "github.com/nephele/context"
+import (
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/util"
+	"path/filepath"
+)
 
 // Storage represents where to get or write image.
 type Store interface {
 	Read(ctx context.Context, path string) ([]byte, error)
-	Write(ctx context.Context, blob []byte, path string) error
 	Delete(ctx context.Context, path string) error
+	Write(ctx context.Context, path string, blob []byte) error
+	WriteOffset(ctx context.Context, path string, blob []byte, offset int64) error
+}
+
+// Config represents how to build storage and storage configuration.
+type Config interface {
+	BuildStore() (Store, error)
 }
 
 var storage Store
@@ -17,18 +27,19 @@ func Init(conf Config) error {
 	return err
 }
 
-func Read(ctx context.Context, path string) ([]byte, error) {
-	return storage.Read(ctx, path)
+func DefaultConfig() (*DiskConfig, error) {
+	var err error
+	var homeDir string
+
+	if homeDir, err = util.HomeDir(); err != nil {
+		return nil, err
+	}
+
+	return &DiskConfig{
+		Dir: filepath.Join(homeDir, "image"),
+	}, nil
 }
 
-func Write(ctx context.Context, blob []byte, path string) error {
-	return storage.Write(ctx, blob, path)
-}
-
-func Delete(ctx context.Context, path string) error {
-	return storage.Delete(ctx, path)
-}
-
-func NewDisk(conf DiskConfig) *Disk {
-	return nil
+func Storage() Store {
+	return storage
 }

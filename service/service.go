@@ -1,34 +1,57 @@
 package service
 
 import (
+	quit "context"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/service/handler"
 	"github.com/gin-gonic/gin"
-	"github.com/nephele/context"
-	"github.com/nephele/service/handler"
+	"net/http"
+	"runtime"
+	"time"
 )
 
 // Service Configuration.
 type Config struct {
-	BufferSize     int `toml:"buffer-size"`
-	MaxConcurrency int `toml:"max-concurrency"`
-	RequestTimeout int `toml:"request-timeout"`
+	BufferSize     int    `toml:"buffer-size"`
+	MaxConcurrency int    `toml:"max-concurrency"`
+	RequestTimeout int    `toml:"request-timeout"`
+	QuitTimeout    int    `toml:"quit-timeout"`
+	Address        string `toml:"address"`
 }
 
 // Represents http service to handle image request.
 type Service struct {
-	conf    Config
-	image   *ImageService
-	router  *gin.Engine
-	factory *handler.HandlerFactory
+	conf     Config
+	image    *ImageService
+	router   *gin.Engine
+	internal *http.Server
+	factory  *handler.HandlerFactory
 }
 
-// Return service with given context and config.
+// Returns service with given context and config.
 func New(ctx *context.Context, conf Config) *Service {
-	return &Service{
+	s := &Service{
 		conf:    conf,
 		router:  gin.New(),
-		image:   new(ImageService),
 		factory: handler.NewFactory(ctx),
 	}
+	s.image = &ImageService{internal: s}
+	s.internal = &http.Server{
+		Handler: s.router,
+		Addr:    conf.Address,
+	}
+	return s
+}
+
+// Return an instance of Config with reasonable defaults.
+func DefaultConfig() (Config, error) {
+	return Config{
+		Address:        ":8080",
+		BufferSize:     200,
+		RequestTimeout: 3000,
+		QuitTimeout:    5000,
+		MaxConcurrency: runtime.NumCPU(),
+	}, nil
 }
 
 // Register http GET handler.
@@ -56,7 +79,7 @@ func (s *Service) OPTIONS(relativePath string, handlers ...handler.HandlerFunc) 
 	s.router.OPTIONS(relativePath, s.factory.BuildMany(handlers...)...)
 }
 
-// Register htt HEAD handler.
+// Register http HEAD handler.
 func (s *Service) HEAD(relativePath string, handlers ...handler.HandlerFunc) {
 	s.router.HEAD(relativePath, s.factory.BuildMany(handlers...)...)
 }
@@ -66,7 +89,20 @@ func (s *Service) Image() *ImageService {
 	return s.image
 }
 
-// run image http service.
-func (s *Service) Run() error {
-	return nil
+// Open image http service.
+func (s *Service) Open() error {
+	s.useFilters()
+	s.image.init()
+	s.image.registerAll()
+	return s.internal.ListenAndServe()
+}
+
+func (s *Service) Quit() error {
+	ctx, cancel := quit.WithTimeout(quit.Background(), time.Duration(s.conf.QuitTimeout)*time.Millisecond)
+	defer cancel()
+	return s.internal.Shutdown(ctx)
+}
+
+func (s *Service) useFilters() {
+	gin.Recovery()
 }

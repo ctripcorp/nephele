@@ -1,13 +1,14 @@
 package app
 
 import (
-	"github.com/nephele/codec"
-	"github.com/nephele/context"
-	"github.com/nephele/logger"
-	"github.com/nephele/service"
-	"github.com/nephele/store"
+	"fmt"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/service"
 	"github.com/urfave/cli"
+	"log"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 )
 
@@ -18,14 +19,41 @@ type App struct {
 	internal *cli.App
 }
 
-// Start new nephele application with default configuration.
-func New() *App {
-	return NewConfigured(new(DemoConfig))
-}
+// Define configurator by runtime environment
+type Configurator func(string) Config
 
-// Start new nephele application with provided configuration.
-func NewConfigured(conf Config) *App {
-	return nil
+// Return new nephele application with given configuration.
+func New(configure Configurator) *App {
+	app := new(App)
+	app.internal = cli.NewApp()
+	app.internal.Name = "Nephele"
+	app.internal.Usage = "Powerful image service!"
+	app.internal.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "config, c",
+			Usage: "load configuration from given path.",
+		},
+		cli.StringFlag{
+			Name:   "env, e",
+			Value:  "dev",
+			Usage:  "set app environment.",
+			EnvVar: "NEPHELE_ENV",
+		},
+		cli.BoolFlag{
+			Name:  "open, o",
+			Usage: "open server to serve image",
+		},
+	}
+
+	app.internal.Action = func(ctx *cli.Context) error {
+		if ctx.Bool("open") {
+			if err := app.open(ctx, configure); err != nil {
+				return cli.NewExitError(err.Error(), 1)
+			}
+		}
+		return nil
+	}
+	return app
 }
 
 // Return server to make initialization or configure service router.
@@ -35,28 +63,84 @@ func (app *App) Server() *Server {
 
 // Run nephele application.
 func (app *App) Run() {
-	app.internal.Run(os.Args)
+	if err := app.internal.Run(os.Args); err != nil {
+		log.Fatal(err.Error())
+	}
 }
 
-// Build a new server and make initialization with provided configuration.
-func newServer(conf Config) (*Server, error) {
+// Open server
+func (app *App) open(ctx *cli.Context, configure Configurator) error {
 	var err error
 
-	// init storage.
-	if err = store.Init(conf.Store()); err != nil {
-		return nil, err
+	env := ctx.String("env")
+	path := ctx.String("config")
+
+	app.conf = configure(env)
+
+	if err = app.conf.LoadFrom(env, path); err != nil {
+		return err
 	}
 
-	// init codec to encode or decode image request URL.
-	if err = codec.Init(conf.Codec()); err != nil {
-		return nil, err
+	s := app.buildServer(app.conf)
+	if err = s.init(); err != nil {
+		return err
 	}
 
+	select {
+	case err = <-app.acceptSignals():
+	case err = <-s.open():
+	}
+
+	return err
+}
+
+func (app *App) reload() error {
+	return app.conf.Reload()
+}
+
+// Close server gracefully.
+func (app *App) quit() error {
+	return app.server.quit()
+}
+
+// Build a new server.
+func (app *App) buildServer(conf Config) *Server {
 	// create root context.
-	ctx := context.New(time.Duration(conf.Service().RequestTimeout))
-
-	return &Server{
-		logger:  logger.New(conf.Logger(), nil),
+	ctx := context.New(conf.Env(), time.Duration(conf.Service().RequestTimeout)*time.Millisecond)
+	app.server = &Server{
+		conf:    conf,
 		service: service.New(ctx, conf.Service()),
-	}, err
+	}
+	return app.server
+}
+
+// register signal to c.
+// when syscall.SIGINT is received, error log should be written.
+// when syscall.SIGHUP is received, app will be reload.
+// when syscall.SIGKILL is received, app will forcibly closed.
+// when syscall.SIGTERM is received, server will quit gracefully.
+func (app *App) acceptSignals() <-chan error {
+	c := make(chan error)
+	go func() {
+		sc := make(chan os.Signal)
+		signal.Notify(sc, syscall.SIGINT, syscall.SIGHUP, syscall.SIGTERM)
+		sig := <-sc
+		switch sig {
+		case syscall.SIGHUP:
+			if err := app.reload(); err != nil {
+				c <- fmt.Errorf("app closed unexpectedly for reload failed. error:%s", err.Error())
+			}
+		case syscall.SIGTERM:
+			{
+				if err := app.quit(); err != nil {
+					c <- fmt.Errorf("app recevied signal:%s, but quit failed. error:%s", sig.String(), err.Error())
+				} else {
+					c <- fmt.Errorf("app closed gracefully for receiving signal:%s", sig.String())
+				}
+			}
+		case syscall.SIGINT:
+			c <- fmt.Errorf("app closed unexpectedly for receiving signal:%s", sig.String())
+		}
+	}()
+	return c
 }

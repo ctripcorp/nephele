@@ -1,8 +1,8 @@
 package handler
 
 import (
+	"github.com/ctripcorp/nephele/context"
 	"github.com/gin-gonic/gin"
-	"github.com/nephele/context"
 )
 
 //Image handle func
@@ -36,19 +36,20 @@ func (f *HandlerFactory) BuildMany(handlers ...HandlerFunc) []gin.HandlerFunc {
 }
 
 // Create image get handler.
-func (f *HandlerFactory) CreateGetImageHandler() gin.HandlerFunc {
-	h := GetImageHandler{}
-	return f.Build(h.Handler())
+func (f *HandlerFactory) CreateGetImageHandler() HandlerFunc {
+	return getImageHandler()
 }
 
 // Create image upload handler.
-func (f *HandlerFactory) CreateUploadImageHandler() gin.HandlerFunc {
-	h := UploadImageHandler{}
-	return f.Build(h.Handler())
+func (f *HandlerFactory) CreateUploadImageHandler() HandlerFunc {
+	return uploadImageHandler()
 }
 
 // Create image delete handler.
-func (f *HandlerFactory) CreateDeleteImageHandler() gin.HandlerFunc {
-	h := DeleteImageHandler{}
-	return f.Build(h.Handler())
+func (f *HandlerFactory) CreateDeleteImageHandler() HandlerFunc {
+	return deleteImageHandler()
+}
+
+func (f *HandlerFactory) CreateHealthcheckHandler() HandlerFunc {
+	return healthcheckHandler()
 }

@@ -4,6 +4,7 @@
 *.so
 *.jpg
 *.png
+*.log
 
 # Folders
 _obj
@@ -14,7 +15,14 @@ _test
 *.test
 *.exe
 *.tmp
-/demo/demo
+
+#main
+/demo/*
+!/demo/*.go
+
+#vendor
+/vendor/*
+!/vendor/vendor.json
 
 # log file
 

@@ -2,7 +2,7 @@ package handler
 
 import "github.com/ctripcorp/nephele/context"
 
-func uploadImageHandler() HandlerFunc {
+func healthcheckHandler() HandlerFunc {
 	return func(ctx *context.Context) {
 
 	}

@@ -1,11 +1,8 @@
 package handler
 
-import "github.com/nephele/context"
+import "github.com/ctripcorp/nephele/context"
 
-type DeleteImageHandler struct {
-}
-
-func (h DeleteImageHandler) Handler() HandlerFunc {
+func deleteImageHandler() HandlerFunc {
 	return func(ctx *context.Context) {
 
 	}

@@ -1,8 +1,8 @@
 package image
 
 import (
-	"github.com/nephele/context"
-	"github.com/nephele/transform"
+	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/transform"
 )
 
 type Type string
@@ -22,7 +22,7 @@ type Image struct {
 
 // Return image with body filled.
 func New(blob []byte) *Image {
-	return nil
+	return &Image{blob: blob}
 }
 
 // Return image meta.
@@ -42,7 +42,7 @@ func (img *Image) Use(transformer transform.Transformer) *Image {
 }
 
 // Transform image with given context.
-func (img *Image) Transform(ctx context.Context) error {
+func (img *Image) Transform(ctx *context.Context) error {
 	var err error
 	var blob []byte
 	if blob, err = img.transformer.Transform(ctx, img.blob); err == nil {
