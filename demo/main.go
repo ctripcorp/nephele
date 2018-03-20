@@ -8,6 +8,6 @@ import (
 func main() {
 	//run a simple server. enjoy!
 	app.New(func(env string) app.Config {
-		return new(DemoConfig)
+		return new(config)
 	}).Run()
 }

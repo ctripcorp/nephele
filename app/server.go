@@ -54,7 +54,7 @@ func (s *Server) init() error {
 	}
 
 	// init logger
-	if err = log.Init(s.conf.Logger()); err != nil {
+	if err = log.Init(s.conf.Log()); err != nil {
 		return err
 	}
 
