@@ -17,26 +17,26 @@ type ResizeCommand struct {
 	Limit, Percentage int
 }
 
-func (r *ResizeCommand) Exec(ctx context.Context) error {
-	log.TraceBegin(&ctx, "resize exec", "URL.Command", "resize")
-	defer log.TraceEnd(&ctx, nil)
+func (r *ResizeCommand) Exec(ctx *context.Context) error {
+	log.TraceBegin(ctx, "resize exec", "URL.Command", "resize")
+	defer log.TraceEnd(ctx, nil)
 	if r.Width > r.Wand.Width() && r.Height > r.Wand.Height() && r.Limit == 0 {
 		return nil
 	}
 	var w, h uint
 	if r.Percentage != 0 {
-		w, h = r.percentage(ctx, r.Wand)
+		w, h = r.percentage(r.Wand)
 	}
 	if strings.ToUpper(r.Method) == "FIXED" {
-		w, h = r.fixed(ctx, r.Wand)
+		w, h = r.fixed(r.Wand)
 	} else {
-		w, h = r.lfit(ctx, r.Wand)
+		w, h = r.lfit(r.Wand)
 	}
 	return r.Wand.LanczosResize(w, h)
 }
 
 //Lfit: isotropic scaling with fixed width and height, which tends to disable one of the inputs(width or height) to feed a larger aspect ratio
-func (r *ResizeCommand) lfit(ctx context.Context, img *gm.MagickWand) (uint, uint) {
+func (r *ResizeCommand) lfit(img *gm.MagickWand) (uint, uint) {
 	var width, height uint
 	width = img.Width()
 	height = img.Height()
@@ -69,7 +69,7 @@ func (r *ResizeCommand) lfit(ctx context.Context, img *gm.MagickWand) (uint, uin
 }
 
 //Fixed: forced scaling with fixed width and height
-func (r *ResizeCommand) fixed(ctx context.Context, img *gm.MagickWand) (uint, uint) {
+func (r *ResizeCommand) fixed(img *gm.MagickWand) (uint, uint) {
 	if r.Width < 1 && r.Height < 1 {
 		return r.Width, r.Height
 	}
@@ -88,7 +88,7 @@ func (r *ResizeCommand) fixed(ctx context.Context, img *gm.MagickWand) (uint, ui
 }
 
 //Percentage: isotropic scaling by multiplicator(%)
-func (r *ResizeCommand) percentage(ctx context.Context, img *gm.MagickWand) (uint, uint) {
+func (r *ResizeCommand) percentage(img *gm.MagickWand) (uint, uint) {
 	r.Width = uint(int(img.Width()) * r.Percentage / 100)
 	r.Height = uint(int(img.Height()) * r.Percentage / 100)
 	return r.Width, r.Height

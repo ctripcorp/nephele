@@ -11,7 +11,7 @@ type Disk struct {
 	Dir string
 }
 
-func (d *Disk) Read(ctx context.Context, path string) ([]byte, error) {
+func (d *Disk) Read(ctx *context.Context, path string) ([]byte, error) {
 	if strings.HasPrefix(path, "\\") {
 		path = strings.Replace(path, "/", "\\", -1)
 	}
@@ -31,14 +31,14 @@ func (d *Disk) Read(ctx context.Context, path string) ([]byte, error) {
 	return buff, nil
 }
 
-func (d *Disk) Delete(ctx context.Context, path string) error {
+func (d *Disk) Delete(ctx *context.Context, path string) error {
 	return nil
 }
 
-func (d *Disk) Write(ctx context.Context, path string, blob []byte) error {
+func (d *Disk) Write(ctx *context.Context, path string, blob []byte) error {
 	return nil
 }
 
-func (d *Disk) WriteOffset(ctx context.Context, path string, blob []byte, offset int64) error {
+func (d *Disk) WriteOffset(ctx *context.Context, path string, blob []byte, offset int64) error {
 	return nil
 }

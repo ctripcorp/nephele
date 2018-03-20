@@ -28,13 +28,13 @@ func (t *Transformer) Transform(ctx *context.Context, blob []byte) ([]byte, erro
 		}
 		c := f(proc.Param, wand)
 		log.Debugw(ctx, string(proc.Name))
-		if err := c.Exec(*ctx); err != nil {
+		if err := c.Exec(ctx); err != nil {
 			return nil, err
 		}
 	}
 	for _, f := range defaultCmdMap {
 		c := f(wand)
-		if err := c.Exec(*ctx); err != nil {
+		if err := c.Exec(ctx); err != nil {
 			return nil, err
 		}
 	}

@@ -10,8 +10,7 @@ type StripCommand struct {
 }
 
 // strip
-func (s *StripCommand) Exec(ctx context.Context) error {
+func (s *StripCommand) Exec(ctx *context.Context) error {
 	//log here
-	println("test strip")
 	return s.Wand.Strip()
 }
