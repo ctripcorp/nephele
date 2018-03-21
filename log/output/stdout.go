@@ -1,16 +1,16 @@
 package output
 
 import (
-    "os"
+	"os"
 )
 
 type StdoutConfig struct {
-    Level string `toml:"level"`
+	Level string `toml:"level"`
 }
 
-func (sc *StdoutConfig) BuildConfig() (Output, error) {
-    return &basicOutput{
-        os.Stdout,
-        sc.Level,
-    }, nil
+func (sc *StdoutConfig) Build() (Output, error) {
+	return &basicOutput{
+		os.Stdout,
+		sc.Level,
+	}, nil
 }

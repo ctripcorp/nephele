@@ -2,41 +2,41 @@ package log
 
 import (
 	"fmt"
-    "os"
+	"os"
 	"path/filepath"
 
 	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/log/output"
 	"github.com/ctripcorp/nephele/util"
-) 
+)
 
 var instance Logger
 
-func Init(conf Config) (err error) {
-	instance, err = conf.BuildLogger()
+func Init(loggerConfig *LoggerConfig) (err error) {
+	instance, err = loggerConfig.Build()
 	return
 }
 
-func DefaultConfig() (Config, error) {
+func DefaultConfig() (*LoggerConfig, error) {
 	var err error
 	var hd string
-    var d string
+	var d string
 
-    hd, err = util.HomeDir();
+	hd, err = util.HomeDir()
 	if err != nil {
 		return nil, err
 	}
 
-    d = filepath.Join(hd, "log/")
-    err = os.MkdirAll(d, 0666);
-    if err != nil {
-        return nil, err
-    }
+	d = filepath.Join(hd, "log/")
+	err = os.MkdirAll(d, 0777)
+	if err != nil {
+		println(err.Error())
+		return nil, err
+	}
 
-	return &DACConfig{
-		Path: d,
-        Buffer: "enable",
-        DumpLevel: "info",
-        ConsoleLevel: "debug",
+	return &LoggerConfig{
+		&output.StdoutConfig{"debug"},
+		&output.DumpConfig{"info", d},
 	}, nil
 }
 
