@@ -94,17 +94,17 @@ func (r *Resize) Exec(ctx *context.Context, wand *gm.MagickWand) error {
 	}
 	var width, height uint
 	if r.Method == resizeKeyMFIXED {
-		width, height = fixed(r.Width, r.Height, srcW, srcH)
+		width, height = resizeFixed(r.Width, r.Height, srcW, srcH)
 	} else if r.Percentage != 0 {
-		width, height = percentage(r.Percentage, srcW, srcH)
+		width, height = resizePercentage(r.Percentage, srcW, srcH)
 	} else {
-		width, height = lfit(r.Width, r.Height, srcW, srcH)
+		width, height = resizeLfit(r.Width, r.Height, srcW, srcH)
 	}
 	return wand.LanczosResize(width, height)
 }
 
 //Lfit: isotropic scaling with fixed width and height, which tends to disable one of the inputs(width or height) to feed a larger aspect ratio
-func lfit(dstW, dstH, srcW, srcH uint) (width, height uint) {
+func resizeLfit(dstW, dstH, srcW, srcH uint) (width, height uint) {
 	//auto compute weight or height
 	if dstW == 0 {
 		width = dstH * srcW / srcH
@@ -139,7 +139,7 @@ func lfit(dstW, dstH, srcW, srcH uint) (width, height uint) {
 }
 
 //Fixed: forced scaling with fixed width and height
-func fixed(dstW, dstH, srcW, srcH uint) (width, height uint) {
+func resizeFixed(dstW, dstH, srcW, srcH uint) (width, height uint) {
 	width, height = dstW, dstH
 	if dstW < 1 {
 		width = srcW
@@ -151,7 +151,7 @@ func fixed(dstW, dstH, srcW, srcH uint) (width, height uint) {
 }
 
 //Percentage: isotropic scaling by multiplicator(%)
-func percentage(p int, srcW, srcH uint) (width, height uint) {
+func resizePercentage(p int, srcW, srcH uint) (width, height uint) {
 	width = srcW * uint(p) / 100
 	height = srcH * uint(p) / 100
 	return

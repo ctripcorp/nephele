@@ -40,23 +40,24 @@ func decode(uri string) []process {
 	prefix := "x-nephele-process=image/"
 	processes := []process{}
 	for _, proc := range procs {
-		if strings.HasPrefix(proc, prefix) {
-			commands := strings.Split(strings.TrimPrefix(proc, prefix), "/")
-			for _, command := range commands {
-				if command == "" {
+		if !strings.HasPrefix(proc, prefix) {
+			continue
+		}
+		commands := strings.Split(strings.TrimPrefix(proc, prefix), "/")
+		for _, command := range commands {
+			if command == "" {
+				continue
+			}
+			arr := strings.Split(command, ",")
+			paramMap := make(map[string]string)
+			for index := 1; index < len(arr); index++ {
+				kv := strings.Split(arr[index], "_")
+				if len(kv) != 2 {
 					continue
 				}
-				arr := strings.Split(command, ",")
-				paramMap := make(map[string]string)
-				for index := 1; index < len(arr); index++ {
-					kv := strings.Split(arr[index], "_")
-					if len(kv) != 2 {
-						continue
-					}
-					paramMap[kv[0]] = kv[1]
-				}
-				processes = append(processes, process{Name: arr[0], Param: paramMap})
+				paramMap[kv[0]] = kv[1]
 			}
+			processes = append(processes, process{Name: arr[0], Param: paramMap})
 		}
 	}
 	return processes
