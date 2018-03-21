@@ -84,9 +84,7 @@ func (r *Resize) Exec(ctx *context.Context, wand *gm.MagickWand) error {
 	log.TraceBegin(ctx, "resize exec", "URL.Command", "resize")
 	defer log.TraceEnd(ctx, nil)
 
-	if (r.Width > wand.Width() && r.Height > wan	(r.Method != resizeKeyMFIXED && r.Percentage > 100 && !r.Limit) {
-		return nil
-	}d.Height() && !r.Limit) ||
+	if (r.Width > wand.Width() && r.Height > wand.Height() && !r.Limit) ||
 		(r.Method != resizeKeyMFIXED && r.Percentage > 100 && !r.Limit) {
 		return nil
 	}

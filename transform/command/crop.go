@@ -9,7 +9,6 @@ import (
 )
 
 type Crop struct {
-	Wand              *gm.MagickWand
 	Width             uint
 	Height            uint
 	Method            string
@@ -17,20 +16,35 @@ type Crop struct {
 	Limit, Percentage int
 }
 
-// const (
-// 	C      string = "c"
-// 	T      string = "t"
-// 	B      string = "b"
-// 	L      string = "l"
-// 	R      string = "r"
-// 	WC     string = "wc"
-// 	HC     string = "hc"
-// 	RESIZE string = "resize"
-// 	CROP   string = "crop"
-// )
+const (
+	cropKeyW     string = "w"
+	cropKeyH     string = "h"
+	cropKeyM     string = "m"
+	cropKeyP     string = "p"
+	cropKeyX     string = "x"
+	cropKeyY     string = "y"
+	cropKeyLimit string = "limit"
+)
+
+const (
+	cropKeyMT      string = "t"
+	cropKeyMB      string = "b"
+	cropKeyML      string = "l"
+	cropKeyMR      string = "r"
+	cropKeyMWC     string = "wc"
+	cropKeyMHC     string = "hc"
+	cropKeyMC      string = "c"
+	cropKeyMRESIZE string = "resize"
+	cropKeyMCROP   string = "crop"
+)
+
+//Verfiy crop verfiy
+func (r *Crop) Verfiy(ctx *context.Context, params map[string]string) error {
+	return nil
+}
 
 //Exec crop exec
-func (c *Crop) Exec(ctx *context.Context) error {
+func (c *Crop) Exec(ctx *context.Context, wand *gm.MagickWand) error {
 	log.TraceBegin(ctx, fmt.Sprintf("crop, method:%s, width:%d,height:%d,x:%d,y:%d,p:%d, limit:%d", c.Method, c.Width, c.Height, c.X, c.Y, c.Percentage, c.Limit),
 		"URL.Command", "crop")
 	defer log.TraceEnd(ctx, nil)
