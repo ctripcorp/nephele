@@ -20,8 +20,8 @@ type basicOutput struct {
 }
 
 func (bo *basicOutput) Write(p []byte, level string) (n int, err error) {
-	if level == bo.level {
-		if level == "error" {
+	if levelInt(level) <= levelInt(bo.level) {
+		if levelInt(level) <= levelInt("error") {
 			defer bo.internal.Sync()
 		}
 		return bo.internal.Write(p)
