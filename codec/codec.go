@@ -29,7 +29,7 @@ type Decoder interface {
 	CreateIndex() index.Index
 
 	// Create transformer from request image url.
-	CreateTransformer() transform.Transformer
+	Transformer() transform.Transformer
 }
 
 // Config represents how to build codec.
