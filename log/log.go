@@ -10,7 +10,7 @@ import (
 	"github.com/ctripcorp/nephele/util"
 )
 
-var instance Logger
+var instance Logger = &fakeLogger{}
 
 func Init(loggerConfig *LoggerConfig) (err error) {
 	instance, err = loggerConfig.Build()

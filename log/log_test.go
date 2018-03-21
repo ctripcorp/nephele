@@ -8,8 +8,8 @@ import (
 )
 
 func TestLogger(t *testing.T) {
-	dc, _ := DefaultConfig()
-	Init(dc)
+	//dc, _ := DefaultConfig()
+	//Init(dc)
 
 	TraceBegin(&context.Context{}, "we are going to gather some personal infomations", "Info", "Collect")
 
