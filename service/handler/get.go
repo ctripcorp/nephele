@@ -19,10 +19,9 @@ func getImageHandler() HandlerFunc {
 			ctx.HTTP().String(400, err.Error())
 			return
 		}
-		if err := image.Use(decoder.CreateTransformer()).Transform(ctx); err != nil {
+		if err := image.Use(decoder.Transformer()).Transform(ctx); err != nil {
 			ctx.HTTP().String(400, err.Error())
 		}
 		ctx.HTTP().Writer.Write(image.Blob())
-		//ctx.HTTP().String(200, "hello.world")
 	}
 }

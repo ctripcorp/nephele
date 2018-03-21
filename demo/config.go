@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/ctripcorp/nephele/codec"
-	"github.com/ctripcorp/nephele/codec/url32"
+	"github.com/ctripcorp/nephele/codec/neph"
 	"github.com/ctripcorp/nephele/log"
 	"github.com/ctripcorp/nephele/service"
 	"github.com/ctripcorp/nephele/store"
@@ -59,7 +60,7 @@ func (conf *DemoConfig) LoadFrom(env, path string) error {
 		return err
 	}
 
-	if conf.codec, err = url32.DefaultConfig(); err != nil {
+	if conf.codec, err = neph.DefaultConfig(); err != nil {
 		return err
 	}
 
