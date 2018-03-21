@@ -2,16 +2,12 @@ package log
 
 import (
 	"fmt"
-
+    "os"
 	"path/filepath"
 
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/util"
-)
-
-type Config interface {
-	BuildLogger() (Logger, error)
-}
+) 
 
 var instance Logger
 
@@ -22,15 +18,25 @@ func Init(conf Config) (err error) {
 
 func DefaultConfig() (Config, error) {
 	var err error
-	var homeDir string
+	var hd string
+    var d string
 
-	if homeDir, err = util.HomeDir(); err != nil {
+    hd, err = util.HomeDir();
+	if err != nil {
 		return nil, err
 	}
-	println(homeDir)
 
-	return &diskConfig{
-		path: filepath.Join(homeDir, "log/today.log"),
+    d = filepath.Join(hd, "log/")
+    err = os.MkdirAll(d, 0666);
+    if err != nil {
+        return nil, err
+    }
+
+	return &DACConfig{
+		Path: d,
+        Buffer: "enable",
+        DumpLevel: "info",
+        ConsoleLevel: "debug",
 	}, nil
 }
 
