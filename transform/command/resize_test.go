@@ -9,6 +9,7 @@ import (
 	"github.com/ctripcorp/nephele/img4go/gm"
 )
 
+//200j.jpg is 320*180
 func TestExec(t *testing.T) {
 	var r Resize
 	bt, err := ioutil.ReadFile("200j.jpg")
@@ -28,7 +29,7 @@ func TestExec(t *testing.T) {
 
 	var ctx context.Context
 	r.Exec(&ctx, wand)
-	if wand.Width() != 4000 || wand.Height() != 2625 {
+	if wand.Width() != 1600 || wand.Height() != 900 {
 		println(wand.Width(), wand.Height())
 		t.Fail()
 	}
