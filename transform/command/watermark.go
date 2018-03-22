@@ -29,7 +29,7 @@ const (
 	watermarkKeyMH string = "mh"
 )
 
-var locations = []string{"nw", "north", "ne", "west", "center", "east", "sw", "south", "se"}
+var watermarkLocations = []string{"nw", "north", "ne", "west", "center", "east", "sw", "south", "se"}
 
 //verify watermark verify
 func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error {
@@ -49,7 +49,7 @@ func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error
 			w.Dissolve = dissolve
 		}
 		if k == watermarkKeyL {
-			if !util.InArray(v, locations) {
+			if !util.InArray(v, watermarkLocations) {
 				return fmt.Errorf(invalidInfoFormat, v, k)
 			}
 			w.Location = v
