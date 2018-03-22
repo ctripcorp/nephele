@@ -15,8 +15,11 @@ type Transformer struct {
 
 func (t *Transformer) Accept(ctx *context.Context, name string, params map[string]string) error {
 	var cmd command.GMCommand
-	if name == command.RESIZE {
+	switch name {
+	case command.RESIZE:
 		cmd = &command.Resize{}
+	case command.CROP:
+		cmd = &command.Crop{}
 	}
 
 	if cmd != nil {
