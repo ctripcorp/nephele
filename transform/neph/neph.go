@@ -10,16 +10,28 @@ import (
 
 // Transformer represents how to transform image with given commands
 type Transformer struct {
-	commands []command.GMCommand
+	commands          []command.GMCommand
+	waterMarkCommands []command.GMCommand
 }
 
 func (t *Transformer) Accept(ctx *context.Context, name string, params map[string]string) error {
 	var cmd command.GMCommand
+	if name == command.WATERMARK {
+		cmd = &command.Watermark{}
+		if err := cmd.Verfiy(ctx, params); err != nil {
+			return err
+		}
+		t.waterMarkCommands = append(t.waterMarkCommands, cmd)
+		return nil
+	}
+
 	switch name {
 	case command.RESIZE:
 		cmd = &command.Resize{}
 	case command.CROP:
 		cmd = &command.Crop{}
+	case command.FORMAT:
+		cmd = &command.Format{}
 	}
 
 	if cmd != nil {
@@ -41,8 +53,17 @@ func (t *Transformer) Transform(ctx *context.Context, blob []byte) ([]byte, erro
 		return nil, errors.New("Timeout")
 	}
 	t.commands = append(t.commands, &command.Strip{})
-	for _, command := range t.commands {
-		if err := command.Exec(ctx, wand); err != nil {
+	for _, cmd := range t.commands {
+		if err := cmd.Exec(ctx, wand); err != nil {
+			return nil, err
+		}
+		if ctx.Canceled() {
+			return nil, errors.New("Timeout")
+		}
+	}
+	//watermark
+	for _, cmd := range t.waterMarkCommands {
+		if err := cmd.Exec(ctx, wand); err != nil {
 			return nil, err
 		}
 		if ctx.Canceled() {
