@@ -1,9 +1,9 @@
 package store
 
 type DiskConfig struct {
-	Dir string `toml:"dir"`
+	Path string `toml:"path"`
 }
 
 func (conf *DiskConfig) BuildStore() (Store, error) {
-	return &Disk{Dir: conf.Dir}, nil
+	return &Disk{Path: conf.Path}, nil
 }

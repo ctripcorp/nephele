@@ -29,14 +29,14 @@ func Init(conf Config) error {
 
 func DefaultConfig() (*DiskConfig, error) {
 	var err error
-	var homeDir string
+	var homePath string
 
-	if homeDir, err = util.HomeDir(); err != nil {
+	if homePath, err = util.HomePath(); err != nil {
 		return nil, err
 	}
 
 	return &DiskConfig{
-		Dir: filepath.Join(homeDir, "image"),
+		Path: filepath.Join(homePath, "image"),
 	}, nil
 }
 

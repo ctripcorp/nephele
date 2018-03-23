@@ -6,6 +6,7 @@ import (
 	"github.com/ctripcorp/nephele/codec/url32"
 	"github.com/ctripcorp/nephele/log"
 	"github.com/ctripcorp/nephele/service"
+	"github.com/ctripcorp/nephele/service/middleware"
 	"github.com/ctripcorp/nephele/store"
 	"github.com/ctripcorp/nephele/util"
 )
@@ -71,8 +72,14 @@ func (conf *config) LoadFrom(env, path string) error {
 			return err
 		}
 	}
+	if len(conf.Service().MiddlewarePath) != 0 {
+		middlewareConf := &middleware.MiddlewareConfig{}
+		if err = util.FromToml(conf.ServiceConfig.MiddlewarePath, middlewareConf); err != nil {
+			return err
+		}
+		conf.ServiceConfig.Middleware = middlewareConf
+	}
 
-	fmt.Println(conf.StoreConfig.Dir)
 	return err
 }
 

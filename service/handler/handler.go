@@ -18,10 +18,18 @@ func NewFactory(ctx *context.Context) *HandlerFactory {
 	return &HandlerFactory{ctx: ctx}
 }
 
+func (f *HandlerFactory) Create() gin.HandlerFunc {
+	return func(httpCtx *gin.Context) {
+		httpCtx.Set(context.GlobalName, f.ctx.New(httpCtx))
+		httpCtx.Next()
+	}
+}
+
 //Return gin http handler with image handler.
 func (f *HandlerFactory) Build(handlerFunc HandlerFunc) gin.HandlerFunc {
 	return func(httpCtx *gin.Context) {
-		handlerFunc(f.ctx.New(httpCtx))
+		ctx := httpCtx.MustGet(context.GlobalName).(*context.Context)
+		handlerFunc(ctx)
 		httpCtx.Next()
 	}
 }
