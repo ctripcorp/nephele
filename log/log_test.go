@@ -14,9 +14,14 @@ func TestLogger(t *testing.T) {
 	TraceBegin(&context.Context{}, "we are going to gather some personal infomations", "Info", "Collect")
 
 	Debugf(&context.Context{}, "%s!!!", "lets start")
+	Errorf(&context.Context{}, "%s...", "so just wait a minute")
 	Infow(&context.Context{}, "this is a info list",
 		"name", "mag",
 		"gender", "male")
+
+	Errorw(&context.Context{}, "this is a error list",
+		"name", "invalid last name",
+		"gender", "not male nor female")
 
 	TraceEnd(&context.Context{}, errors.New("seems something wrong"))
 }

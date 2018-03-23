@@ -16,7 +16,7 @@ import (
 type config struct {
 	env           string
 	codec         codec.Config
-	LogConfig     log.Config        `toml:"log"`
+	LogConfig     *log.LoggerConfig `toml:"log"`
 	ServiceConfig service.Config    `toml:"service"`
 	StoreConfig   *store.DiskConfig `toml:"storage"`
 }
@@ -80,7 +80,13 @@ func (conf *config) LoadFrom(env, path string) error {
 		}
 		conf.ServiceConfig.Middleware = middlewareConf
 	}
-
+	if len(conf.LogConfig.ConfigPath) != 0 {
+		loggerConf := &log.LoggerConfig{}
+		if err = util.FromToml(conf.LogConfig.ConfigPath, loggerConf); err != nil {
+			return err
+		}
+		conf.LogConfig = loggerConf
+	}
 	return err
 }
 
