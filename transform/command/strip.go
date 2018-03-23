@@ -11,11 +11,13 @@ type Strip struct {
 
 //Verfiy strip verfiy params
 func (s *Strip) Verfiy(ctx *context.Context, params map[string]string) error {
+	//log.Debugw(ctx, "begin strip verfiy")
 	return nil
 }
 
 // Exec strip exec
 func (s *Strip) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	//log here
+	//log.TraceBegin(ctx, "strip exec", "URL.Command", "strip")
+	//defer log.TraceEnd(ctx, nil)
 	return wand.Strip()
 }
