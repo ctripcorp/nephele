@@ -34,3 +34,6 @@ Where commands include:
 
  ### 安装失败怎么办？
  如果通过脚本未能成功安装，可通过源码编译安装，http://www.graphicsmagick.org/README.html
+
+ ### 注意：
+ 脚本执行会将系统对应的安装源修改为阿里云源
