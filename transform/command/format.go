@@ -19,7 +19,7 @@ const (
 
 var formats = []string{"jpg", "png", "webp", "gif"}
 
-//Verify format verify params
+//Verify format Verify params
 func (f *Format) Verify(ctx *context.Context, params map[string]string) error {
 	//log.Debugw(ctx, "begin watermark verfiy")
 	for k, v := range params {

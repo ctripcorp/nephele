@@ -9,8 +9,8 @@ import (
 type Strip struct {
 }
 
-//Verfiy strip verfiy params
-func (s *Strip) Verfiy(ctx *context.Context, params map[string]string) error {
+//Verify strip Verify params
+func (s *Strip) Verify(ctx *context.Context, params map[string]string) error {
 	//log.Debugw(ctx, "begin strip verfiy")
 	return nil
 }

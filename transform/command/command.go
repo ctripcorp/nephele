@@ -5,7 +5,7 @@ import "github.com/ctripcorp/nephele/img4go/gm"
 
 //GMCommand verfiy param  and Exec image
 type GMCommand interface {
-	Verfiy(ctx *context.Context, params map[string]string) error
+	Verify(ctx *context.Context, params map[string]string) error
 	Exec(ctx *context.Context, wand *gm.MagickWand) error
 }
 

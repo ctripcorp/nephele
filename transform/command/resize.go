@@ -31,9 +31,9 @@ const (
 	resizeKeyMLFIT  string = "lfit"
 )
 
-//Verfiy resize verfiy
-func (r *Resize) Verfiy(ctx *context.Context, params map[string]string) error {
-	//log.Debugw(ctx, "begin resize verfiy")
+//Verify resize Verify
+func (r *Resize) Verify(ctx *context.Context, params map[string]string) error {
+	//log.Debugw(ctx, "begin resize Verify")
 	for k, v := range params {
 		if k == resizeKeyW {
 			width, e := strconv.Atoi(v)
