@@ -11,6 +11,7 @@ type StdoutConfig struct {
 func (sc *StdoutConfig) Build() (Output, error) {
 	return &basicOutput{
 		os.Stdout,
+		nil,
 		sc.Level,
 	}, nil
 }

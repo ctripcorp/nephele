@@ -10,9 +10,13 @@ import (
 	"github.com/ctripcorp/nephele/util"
 )
 
+type Config interface {
+	Build() (Logger, error)
+}
+
 var instance Logger = &fakeLogger{}
 
-func Init(loggerConfig *LoggerConfig) (err error) {
+func Init(loggerConfig Config) (err error) {
 	instance, err = loggerConfig.Build()
 	return
 }
@@ -35,8 +39,9 @@ func DefaultConfig() (*LoggerConfig, error) {
 	}
 
 	return &LoggerConfig{
+		"",
 		&output.StdoutConfig{"debug"},
-		&output.DumpConfig{"info", d},
+		&output.DumpConfig{"info", d, 60},
 	}, nil
 }
 

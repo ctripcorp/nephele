@@ -3,6 +3,8 @@ package log
 import (
 	"bytes"
 	"fmt"
+	"runtime"
+	"strings"
 	"sync"
 	"time"
 
@@ -22,7 +24,14 @@ type logger struct {
 
 func (l *logger) Printf(ctx *context.Context, level string, format string, values ...interface{}) {
 	var rb *bytes.Buffer = l.bufferPool.Get().(*bytes.Buffer)
-	fmt.Fprintf(rb, "[%s] %s [%s]", level, ctx.ID(), time.Now().Format(time.RFC3339))
+	fmt.Fprintf(rb, "[%s] %s ", level, ctx.ID())
+	if level == "error" {
+		_, file, line, ok := runtime.Caller(2)
+		if ok {
+			fmt.Fprintf(rb, "%s line:%d ", file[strings.LastIndex(file, "nephele"):], line)
+		}
+	}
+	fmt.Fprintf(rb, "[%s]", time.Now().Format(time.RFC3339))
 	fmt.Fprintf(rb, "\t\""+format+"\"\n", values...)
 
 	for _, o := range l.outputs {
@@ -32,7 +41,14 @@ func (l *logger) Printf(ctx *context.Context, level string, format string, value
 
 func (l *logger) Printw(ctx *context.Context, level string, message string, keysAndValues ...interface{}) {
 	var rb *bytes.Buffer = l.bufferPool.Get().(*bytes.Buffer)
-	fmt.Fprintf(rb, "[%s] %s [%s]", level, ctx.ID(), time.Now().Format(time.RFC3339))
+	fmt.Fprintf(rb, "[%s] %s ", level, ctx.ID())
+	if level == "error" {
+		_, file, line, ok := runtime.Caller(2)
+		if ok {
+			fmt.Fprintf(rb, "%s line:%d ", file[strings.LastIndex(file, "nephele"):], line)
+		}
+	}
+	fmt.Fprintf(rb, "[%s]", time.Now().Format(time.RFC3339))
 	for i := 0; i < len(keysAndValues)/2; i++ {
 		fmt.Fprintf(rb, "\t\"%v\"", keysAndValues[i*2])
 		fmt.Fprintf(rb, "\t%v", keysAndValues[i*2+1])
@@ -45,8 +61,9 @@ func (l *logger) Printw(ctx *context.Context, level string, message string, keys
 }
 
 type LoggerConfig struct {
-	Stdout *output.StdoutConfig
-	Dump   *output.DumpConfig
+	ConfigPath string               `toml:"config-path"`
+	Stdout     *output.StdoutConfig `toml:"stdout"`
+	Dump       *output.DumpConfig   `toml:"dump"`
 }
 
 func (lc *LoggerConfig) Build() (Logger, error) {

@@ -15,9 +15,12 @@ type Output interface {
 }
 
 type basicOutput struct {
-	internal WriteSyncer
-	level    string
+	internal        WriteSyncer
+	internalCreater func() (WriteSyncer, error)
+	level           string
 }
+
+func (bo *basicOutput) Reset() (err error) { return }
 
 func (bo *basicOutput) Write(p []byte, level string) (n int, err error) {
 	if levelInt(level) <= levelInt(bo.level) {
