@@ -18,7 +18,7 @@ func (t *Transformer) Accept(ctx *context.Context, name string, params map[strin
 	var cmd command.GMCommand
 	if name == command.WATERMARK {
 		cmd = &command.Watermark{}
-		if err := cmd.Verfiy(ctx, params); err != nil {
+		if err := cmd.Verify(ctx, params); err != nil {
 			return err
 		}
 		t.waterMarkCommands = append(t.waterMarkCommands, cmd)
@@ -35,7 +35,7 @@ func (t *Transformer) Accept(ctx *context.Context, name string, params map[strin
 	}
 
 	if cmd != nil {
-		if err := cmd.Verfiy(ctx, params); err != nil {
+		if err := cmd.Verify(ctx, params); err != nil {
 			return err
 		}
 		t.commands = append(t.commands, cmd)

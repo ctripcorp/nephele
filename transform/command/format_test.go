@@ -23,7 +23,7 @@ func TestExecFormat(t *testing.T) {
 
 	var ctx context.Context
 	m3 := map[string]string{"v": "webp"}
-	if f.Verfiy(&ctx, m3) != nil {
+	if f.Verify(&ctx, m3) != nil {
 		t.Error()
 	}
 	if f.Exec(&ctx, wand) != nil {
@@ -46,7 +46,7 @@ func TestExecFormat1(t *testing.T) {
 
 	var ctx context.Context
 	m3 := map[string]string{"v": "png"}
-	if f.Verfiy(&ctx, m3) != nil {
+	if f.Verify(&ctx, m3) != nil {
 		t.Error()
 	}
 	if f.Exec(&ctx, wand) != nil {

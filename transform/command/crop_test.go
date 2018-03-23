@@ -25,7 +25,7 @@ func TestVerfiy(t *testing.T) {
 	}
 	cropCommand := &Crop{}
 	for i, c := range checks {
-		err := cropCommand.Verfiy(nil, c.Param)
+		err := cropCommand.Verify(nil, c.Param)
 		if c.IsErr == (err == nil) {
 			t.Error("index:", i, " check failed.")
 			return

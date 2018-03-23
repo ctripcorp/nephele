@@ -42,10 +42,10 @@ const (
 	cropKeyMCROP   string = "crop"
 )
 
-//Verfiy crop verfiy
-func (c *Crop) Verfiy(ctx *context.Context, params map[string]string) error {
+//Verify crop Verify
+func (c *Crop) Verify(ctx *context.Context, params map[string]string) error {
 	if ctx != nil {
-		log.Debugw(ctx, "begin crop verfiy")
+		log.Debugw(ctx, "begin crop Verify")
 	}
 	for k, v := range params {
 		if k == cropKeyW {
