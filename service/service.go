@@ -18,7 +18,7 @@ type Config struct {
 	MaxConcurrency int    `toml:"max-concurrency"`
 	RequestTimeout int    `toml:"request-timeout"`
 	QuitTimeout    int    `toml:"quit-timeout"`
-	MiddlewarePath string `toml:"middleware"`
+	MiddlewarePath string `toml:"middleware-config-path"`
 	Middleware     interface{}
 }
 

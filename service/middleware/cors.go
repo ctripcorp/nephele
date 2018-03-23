@@ -9,7 +9,7 @@ import (
 // See "github.com/gin-contrib/cors".
 type CORSConfig struct {
 	MaxAge          int      `toml:"max-age"`
-	RegisterOrder   int      `toml:"order"`
+	RegistOrder     int      `toml:"order"`
 	AllowAllOrigins bool     `toml:"allow-all-origins"`
 	AllowOrigins    []string `toml:"allow-origins"`
 	AllowMethods    []string `toml:"allow-methods"`
@@ -18,7 +18,7 @@ type CORSConfig struct {
 }
 
 func (conf *CORSConfig) Order() int {
-	return conf.RegisterOrder
+	return conf.RegistOrder
 }
 
 // Return cors handler.

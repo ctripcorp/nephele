@@ -13,27 +13,44 @@ type StructTestConfig struct {
 type PointerTestConfig struct {
 	*MiddlewareConfig
 	Reader *ReaderConfig
+	Writer *WriterConfig
 }
 
 type ReaderConfig struct {
-	RegisterOrder int
-	Path          string
+	RegistOrder int
+	Path        string
 }
 
 func (r *ReaderConfig) Order() int {
-	return r.RegisterOrder
+	return r.RegistOrder
 }
 
 func (r *ReaderConfig) Handler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-
+		configOrder = append(configOrder, "reader")
 	}
 }
+
+type WriterConfig struct {
+	RegistOrder int
+}
+
+func (w *WriterConfig) Order() int {
+	return w.RegistOrder
+}
+
+func (w *WriterConfig) Handler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		configOrder = append(configOrder, "writer")
+	}
+}
+
+var configOrder = make([]string, 0)
 
 func TestDefaultBuild(t *testing.T) {
 	conf := &MiddlewareConfig{
 		CORS: &CORSConfig{
-			RegisterOrder:   1,
+			RegistOrder:     1,
 			AllowAllOrigins: true,
 		},
 	}
@@ -56,8 +73,8 @@ func TestStructBuild(t *testing.T) {
 			},
 		},
 		Reader: &ReaderConfig{
-			RegisterOrder: 2,
-			Path:          "/home",
+			RegistOrder: 2,
+			Path:        "/home/",
 		},
 	}
 	if handlers := Build(conf); len(handlers) != 3 {
@@ -74,13 +91,13 @@ func TestPointerBuild(t *testing.T) {
 	conf := &PointerTestConfig{
 		MiddlewareConfig: &MiddlewareConfig{
 			CORS: &CORSConfig{
-				RegisterOrder:   1,
+				RegistOrder:     1,
 				AllowAllOrigins: true,
 			},
 		},
 		Reader: &ReaderConfig{
-			RegisterOrder: 2,
-			Path:          "/home",
+			RegistOrder: 2,
+			Path:        "/home/",
 		},
 	}
 	if handlers := Build(conf); len(handlers) != 3 {
@@ -90,5 +107,36 @@ func TestPointerBuild(t *testing.T) {
 	conf.MiddlewareConfig.CORS = nil
 	if handlers := Build(conf); len(handlers) != 1 {
 		t.Errorf("expect handlers :1, but got %d", len(handlers))
+	}
+}
+
+func TestOrderedConfigBuild(t *testing.T) {
+	conf := &PointerTestConfig{
+		MiddlewareConfig: &MiddlewareConfig{
+			CORS: &CORSConfig{
+				RegistOrder:     2,
+				AllowAllOrigins: true,
+			},
+		},
+		Reader: &ReaderConfig{
+			RegistOrder: 4,
+			Path:        "/home/",
+		},
+		Writer: &WriterConfig{
+			RegistOrder: 3,
+		},
+	}
+
+	handlers := Build(conf)
+
+	if len(handlers) != 4 {
+		t.Errorf("expect handlers :4, but got %d", len(handlers))
+	}
+
+	handlers[2](nil)
+	handlers[3](nil)
+
+	if configOrder[0] != "writer" && configOrder[1] != "reader" {
+		t.Errorf("expect order:[`writer`, `reader`] but got %v", configOrder)
 	}
 }
