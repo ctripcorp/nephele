@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+const GlobalName = "@@GlobalContextName"
+
 // Context walks through all the functions.
 type Context struct {
 	id       string

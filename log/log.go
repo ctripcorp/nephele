@@ -24,7 +24,7 @@ func DefaultConfig() (Config, error) {
 	var err error
 	var homeDir string
 
-	if homeDir, err = util.HomeDir(); err != nil {
+	if homeDir, err = util.HomePath(); err != nil {
 		return nil, err
 	}
 	println(homeDir)
