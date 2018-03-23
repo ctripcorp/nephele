@@ -3,17 +3,17 @@
 echo `uname -a`
 os=`uname -a`
 
-centos7(){
-sudo wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo 
-sudo yum makecache 
-sudo yum install -y GraphicsMagick-devel --enablerepo=epel  
-}
-
-
-centos6(){
-sudo wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-6.repo
+centos(){
 sudo yum makecache
 sudo yum install -y GraphicsMagick-devel --enablerepo=epel 
+}
+
+centos7(){
+sudo wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo 
+}
+
+centos6(){
+sudo wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-6.repo 
 }
 
 ubuntu_debian(){
@@ -29,8 +29,8 @@ macOS(){
 brew install -y /GraphicsMagick*/
 }
 
-[[ $os =~ "el7" ]] &&centos7
-[[ $os =~ "el6" ]] &&centos6
+[[ $os =~ "el7" ]] &&centos7&&centos
+[[ $os =~ "el6" ]] &&centos6&&centos
 [[ $os =~ "Ubuntu" ]] &&ubuntu_debian
 [[ $os =~ "Debian" ]] &&ubuntu_debian
 [[ $os =~ "Mac" ]] &&macOS
