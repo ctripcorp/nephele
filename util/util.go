@@ -2,16 +2,17 @@ package util
 
 import (
 	"fmt"
-	"github.com/BurntSushi/toml"
-	"golang.org/x/text/encoding/unicode"
-	"golang.org/x/text/transform"
 	"io/ioutil"
 	"os"
 	"os/user"
 	"path/filepath"
+
+	"github.com/BurntSushi/toml"
+	"golang.org/x/text/encoding/unicode"
+	"golang.org/x/text/transform"
 )
 
-func HomeDir() (string, error) {
+func HomePath() (string, error) {
 	var homeDir string
 	// By default, store image and log files in current users home directory
 	u, err := user.Current()
@@ -42,4 +43,14 @@ func FromToml(path string, v interface{}) error {
 
 	_, err = toml.Decode(string(blob), v)
 	return err
+}
+
+func InArray(val string, arr []string) bool {
+	for _, value := range arr {
+		if val == value {
+			return true
+			break
+		}
+	}
+	return false
 }

@@ -22,7 +22,7 @@ func DefaultConfig() (*LoggerConfig, error) {
 	var hd string
 	var d string
 
-	hd, err = util.HomeDir()
+	hd, err = util.HomePath()
 	if err != nil {
 		return nil, err
 	}
@@ -30,7 +30,7 @@ func DefaultConfig() (*LoggerConfig, error) {
 	d = filepath.Join(hd, "log/")
 	err = os.MkdirAll(d, 0777)
 	if err != nil {
-		println(err.Error())
+		fmt.Println(err)
 		return nil, err
 	}
 

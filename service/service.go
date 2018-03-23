@@ -4,6 +4,7 @@ import (
 	quit "context"
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/service/handler"
+	"github.com/ctripcorp/nephele/service/middleware"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"runtime"
@@ -12,11 +13,13 @@ import (
 
 // Service Configuration.
 type Config struct {
+	Address        string `toml:"address"`
 	BufferSize     int    `toml:"buffer-size"`
 	MaxConcurrency int    `toml:"max-concurrency"`
 	RequestTimeout int    `toml:"request-timeout"`
 	QuitTimeout    int    `toml:"quit-timeout"`
-	Address        string `toml:"address"`
+	MiddlewarePath string `toml:"middleware"`
+	Middleware     interface{}
 }
 
 // Represents http service to handle image request.
@@ -91,18 +94,22 @@ func (s *Service) Image() *ImageService {
 
 // Open image http service.
 func (s *Service) Open() error {
-	s.useFilters()
-	s.image.init()
-	s.image.registerAll()
+	s.router.Use(s.factory.Create())
+	s.useMiddlewares()
+	s.image.init().registerAll()
 	return s.internal.ListenAndServe()
 }
 
+// Quit image http service gracefully.
 func (s *Service) Quit() error {
 	ctx, cancel := quit.WithTimeout(quit.Background(), time.Duration(s.conf.QuitTimeout)*time.Millisecond)
 	defer cancel()
 	return s.internal.Shutdown(ctx)
 }
 
-func (s *Service) useFilters() {
-	gin.Recovery()
+// Use middlewares
+func (s *Service) useMiddlewares() {
+	for _, m := range middleware.Build(s.conf.Middleware) {
+		s.router.Use(m)
+	}
 }

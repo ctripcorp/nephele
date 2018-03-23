@@ -41,11 +41,12 @@ func (s *ImageService) registerAll() {
 	}
 }
 
-func (s *ImageService) init() {
+func (s *ImageService) init() *ImageService {
 	s.routeMap = map[string]string{
 		"GET":         "/image/*imagepath",
 		"UPLOAD":      "/image",
 		"DELETE":      "/image/*",
 		"HEALTHCHECK": "/healthcheck",
 	}
+	return s
 }

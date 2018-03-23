@@ -12,6 +12,9 @@ type Config interface {
 	// Return current environment
 	Env() string
 
+	// Return log config.
+	Log() log.Config
+
 	// Returns store config.
 	Store() store.Config
 
@@ -20,9 +23,6 @@ type Config interface {
 
 	// Return service config.
 	Service() service.Config
-
-	// Return logger config.
-	Logger() log.Config
 
 	// Implements how to parse config.
 	LoadFrom(env, path string) error
