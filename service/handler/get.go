@@ -21,6 +21,7 @@ func getImageHandler() HandlerFunc {
 		}
 		if err := image.Use(decoder.Transformer()).Transform(ctx); err != nil {
 			ctx.HTTP().String(400, err.Error())
+			return
 		}
 		ctx.HTTP().Writer.Write(image.Blob())
 	}

@@ -32,7 +32,7 @@ const (
 var watermarkLocations = []string{"nw", "north", "ne", "west", "center", "east", "sw", "south", "se"}
 
 //verify watermark verify
-func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error {
+func (w *Watermark) Verfiy(ctx *context.Context, params map[string]string) error {
 	//log.Debugw(ctx, "begin watermark verfiy")
 	for k, v := range params {
 		if k == watermarkKeyN {
