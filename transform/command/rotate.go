@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/ctripcorp/nephele/img4go/gm"
 	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/img4go/gm"
 )
 
 //Rotate rotate command
