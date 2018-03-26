@@ -12,7 +12,7 @@ type Strip struct {
 
 //Verify strip Verify params
 func (s *Strip) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugw(ctx, "begin strip verfiy")
+	log.Debugw(ctx, "begin strip verify")
 	return nil
 }
 
