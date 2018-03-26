@@ -12,7 +12,7 @@ import (
 	"golang.org/x/text/transform"
 )
 
-func HomeDir() (string, error) {
+func HomePath() (string, error) {
 	var homeDir string
 	// By default, store image and log files in current users home directory
 	u, err := user.Current()

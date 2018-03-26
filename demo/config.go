@@ -7,56 +7,59 @@ import (
 	"github.com/ctripcorp/nephele/codec/neph"
 	"github.com/ctripcorp/nephele/log"
 	"github.com/ctripcorp/nephele/service"
+	"github.com/ctripcorp/nephele/service/middleware"
 	"github.com/ctripcorp/nephele/store"
 	"github.com/ctripcorp/nephele/util"
 )
 
 // Define configuration for demo app
-type DemoConfig struct {
-	env     string
-	logger  log.Config        `toml:"log"`
-	service service.Config    `toml:"service"`
-	store   *store.DiskConfig `toml:"storage"`
-	codec   codec.Config
+type config struct {
+	env           string
+	codec         codec.Config
+	LogConfig     *log.LoggerConfig `toml:"log"`
+	ServiceConfig service.Config    `toml:"service"`
+	StoreConfig   *store.DiskConfig `toml:"storage"`
 }
 
 // Return current environment
-func (conf *DemoConfig) Env() string {
+func (conf *config) Env() string {
 	return conf.env
 }
 
-// Return demo service config.
-func (conf *DemoConfig) Service() service.Config {
-	return conf.service
+// Return demo logger config.
+func (conf *config) Log() log.Config {
+	return conf.LogConfig
 }
 
-// Return demo logger config.
-func (conf *DemoConfig) Logger() log.Config {
-	return conf.logger
+// Return demo server config.
+func (conf *config) Service() service.Config {
+	return conf.ServiceConfig
 }
 
 // Return demo storage config.
-func (conf *DemoConfig) Store() store.Config {
-	return conf.store
+func (conf *config) Store() store.Config {
+	return conf.StoreConfig
 }
 
 // Return demo codec config.
-func (conf *DemoConfig) Codec() codec.Config {
+func (conf *config) Codec() codec.Config {
 	return conf.codec
 }
 
 // Implementation to parse config.
-func (conf *DemoConfig) LoadFrom(env, path string) error {
+func (conf *config) LoadFrom(env, path string) error {
 	var err error
 
 	// give default configuration
-	if conf.service, err = service.DefaultConfig(); err != nil {
+	if conf.ServiceConfig, err = service.DefaultConfig(); err != nil {
 		return err
 	}
-	if conf.store, err = store.DefaultConfig(); err != nil {
+
+	if conf.StoreConfig, err = store.DefaultConfig(); err != nil {
 		return err
 	}
-	if conf.logger, err = log.DefaultConfig(); err != nil {
+
+	if conf.LogConfig, err = log.DefaultConfig(); err != nil {
 		return err
 	}
 
@@ -64,18 +67,31 @@ func (conf *DemoConfig) LoadFrom(env, path string) error {
 		return err
 	}
 
+	conf.env = env
 	if len(path) != 0 {
 		if err = util.FromToml(path, conf); err != nil {
 			return err
 		}
 	}
-	conf.env = env
-
+	if len(conf.Service().MiddlewarePath) != 0 {
+		middlewareConf := &middleware.MiddlewareConfig{}
+		if err = util.FromToml(conf.ServiceConfig.MiddlewarePath, middlewareConf); err != nil {
+			return err
+		}
+		conf.ServiceConfig.Middleware = middlewareConf
+	}
+	if len(conf.LogConfig.ConfigPath) != 0 {
+		loggerConf := &log.LoggerConfig{}
+		if err = util.FromToml(conf.LogConfig.ConfigPath, loggerConf); err != nil {
+			return err
+		}
+		conf.LogConfig = loggerConf
+	}
 	return err
 }
 
 // Reload configuration
-func (conf *DemoConfig) Reload() error {
+func (conf *config) Reload() error {
 	fmt.Println("reload")
 	return nil
 }

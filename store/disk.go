@@ -8,7 +8,7 @@ import (
 )
 
 type Disk struct {
-	Dir string
+	Path string
 }
 
 func (d *Disk) Read(ctx *context.Context, path string) ([]byte, error) {
@@ -18,10 +18,10 @@ func (d *Disk) Read(ctx *context.Context, path string) ([]byte, error) {
 	if strings.HasPrefix(path, "/") {
 		path = strings.Replace(path, "\\", "/", -1)
 	}
-	if strings.HasSuffix(d.Dir, "/") {
-		path = d.Dir + path
+	if strings.HasSuffix(d.Path, "/") {
+		path = d.Path + path
 	} else {
-		path = d.Dir + "/" + path
+		path = d.Path + "/" + path
 	}
 
 	buff, err := ioutil.ReadFile(path)

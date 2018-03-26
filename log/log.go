@@ -2,35 +2,46 @@ package log
 
 import (
 	"fmt"
-
+	"os"
 	"path/filepath"
 
 	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/log/output"
 	"github.com/ctripcorp/nephele/util"
 )
 
 type Config interface {
-	BuildLogger() (Logger, error)
+	Build() (Logger, error)
 }
 
-var instance Logger
+var instance Logger = &fakeLogger{}
 
-func Init(conf Config) (err error) {
-	instance, err = conf.BuildLogger()
+func Init(loggerConfig Config) (err error) {
+	instance, err = loggerConfig.Build()
 	return
 }
 
-func DefaultConfig() (Config, error) {
+func DefaultConfig() (*LoggerConfig, error) {
 	var err error
-	var homeDir string
+	var hd string
+	var d string
 
-	if homeDir, err = util.HomeDir(); err != nil {
+	hd, err = util.HomePath()
+	if err != nil {
 		return nil, err
 	}
-	println(homeDir)
 
-	return &diskConfig{
-		path: filepath.Join(homeDir, "log/today.log"),
+	d = filepath.Join(hd, "log/")
+	err = os.MkdirAll(d, 0777)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	return &LoggerConfig{
+		"",
+		&output.StdoutConfig{"debug"},
+		&output.DumpConfig{"info", d, 60},
 	}, nil
 }
 
