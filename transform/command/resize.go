@@ -81,7 +81,7 @@ func (r *Resize) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec resize  exec
 func (r *Resize) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, "resize executive", "method", r.Method, "width", r.Width, "height", r.Height, "percentage", r.Percentage, "limit", r.Limit)
+	log.TraceBegin(ctx, "", "URL.Command", "resize", "method", r.Method, "width", r.Width, "height", r.Height, "percentage", r.Percentage, "limit", r.Limit)
 	defer log.TraceEnd(ctx, nil)
 
 	if (r.Width > wand.Width() && r.Height > wand.Height() && !r.Limit) ||

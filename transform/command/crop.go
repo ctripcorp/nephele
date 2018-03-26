@@ -118,7 +118,7 @@ func (c *Crop) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec crop exec
 func (c *Crop) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, "crop executive", "method", c.Method, "width", c.Width, "height", c.Height, "x", c.X, "y", c.Y)
+	log.TraceBegin(ctx, "", "URL.Command", "crop", "method", c.Method, "width", c.Width, "height", c.Height, "x", c.X, "y", c.Y)
 
 	defer log.TraceEnd(ctx, nil)
 
