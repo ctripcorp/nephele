@@ -53,7 +53,7 @@ func (bo *basicOutput) Write(p []byte, level string) (n int, err error) {
 		if levelInt(level) <= levelInt("error") {
 			defer internal.Sync()
 		}
-		return bo.internal.Write(p)
+		return n, err
 	}
 	return 0, nil
 }

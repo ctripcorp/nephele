@@ -12,6 +12,7 @@ func TestLogger(t *testing.T) {
 	Init(dc)
 
 	TraceBegin(&context.Context{}, "we are going to gather some personal infomations", "Info", "Collect")
+	TraceBegin(&context.Context{}, "yes, lets start", "Info", "DelayCollect")
 
 	Debugf(&context.Context{}, "%s!!!", "lets start")
 	Errorf(&context.Context{}, "%s...", "so just wait a minute")
@@ -23,5 +24,5 @@ func TestLogger(t *testing.T) {
 		"name", "invalid last name",
 		"gender", "not male nor female")
 
-	TraceEnd(&context.Context{}, errors.New("seems something wrong"))
+	TraceEndRoot(&context.Context{}, errors.New("seems something wrong"))
 }
