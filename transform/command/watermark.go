@@ -95,7 +95,7 @@ func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error
 
 //Exec watermark exec
 func (w *Watermark) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, "", "URL.Command", "crop", "watermark", w.Name, "location", w.Location, "dissolve", w.Dissolve, "x", w.X, "y", w.Y)
+	log.TraceBegin(ctx, "", "URL.Command", "watermark", "watermarkName", w.Name, "location", w.Location, "dissolve", w.Dissolve, "x", w.X, "y", w.Y)
 	defer log.TraceEnd(ctx, nil)
 	if wand.Width() < w.Minwidth || wand.Height() < w.Minheight {
 		return nil
