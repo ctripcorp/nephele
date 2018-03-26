@@ -15,5 +15,5 @@ func levelInt(level string) int {
 			return i
 		}
 	}
-	return i
+	return 3
 }
