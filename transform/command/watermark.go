@@ -1,6 +1,7 @@
 package command
 
 import (
+	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"strconv"
@@ -33,13 +34,17 @@ var watermarkLocations = []string{"nw", "north", "ne", "west", "center", "east",
 
 //verify watermark verify
 func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error {
-	//log.Debugw(ctx, "begin watermark verfiy")
+	//log.Debugw(ctx, "begin watermark verify")
 	for k, v := range params {
 		if k == watermarkKeyN {
-			if v == "" {
+			vByte, e := base64.StdEncoding.DecodeString(v)
+			if e != nil {
+				return fmt.Errorf(invalidInfoFormat, v, k)
+			}
+			if string(vByte) == "" {
 				return fmt.Errorf("name of watermark must be provided")
 			}
-			w.Name = v
+			w.Name = string(vByte)
 		}
 		if k == watermarkKeyD {
 			dissolve, e := strconv.Atoi(v)
@@ -49,7 +54,7 @@ func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error
 			w.Dissolve = dissolve
 		}
 		if k == watermarkKeyL {
-			if !util.InArray(v, watermarkLocations) {
+			if !util.InArray(v, watermarkLocations) && v != "" {
 				return fmt.Errorf(invalidInfoFormat, v, k)
 			}
 			w.Location = v
@@ -171,7 +176,7 @@ func watermarkGetLocation(location string, wand, logo *gm.MagickWand) (int, int,
 
 //GetLogoWand: get magickwand of logoImage
 func watermarkGetLogoWand(wmName string, dissolve int) (*gm.MagickWand, error) {
-	bt, err := ioutil.ReadFile(wmName + ".jpg")
+	bt, err := ioutil.ReadFile(wmName)
 	if err != nil {
 		return nil, err
 	}
@@ -179,8 +184,8 @@ func watermarkGetLogoWand(wmName string, dissolve int) (*gm.MagickWand, error) {
 	if err != nil {
 		return nil, err
 	}
-	if dissolve == 0 {
-		dissolve = 100
+	if dissolve == 0 || dissolve == 100 {
+		return logoWand, nil
 	}
 	logoWand.Dissolve(dissolve)
 	return logoWand, nil
