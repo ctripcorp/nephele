@@ -34,7 +34,9 @@ const (
 
 //Verify resize Verify
 func (r *Resize) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugw(ctx, "begin resize Verify")
+	if ctx != nil {
+		log.Debugw(ctx, "begin resize Verify")
+	}
 	for k, v := range params {
 		if k == resizeKeyW {
 			width, e := strconv.Atoi(v)
@@ -81,7 +83,7 @@ func (r *Resize) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec resize  exec
 func (r *Resize) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, "resize exec", "URL.Command", "resize")
+	log.TraceBegin(ctx, fmt.Sprintf("resize, method:%s, width:%d,height:%d,x:%d,y:%d,p:%d, limit:%t", r.Method, r.Width, r.Height, r.Percentage, r.Limit), "URL.Command", "resize")
 	defer log.TraceEnd(ctx, nil)
 
 	if (r.Width > wand.Width() && r.Height > wand.Height() && !r.Limit) ||
