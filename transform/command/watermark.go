@@ -36,7 +36,7 @@ var watermarkLocations = []string{"nw", "north", "ne", "west", "center", "east",
 
 //verify watermark verify
 func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugw(ctx, "begin watermark verify")
+	log.Debugf(ctx, "watermark verify")
 	for k, v := range params {
 		if k == watermarkKeyN {
 			vByte, e := base64.StdEncoding.DecodeString(v)

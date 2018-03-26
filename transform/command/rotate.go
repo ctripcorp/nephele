@@ -20,7 +20,7 @@ const (
 
 //Verify rotate verify params
 func (r *Rotate) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugw(ctx, "begin rotate verify")
+	log.Debugf(ctx, "rotate verify")
 	for k, v := range params {
 		if k == rotateV {
 			degree, e := strconv.Atoi(v)

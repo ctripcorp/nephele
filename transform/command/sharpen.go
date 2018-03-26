@@ -21,7 +21,7 @@ const (
 
 //Verify sharpen Verify
 func (s *Sharpen) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugw(ctx, "begin sharpen verify")
+	log.Debugf(ctx, "sharpen verify")
 	for k, v := range params {
 		if k == sharpenR {
 			radius, e := strconv.ParseFloat(v, 64)
@@ -45,6 +45,5 @@ func (s *Sharpen) Verify(ctx *context.Context, params map[string]string) error {
 func (s *Sharpen) Exec(ctx *context.Context, wand *gm.MagickWand) error {
 	log.TraceBegin(ctx, fmt.Sprintf("sharpen,radius:%g,sigma:%g", s.Radius, s.Sigma), "URL.Command", "format")
 	defer log.TraceEnd(ctx, nil)
-	println(s.Radius, s.Sigma)
 	return wand.Sharpen(s.Radius, s.Sigma)
 }
