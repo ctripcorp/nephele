@@ -44,9 +44,7 @@ const (
 
 //Verify crop Verify
 func (c *Crop) Verify(ctx *context.Context, params map[string]string) error {
-	if ctx != nil {
-		log.Debugw(ctx, "begin crop Verify")
-	}
+	log.Debugw(ctx, "begin crop Verify")
 	for k, v := range params {
 		if k == cropKeyW {
 			width, e := strconv.Atoi(v)

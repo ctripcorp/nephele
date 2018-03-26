@@ -18,10 +18,6 @@ func TestExecWatermark(t *testing.T) {
 
 	var w Watermark
 
-	w.Name = base64.StdEncoding.EncodeToString([]byte("wm1.png"))
-
-	w.Location = "ne"
-
 	bt, err := ioutil.ReadFile("200j.jpg")
 	if err != nil {
 		t.Error()

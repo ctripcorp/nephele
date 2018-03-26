@@ -34,9 +34,7 @@ const (
 
 //Verify resize Verify
 func (r *Resize) Verify(ctx *context.Context, params map[string]string) error {
-	if ctx != nil {
-		log.Debugw(ctx, "begin resize Verify")
-	}
+	log.Debugw(ctx, "begin resize Verify")
 	for k, v := range params {
 		if k == resizeKeyW {
 			width, e := strconv.Atoi(v)

@@ -22,9 +22,7 @@ var formats = []string{"jpg", "png", "webp", "gif"}
 
 //Verify format Verify params
 func (f *Format) Verify(ctx *context.Context, params map[string]string) error {
-	if ctx != nil {
-		log.Debugw(ctx, "begin watermark verify")
-	}
+	log.Debugw(ctx, "begin watermark verify")
 	for k, v := range params {
 		if k == formatV {
 			if !util.InArray(v, formats) {
