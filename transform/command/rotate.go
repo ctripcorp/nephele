@@ -6,6 +6,7 @@ import (
 
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/img4go/gm"
+	"github.com/ctripcorp/nephele/log"
 )
 
 //Rotate rotate command
@@ -19,7 +20,7 @@ const (
 
 //Verify rotate verify params
 func (r *Rotate) Verify(ctx *context.Context, params map[string]string) error {
-	//log.Debugw(ctx, "begin rotate verfiy")
+	log.Debugw(ctx, "begin rotate verify")
 	for k, v := range params {
 		if k == rotateV {
 			degree, e := strconv.Atoi(v)
@@ -34,7 +35,7 @@ func (r *Rotate) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec rotate exec
 func (r *Rotate) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	//log.TraceBegin(ctx, "rotate exec", "URL.Command", "rotate")
-	//defer log.TraceEnd(ctx, nil)
+	log.TraceBegin(ctx, "rotate exec", "URL.Command", "rotate")
+	defer log.TraceEnd(ctx, nil)
 	return wand.Rotate(float64(r.Degree))
 }

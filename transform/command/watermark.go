@@ -8,6 +8,7 @@ import (
 
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/img4go/gm"
+	"github.com/ctripcorp/nephele/log"
 	"github.com/ctripcorp/nephele/util"
 )
 
@@ -34,7 +35,7 @@ var watermarkLocations = []string{"nw", "north", "ne", "west", "center", "east",
 
 //verify watermark verify
 func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error {
-	//log.Debugw(ctx, "begin watermark verify")
+	log.Debugw(ctx, "begin watermark verify")
 	for k, v := range params {
 		if k == watermarkKeyN {
 			vByte, e := base64.StdEncoding.DecodeString(v)
@@ -93,8 +94,8 @@ func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error
 
 //Exec watermark exec
 func (w *Watermark) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	//log.TraceBegin(ctx, "watermark exec", "URL.Command", "watermark")
-	//defer log.TraceEnd(ctx, nil)
+	log.TraceBegin(ctx, "watermark exec", "URL.Command", "watermark")
+	defer log.TraceEnd(ctx, nil)
 	if wand.Width() < w.Minwidth || wand.Height() < w.Minheight {
 		return nil
 	}
