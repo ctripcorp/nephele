@@ -3,8 +3,9 @@ package command
 import (
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"
 	"strconv"
+
+	"github.com/ctripcorp/nephele/store"
 
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/img4go/gm"
@@ -35,7 +36,7 @@ var watermarkLocations = []string{"nw", "north", "ne", "west", "center", "east",
 
 //verify watermark verify
 func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugw(ctx, "begin watermark verify")
+	log.Debugf(ctx, "watermark verification")
 	for k, v := range params {
 		if k == watermarkKeyN {
 			vByte, e := base64.StdEncoding.DecodeString(v)
@@ -94,12 +95,12 @@ func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error
 
 //Exec watermark exec
 func (w *Watermark) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, "watermark exec", "URL.Command", "watermark")
+	log.TraceBegin(ctx, "", "URL.Command", "watermark", "watermarkName", w.Name, "location", w.Location, "dissolve", w.Dissolve, "x", w.X, "y", w.Y)
 	defer log.TraceEnd(ctx, nil)
 	if wand.Width() < w.Minwidth || wand.Height() < w.Minheight {
 		return nil
 	}
-	logoWand, err := watermarkGetLogoWand(w.Name, w.Dissolve)
+	logoWand, err := watermarkGetLogoWand(ctx, w.Name, w.Dissolve)
 	if err != nil {
 		return err
 	}
@@ -176,11 +177,12 @@ func watermarkGetLocation(location string, wand, logo *gm.MagickWand) (int, int,
 }
 
 //GetLogoWand: get magickwand of logoImage
-func watermarkGetLogoWand(watermarkName string, dissolve int) (*gm.MagickWand, error) {
-	bt, err := ioutil.ReadFile(watermarkName)
+func watermarkGetLogoWand(ctx *context.Context, watermarkName string, dissolve int) (*gm.MagickWand, error) {
+	bt, err := store.Storage().Read(ctx, watermarkName)
 	if err != nil {
 		return nil, err
 	}
+
 	logoWand, err := gm.NewMagickWand(bt)
 	if err != nil {
 		return nil, err

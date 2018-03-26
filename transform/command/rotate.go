@@ -20,7 +20,7 @@ const (
 
 //Verify rotate verify params
 func (r *Rotate) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugw(ctx, "begin rotate verify")
+	log.Debugf(ctx, "rotate verification")
 	for k, v := range params {
 		if k == rotateV {
 			degree, e := strconv.Atoi(v)
@@ -35,7 +35,7 @@ func (r *Rotate) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec rotate exec
 func (r *Rotate) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, "rotate exec", "URL.Command", "rotate")
+	log.TraceBegin(ctx, "", "URL.Command", "rotate", "degree", r.Degree)
 	defer log.TraceEnd(ctx, nil)
 	return wand.Rotate(float64(r.Degree))
 }

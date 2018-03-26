@@ -44,9 +44,7 @@ const (
 
 //Verify crop Verify
 func (c *Crop) Verify(ctx *context.Context, params map[string]string) error {
-	if ctx != nil {
-		log.Debugw(ctx, "begin crop Verify")
-	}
+	log.Debugf(ctx, "crop verification")
 	for k, v := range params {
 		if k == cropKeyW {
 			width, e := strconv.Atoi(v)
@@ -120,8 +118,8 @@ func (c *Crop) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec crop exec
 func (c *Crop) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, fmt.Sprintf("crop, method:%s, width:%d,height:%d,x:%d,y:%d,p:%d, limit:%t", c.Method, c.Width, c.Height, c.X, c.Y, c.Percentage, c.Limit),
-		"URL.Command", "crop")
+	log.TraceBegin(ctx, "", "URL.Command", "crop", "method", c.Method, "width", c.Width, "height", c.Height, "x", c.X, "y", c.Y)
+
 	defer log.TraceEnd(ctx, nil)
 
 	srcW, srcH := wand.Width(), wand.Height()

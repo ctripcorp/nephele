@@ -22,7 +22,7 @@ var formats = []string{"jpg", "png", "webp", "gif"}
 
 //Verify format Verify params
 func (f *Format) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugw(ctx, "begin watermark verify")
+	log.Debugf(ctx, "format verification")
 	for k, v := range params {
 		if k == formatV {
 			if !util.InArray(v, formats) {
@@ -36,7 +36,7 @@ func (f *Format) Verify(ctx *context.Context, params map[string]string) error {
 
 // Exec format exec
 func (f *Format) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, "format exec", "URL.Command", "format")
+	log.TraceBegin(ctx, "", "URL.Command", "format", "format", f.format)
 	defer log.TraceEnd(ctx, nil)
 	return wand.SetFormat(f.format)
 }
