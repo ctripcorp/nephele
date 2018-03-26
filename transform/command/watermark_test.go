@@ -1,6 +1,7 @@
 package command
 
 import (
+	"encoding/base64"
 	"io/ioutil"
 	"testing"
 
@@ -10,7 +11,9 @@ import (
 
 func TestExecWatermark(t *testing.T) {
 	var w Watermark
-	w.Name = "wm1"
+
+	w.Name = base64.StdEncoding.EncodeToString([]byte("wm1.png"))
+	println(w.Name)
 	w.Location = "ne"
 
 	bt, err := ioutil.ReadFile("200j.jpg")
@@ -22,10 +25,14 @@ func TestExecWatermark(t *testing.T) {
 		t.Error()
 	}
 	var ctx context.Context
-	err = w.Exec(&ctx, wand)
-	if err != nil {
+	m3 := map[string]string{"n": base64.StdEncoding.EncodeToString([]byte("wm1.png")), "d": "50", "l": "sw"}
+	if w.Verify(&ctx, m3) != nil {
 		t.Error()
 	}
+	if w.Exec(&ctx, wand) != nil {
+		t.Error()
+	}
+
 	bt1, err := wand.WriteBlob()
 	if err != nil {
 		t.Error()
@@ -36,7 +43,7 @@ func TestExecWatermark(t *testing.T) {
 // 200j.jpg is 320*180
 func TestExecWatermark1(t *testing.T) {
 	var w Watermark
-	w.Name = "wm1"
+	w.Name = base64.StdEncoding.EncodeToString([]byte("wm1.png"))
 	w.Location = ""
 
 	w.X = 160
@@ -50,10 +57,14 @@ func TestExecWatermark1(t *testing.T) {
 		t.Error()
 	}
 	var ctx context.Context
-	err = w.Exec(&ctx, wand)
-	if err != nil {
+	m3 := map[string]string{"n": base64.StdEncoding.EncodeToString([]byte("wm1.png")), "d": "70", "l": ""}
+	if w.Verify(&ctx, m3) != nil {
 		t.Error()
 	}
+	if w.Exec(&ctx, wand) != nil {
+		t.Error()
+	}
+
 	bt1, err := wand.WriteBlob()
 	if err != nil {
 		t.Error()
@@ -73,7 +84,7 @@ func TestExecWatermark2(t *testing.T) {
 		t.Error()
 	}
 	var ctx context.Context
-	m3 := map[string]string{"n": "wm1", "d": "70", "l": "sw"}
+	m3 := map[string]string{"n": base64.StdEncoding.EncodeToString([]byte("wm1.png")), "d": "90", "l": "sw"}
 	if w.Verify(&ctx, m3) != nil {
 		t.Error()
 	}

@@ -8,6 +8,7 @@ import (
 
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/img4go/gm"
+	"github.com/ctripcorp/nephele/log"
 )
 
 //Resize resize command
@@ -33,7 +34,7 @@ const (
 
 //Verify resize Verify
 func (r *Resize) Verify(ctx *context.Context, params map[string]string) error {
-	//log.Debugw(ctx, "begin resize Verify")
+	log.Debugw(ctx, "begin resize Verify")
 	for k, v := range params {
 		if k == resizeKeyW {
 			width, e := strconv.Atoi(v)
@@ -80,8 +81,8 @@ func (r *Resize) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec resize  exec
 func (r *Resize) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	//log.TraceBegin(ctx, "resize exec", "URL.Command", "resize")
-	//defer log.TraceEnd(ctx, nil)
+	log.TraceBegin(ctx, "resize exec", "URL.Command", "resize")
+	defer log.TraceEnd(ctx, nil)
 
 	if (r.Width > wand.Width() && r.Height > wand.Height() && !r.Limit) ||
 		(r.Method != resizeKeyMFIXED && r.Percentage > 100 && !r.Limit) {
