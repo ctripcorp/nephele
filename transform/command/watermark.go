@@ -176,8 +176,8 @@ func watermarkGetLocation(location string, wand, logo *gm.MagickWand) (int, int,
 }
 
 //GetLogoWand: get magickwand of logoImage
-func watermarkGetLogoWand(wmName string, dissolve int) (*gm.MagickWand, error) {
-	bt, err := ioutil.ReadFile(wmName)
+func watermarkGetLogoWand(watermarkmName string, dissolve int) (*gm.MagickWand, error) {
+	bt, err := ioutil.ReadFile(watermarkmName)
 	if err != nil {
 		return nil, err
 	}
