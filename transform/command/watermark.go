@@ -36,7 +36,7 @@ var watermarkLocations = []string{"nw", "north", "ne", "west", "center", "east",
 
 //verify watermark verify
 func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugf(ctx, "watermark verify")
+	log.Debugf(ctx, "watermark verification")
 	for k, v := range params {
 		if k == watermarkKeyN {
 			vByte, e := base64.StdEncoding.DecodeString(v)
@@ -95,7 +95,7 @@ func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error
 
 //Exec watermark exec
 func (w *Watermark) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, fmt.Sprintf("watermark,name:%s,location:%s,dissolve:%d,x:%d,y:%d", w.Name, w.Location, w.Dissolve, w.X, w.Y), "URL.Command", "watermark")
+	log.TraceBegin(ctx, "watermark executive", "watermark", w.Name, "location", w.Location, "dissolve", w.Dissolve, "x", w.X, "y", w.Y)
 	defer log.TraceEnd(ctx, nil)
 	if wand.Width() < w.Minwidth || wand.Height() < w.Minheight {
 		return nil
