@@ -1,20 +1,20 @@
 package middleware
 
 import (
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"time"
+	cors "github.com/rs/cors/wrapper/gin"
 )
 
 // See "github.com/gin-contrib/cors".
 type CORSConfig struct {
-	MaxAge          int      `toml:"max-age"`
-	RegistOrder     int      `toml:"order"`
-	AllowAllOrigins bool     `toml:"allow-all-origins"`
-	AllowOrigins    []string `toml:"allow-origins"`
-	AllowMethods    []string `toml:"allow-methods"`
-	AllowHeaders    []string `toml:"allow-headers"`
-	ExposeHeaders   []string `toml:"expose-headers"`
+	MaxAge            int      `toml:"max-age"`
+	RegistOrder       int      `toml:"order"`
+	OptionPassthrough bool     `toml:"option-pass-through"`
+	AllowAllOrigins   bool     `toml:"allow-all-origins"`
+	AllowOrigins      []string `toml:"allow-origins"`
+	AllowMethods      []string `toml:"allow-methods"`
+	AllowHeaders      []string `toml:"allow-headers"`
+	ExposeHeaders     []string `toml:"expose-headers"`
 }
 
 func (conf *CORSConfig) Order() int {
@@ -23,12 +23,20 @@ func (conf *CORSConfig) Order() int {
 
 // Return cors handler.
 func (conf *CORSConfig) Handler() gin.HandlerFunc {
-	return cors.New(cors.Config{
-		AllowAllOrigins: conf.AllowAllOrigins,
-		AllowOrigins:    conf.AllowOrigins,
-		AllowMethods:    conf.AllowMethods,
-		AllowHeaders:    conf.AllowHeaders,
-		ExposeHeaders:   conf.ExposeHeaders,
-		MaxAge:          time.Duration(conf.MaxAge) * time.Second,
-	})
+	var middleware gin.HandlerFunc
+
+	if conf.AllowAllOrigins {
+		middleware = cors.AllowAll()
+	} else {
+		middleware = cors.New(cors.Options{
+			MaxAge:             conf.MaxAge,
+			AllowedOrigins:     conf.AllowOrigins,
+			AllowedMethods:     conf.AllowMethods,
+			AllowedHeaders:     conf.AllowHeaders,
+			ExposedHeaders:     conf.ExposeHeaders,
+			OptionsPassthrough: conf.OptionPassthrough,
+		})
+	}
+
+	return middleware
 }
