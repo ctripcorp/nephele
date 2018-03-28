@@ -10,7 +10,7 @@ import (
 )
 
 type Quality struct {
-	Quality int
+	Quality uint
 }
 
 const (
@@ -26,7 +26,7 @@ func (q *Quality) Verify(ctx *context.Context, params map[string]string) error {
 			if e != nil || quality < 0 || quality > 100 {
 				return fmt.Errorf(invalidInfoFormat, v, k)
 			}
-			q.Quality = quality
+			q.Quality = uint(quality)
 		}
 	}
 	return nil
