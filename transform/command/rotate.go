@@ -35,7 +35,9 @@ func (r *Rotate) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec rotate exec
 func (r *Rotate) Exec(ctx *context.Context, wand *gm.MagickWand) error {
+	var err error
 	log.TraceBegin(ctx, "", "URL.Command", "rotate", "degree", r.Degree)
-	defer log.TraceEnd(ctx, nil)
-	return wand.Rotate(float64(r.Degree))
+	defer log.TraceEnd(ctx, err)
+	err = wand.Rotate(float64(r.Degree))
+	return err
 }
