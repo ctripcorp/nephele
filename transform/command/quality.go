@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/ctripcorp/nephele/img4go/gm"
-
 	"github.com/ctripcorp/nephele/context"
+	"github.com/ctripcorp/nephele/img4go/gm"
 	"github.com/ctripcorp/nephele/log"
 )
 
@@ -18,7 +17,7 @@ const (
 	qualityKeyV string = "v"
 )
 
-//Verify  quality verify
+//Verify verify quality
 func (q *Quality) Verify(ctx *context.Context, params map[string]string) error {
 	log.Debugf(ctx, "quality verification")
 	for k, v := range params {
@@ -33,12 +32,15 @@ func (q *Quality) Verify(ctx *context.Context, params map[string]string) error {
 	return nil
 }
 
-//Exec quality exec
+//Exec exec
 func (q *Quality) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, "", "URL.Command", "quality", q.Quality)
-	defer log.TraceEnd(ctx, nil)
-	if q.Quality == 0 || q.Quality == 100 {
-		return nil
+	var err error
+	log.TraceBegin(ctx, "", "URL.Command", "quality", "quality", q.Quality)
+	defer log.TraceEnd(ctx, err)
+	if q.Quality == 0 {
+		err = wand.PreserveJPEGSettings()
+	} else {
+		err = wand.SetCompressionQuality(uint(q.Quality))
 	}
-	return wand.SetCompressionQuality(q.Quality)
+	return err
 }

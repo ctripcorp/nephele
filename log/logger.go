@@ -37,6 +37,9 @@ func (l *logger) Printf(ctx *context.Context, level string, format string, value
 	for _, o := range l.outputs {
 		o.Write(rb.Bytes(), level)
 	}
+
+	rb.Reset()
+	l.bufferPool.Put(rb)
 }
 
 func (l *logger) Printw(ctx *context.Context, level string, message string, keysAndValues ...interface{}) {
@@ -58,6 +61,9 @@ func (l *logger) Printw(ctx *context.Context, level string, message string, keys
 	for _, o := range l.outputs {
 		o.Write(rb.Bytes(), level)
 	}
+
+	rb.Reset()
+	l.bufferPool.Put(rb)
 }
 
 type LoggerConfig struct {

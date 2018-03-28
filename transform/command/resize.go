@@ -81,8 +81,9 @@ func (r *Resize) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec resize  exec
 func (r *Resize) Exec(ctx *context.Context, wand *gm.MagickWand) error {
+	var err error
 	log.TraceBegin(ctx, "", "URL.Command", "resize", "method", r.Method, "width", r.Width, "height", r.Height, "percentage", r.Percentage, "limit", r.Limit)
-	defer log.TraceEnd(ctx, nil)
+	defer log.TraceEnd(ctx, err)
 
 	if (r.Width > wand.Width() && r.Height > wand.Height() && !r.Limit) ||
 		(r.Method != resizeKeyMFIXED && r.Percentage > 100 && !r.Limit) {
@@ -100,7 +101,8 @@ func (r *Resize) Exec(ctx *context.Context, wand *gm.MagickWand) error {
 	} else {
 		width, height = resizeLfit(r.Width, r.Height, srcW, srcH)
 	}
-	return wand.LanczosResize(width, height)
+	err = wand.LanczosResize(width, height)
+	return err
 }
 
 //Lfit: isotropic scaling with fixed width and height, which tends to disable one of the inputs(width or height) to feed a larger aspect ratio

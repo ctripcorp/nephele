@@ -86,13 +86,18 @@ func Fatalw(ctx *context.Context, message string, keysAndValues ...interface{}) 
 }
 
 func TraceBegin(ctx *context.Context, message string, keysAndValues ...interface{}) {
+	traceBegin(ctx.ID(), message, keysAndValues...)
 	instance.Printw(ctx, "trace/begin", message, keysAndValues...)
 }
 
 func TraceEnd(ctx *context.Context, state interface{}) {
+	traceEnd(ctx.ID(), state)
 	instance.Printw(ctx, "trace/end", fmt.Sprintf("%v", state))
 }
 
 func TraceEndRoot(ctx *context.Context, state interface{}) {
+	traceEndRoot(ctx.ID(), state)
+	message, namesAndDurations := traceSum(ctx.ID())
 	instance.Printw(ctx, "trace/endroot", fmt.Sprintf("%v", state))
+	instance.Printw(ctx, "trace/summary", message, namesAndDurations...)
 }
