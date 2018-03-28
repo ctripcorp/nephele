@@ -4,21 +4,21 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/ctripcorp/nephele/img4go/gm"
+
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/log"
 )
 
 type Quality struct {
-	Quality int
-	Aio     int
+	Quality uint
 }
 
 const (
-	qualityKeyV   string = "v"
-	qualityKeyAIO string = "aio"
+	qualityKeyV string = "v"
 )
 
-//Quality verify quality
+//Verify  quality verify
 func (q *Quality) Verify(ctx *context.Context, params map[string]string) error {
 	log.Debugf(ctx, "quality verification")
 	for k, v := range params {
@@ -27,8 +27,18 @@ func (q *Quality) Verify(ctx *context.Context, params map[string]string) error {
 			if e != nil || quality < 0 || quality > 100 {
 				return fmt.Errorf(invalidInfoFormat, v, k)
 			}
-			q.Quality = quality
+			q.Quality = uint(quality)
 		}
 	}
 	return nil
+}
+
+//Exec quality exec
+func (q *Quality) Exec(ctx *context.Context, wand *gm.MagickWand) error {
+	log.TraceBegin(ctx, "", "URL.Command", "quality", q.Quality)
+	defer log.TraceEnd(ctx, nil)
+	if q.Quality == 0 || q.Quality == 100 {
+		return nil
+	}
+	return wand.SetCompressionQuality(q.Quality)
 }
