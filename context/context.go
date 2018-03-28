@@ -11,19 +11,19 @@ const GlobalName = "@@GlobalContextName"
 
 // Context walks through all the functions.
 type Context struct {
-	id          string
-	env string
-	timeout     time.Duration
-	internal    context.Context
-	cancel      context.CancelFunc
-	http        *gin.Context
+	id       string
+	env      string
+	timeout  time.Duration
+	internal context.Context
+	cancel   context.CancelFunc
+	http     *gin.Context
 }
 
 // Return root context and share its variables.
 func New(env string, timeout time.Duration) *Context {
 	return &Context{
-		env: env,
-		timeout:     timeout * time.Millisecond,
+		env:     env,
+		timeout: timeout * time.Millisecond,
 	}
 }
 
@@ -32,12 +32,12 @@ func (ctx *Context) New(httpCtx *gin.Context) *Context {
 	internal, cancel := context.WithTimeout(context.Background(), ctx.timeout)
 	uuid, _ := uuid.NewV1()
 	return &Context{
-		id:          uuid.String(),
-		env: ctx.env,
-		timeout:     ctx.timeout,
-		http:        httpCtx,
-		internal:    internal,
-		cancel:      cancel,
+		id:       uuid.String(),
+		env:      ctx.env,
+		timeout:  ctx.timeout,
+		http:     httpCtx,
+		internal: internal,
+		cancel:   cancel,
 	}
 }
 
