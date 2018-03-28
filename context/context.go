@@ -41,7 +41,7 @@ func (ctx *Context) New(httpCtx *gin.Context) *Context {
 	}
 }
 
-// Return current environment
+// Return current env
 func (ctx *Context) Env() string {
 	return ctx.env
 }

@@ -2,29 +2,40 @@ package log
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
 var traceTrees map[string]*traceTree
+var traceMutex sync.RWMutex
 
 func init() {
 	traceTrees = make(map[string]*traceTree)
 }
 
 func traceBegin(contextID string, message string, keysAndValues ...interface{}) {
+	traceMutex.RLock()
 	t, ok := traceTrees[contextID]
+	traceMutex.RUnlock()
 	if !ok {
+		traceMutex.Lock()
 		traceTrees[contextID] = &traceTree{
 			make([]*trace, 0),
 			nil,
 		}
+		traceMutex.Unlock()
+
+		traceMutex.RLock()
 		t = traceTrees[contextID]
+		traceMutex.RUnlock()
 	}
 	t.begin(message, keysAndValues...)
 }
 
 func traceEnd(contextID string, state interface{}) {
+	traceMutex.RLock()
 	t, ok := traceTrees[contextID]
+	traceMutex.RUnlock()
 	if !ok {
 		return
 	}
@@ -32,7 +43,9 @@ func traceEnd(contextID string, state interface{}) {
 }
 
 func traceEndRoot(contextID string, state interface{}) {
+	traceMutex.RLock()
 	t, ok := traceTrees[contextID]
+	traceMutex.RUnlock()
 	if !ok {
 		return
 	}
@@ -40,7 +53,14 @@ func traceEndRoot(contextID string, state interface{}) {
 }
 
 func traceSum(contextID string) (string, []interface{}) {
+	defer func() {
+		traceMutex.Lock()
+		delete(traceTrees, contextID)
+		traceMutex.Unlock()
+	}()
+	traceMutex.RLock()
 	t, ok := traceTrees[contextID]
+	traceMutex.RUnlock()
 	if !ok {
 		return "", nil
 	}
