@@ -3,17 +3,17 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "v8tchPHvu2WdVDFhWIFBlxHHJCs=",
-			"path": "github.com/happysheeps/gmagick",
-			"revision": "5a070d41ccc881aaedacd19b9fdb65663477bb38",
-			"revisionTime": "2018-03-13T07:50:00Z"
+			"checksumSHA1": "34xJvxE4UOiKFMPw7LczFEKq2qg=",
+			"path": "github.com/giantpoplar/gmagick",
+			"revision": "70303bd9ef023e79902cd56baaf09fd2558626ae",
+			"revisionTime": "2018-03-28T02:00:10Z"
 		},
 		{
-			"checksumSHA1": "uZCfwR7Fe37TrWBSZbBzqIEi1dA=",
-			"path": "github.com/happysheeps/gmagick/types",
-			"revision": "5a070d41ccc881aaedacd19b9fdb65663477bb38",
-			"revisionTime": "2018-03-13T07:50:00Z"
+			"checksumSHA1": "0kr4ecCBTPZNxNfQtLA834bFiUI=",
+			"path": "github.com/giantpoplar/gmagick/types",
+			"revision": "70303bd9ef023e79902cd56baaf09fd2558626ae",
+			"revisionTime": "2018-03-28T02:00:10Z"
 		}
 	],
-	"rootPath": "github.com/happysheeps/nephele/img4go"
+	"rootPath": "github.com/giantpoplar/nephele/img4go"
 }
