@@ -36,7 +36,9 @@ func (f *Format) Verify(ctx *context.Context, params map[string]string) error {
 
 // Exec format exec
 func (f *Format) Exec(ctx *context.Context, wand *gm.MagickWand) error {
+	var err error
 	log.TraceBegin(ctx, "", "URL.Command", "format", "format", f.format)
-	defer log.TraceEnd(ctx, nil)
-	return wand.SetFormat(f.format)
+	defer log.TraceEnd(ctx, err)
+	err = wand.SetFormat(f.format)
+	return err
 }

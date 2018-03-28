@@ -118,28 +118,28 @@ func (c *Crop) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec crop exec
 func (c *Crop) Exec(ctx *context.Context, wand *gm.MagickWand) error {
+	var err error
 	log.TraceBegin(ctx, "", "URL.Command", "crop", "method", c.Method, "width", c.Width, "height", c.Height, "x", c.X, "y", c.Y)
-
-	defer log.TraceEnd(ctx, nil)
+	defer log.TraceEnd(ctx, err)
 
 	srcW, srcH := wand.Width(), wand.Height()
 	var width, height uint
 	var x, y int
 	if c.Method == cropKeyMRESIZE {
 		var isResize bool
-		width, height, x, y, isResize = cropMRESIZE(c.Width, c.Height, srcW, srcH, c.Limit)
+		width, height, x, y, isResize = cropMRE(c.Width, c.Height, srcW, srcH, c.Limit)
 		if width == 0 && height == 0 && x == 0 && y == 0 {
 			return nil
 		}
 		fmt.Println(width, height, x, y, isResize)
 		if !(width == srcW && height == srcH && x == 0 && y == 0) {
-			if err := wand.Crop(width, height, x, y); err != nil {
+			if err = wand.Crop(width, height, x, y); err != nil {
 				return err
 			}
 			if !isResize {
 				return nil
 			}
-			if err := wand.LanczosResize(c.Width, c.Height); err != nil {
+			if err = wand.LanczosResize(c.Width, c.Height); err != nil {
 				return err
 			}
 		}
@@ -152,7 +152,7 @@ func (c *Crop) Exec(ctx *context.Context, wand *gm.MagickWand) error {
 	case cropKeyMC:
 		width, height, x, y = cropMC(c.Width, c.Height, srcW, srcH, c.Percentage)
 	case cropKeyMCROP:
-		width, height = cropMCROP(c.Width, c.Height, srcW, srcH, c.Percentage)
+		width, height = cropMCR(c.Width, c.Height, srcW, srcH, c.Percentage)
 		x, y = c.X, c.Y
 	case cropKeyMHC:
 		width, height, x, y = cropMHC(c.Height, srcW, srcH, c.Percentage)
@@ -166,12 +166,15 @@ func (c *Crop) Exec(ctx *context.Context, wand *gm.MagickWand) error {
 		width, height, x, y = cropMWC(c.Width, srcW, srcH, c.Percentage)
 	}
 	if width < 1 || height < 1 || x >= int(srcW) || y >= int(srcH) {
-		return errors.New("param is invalid.")
+		err = errors.New("param is invalid.")
+		return err
 	}
-	return wand.Crop(width, height, x, y)
+	err = wand.Crop(width, height, x, y)
+	return err
 }
 
-func cropMRESIZE(w, h, srcW, srcH uint, limit bool) (width, height uint, x, y int, resize bool) {
+// crop,m_resize,w_100,h_100 , first equal comparison cut image, finally resize
+func cropMRE(w, h, srcW, srcH uint, limit bool) (width, height uint, x, y int, resize bool) {
 	resize = false
 	if !limit && w > srcW && h > srcH {
 		return
@@ -209,6 +212,7 @@ func cropMRESIZE(w, h, srcW, srcH uint, limit bool) (width, height uint, x, y in
 	return
 }
 
+//crop,m_t,h_100  crop top height 100
 func cropMT(h, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	if p > 0 {
 		h = srcH * uint(p) / 100
@@ -219,6 +223,7 @@ func cropMT(h, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	return
 }
 
+//crop,m_b,h_100 , crop bottom
 func cropMB(h, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	if p > 0 {
 		h = srcH * uint(p) / 100
@@ -228,6 +233,7 @@ func cropMB(h, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	return
 }
 
+//crop,m_hc,h_100 ,  cut the upper and lower sides
 func cropMHC(h, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	if p > 0 {
 		h = srcH * uint(p) / 100
@@ -238,6 +244,7 @@ func cropMHC(h, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	return
 }
 
+//crop,m_l,w_100,  crop left
 func cropML(w, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	if p > 0 {
 		w = srcW * uint(p) / 100
@@ -248,6 +255,7 @@ func cropML(w, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	return
 }
 
+//crop,m_r,w_100,  crop right
 func cropMR(w, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	if p > 0 {
 		w = srcW * uint(p) / 100
@@ -257,6 +265,7 @@ func cropMR(w, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	return
 }
 
+//crop,m_wc,w_100, cut the left and right sides
 func cropMWC(w, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	if p > 0 {
 		w = srcW * uint(p) / 100
@@ -267,6 +276,7 @@ func cropMWC(w, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	return
 }
 
+//crop,m_c,w_100 cut image for center
 func cropMC(w, h, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	if p > 0 {
 		w = srcW * uint(p) / 100
@@ -285,7 +295,8 @@ func cropMC(w, h, srcW, srcH uint, p int) (width, height uint, x, y int) {
 	return
 }
 
-func cropMCROP(w, h, srcW, srcH uint, p int) (width, height uint) {
+// crop,m_crop,w_100, crop cut image
+func cropMCR(w, h, srcW, srcH uint, p int) (width, height uint) {
 	if p > 0 {
 		w = srcW * uint(p) / 100
 		h = srcH * uint(p) / 100

@@ -32,6 +32,12 @@ func (t *Transformer) Accept(ctx *context.Context, name string, params map[strin
 		cmd = &command.Crop{}
 	case command.FORMAT:
 		cmd = &command.Format{}
+	case command.QUALITY:
+		cmd = &command.Quality{}
+	case command.SHARPEN:
+		cmd = &command.Sharpen{}
+	case command.ROTATE:
+		cmd = &command.Rotate{}
 	}
 
 	if cmd != nil {

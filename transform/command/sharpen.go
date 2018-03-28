@@ -43,7 +43,9 @@ func (s *Sharpen) Verify(ctx *context.Context, params map[string]string) error {
 
 //Exec sharpen exec
 func (s *Sharpen) Exec(ctx *context.Context, wand *gm.MagickWand) error {
+	var err error
 	log.TraceBegin(ctx, "", "URL.Command", "sharpen", "radius", s.Radius, "sigma", s.Sigma)
-	defer log.TraceEnd(ctx, nil)
-	return wand.Sharpen(s.Radius, s.Sigma)
+	defer log.TraceEnd(ctx, err)
+	err = wand.Sharpen(s.Radius, s.Sigma)
+	return err
 }

@@ -1,9 +1,10 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
 	"reflect"
 	"sort"
+
+	"github.com/gin-gonic/gin"
 )
 
 type Config interface {
@@ -45,7 +46,7 @@ type byOrder struct {
 //only those implement Config interface will be registered.
 func Build(conf interface{}) []gin.HandlerFunc {
 	//recovery should always be the first middleware
-	array := []byOrder{byOrder{order: -99, handler: recovery()}}
+	array := []byOrder{byOrder{order: -99, handler: entrance()}}
 	if conf != nil {
 		array = append(array, build(conf)...)
 		sort.Slice(array, func(i, j int) bool {
