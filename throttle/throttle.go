@@ -1,18 +1,13 @@
-package concurrency
+package throttle
 
 import (
-	"errors"
-	"fmt"
-	"sync"
-	"time"
+    "errors"
+    "time"
+    "fmt"
+    "sync"
 )
 
-var limiters map[string]*limiter
-var limiterMutex sync.RWMutex
-
-func init() {
-	limiters = make(map[string]*limiter)
-}
+var limiters sync.Map
 
 type limiter struct {
 	concurrency *pool
@@ -33,24 +28,22 @@ func (l *limiter) Done() error {
 
 func Limiter(name string, maxConcurrency int, maxWait int) *limiter {
 	id := fmt.Sprintf("%s-%d-%d", name, maxConcurrency, maxWait)
-	limiterMutex.RLock()
-	l, ok := limiters[id]
-	limiterMutex.RUnlock()
+	l, ok := limiters.Load(id)
 	if !ok {
-		limiterMutex.Lock()
 		c := &pool{}
 		c.init(maxConcurrency)
 		w := &pool{}
 		w.init(maxWait)
-		limiters[id] = &limiter{
+
+        limiters.Store(id, &limiter{
 			concurrency: c,
 			wait:        w,
-		}
-		limiterMutex.Unlock()
+		})
 
-		limiterMutex.RLock()
-		l = limiters[id]
-		limiterMutex.RUnlock()
-	}
-	return l
+		l, ok = limiters.Load(id)
+    }
+    if !ok {
+        return nil
+    }
+    return l.(*limiter)
 }
