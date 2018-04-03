@@ -95,12 +95,14 @@ func (w *Watermark) Verify(ctx *context.Context, params map[string]string) error
 
 //Exec watermark exec
 func (w *Watermark) Exec(ctx *context.Context, wand *gm.MagickWand) error {
+	var err error
 	log.TraceBegin(ctx, "", "URL.Command", "watermark", "watermarkName", w.Name, "location", w.Location, "dissolve", w.Dissolve, "x", w.X, "y", w.Y)
-	defer log.TraceEnd(ctx, nil)
+	defer log.TraceEnd(ctx, err)
 	if wand.Width() < w.Minwidth || wand.Height() < w.Minheight {
 		return nil
 	}
-	logoWand, err := watermarkGetLogoWand(ctx, w.Name, w.Dissolve)
+	var logoWand *gm.MagickWand
+	logoWand, err = watermarkGetLogoWand(ctx, w.Name, w.Dissolve)
 	if err != nil {
 		return err
 	}
@@ -113,7 +115,8 @@ func (w *Watermark) Exec(ctx *context.Context, wand *gm.MagickWand) error {
 	if err != nil {
 		return err
 	}
-	return wand.Composite(logoWand, x, y)
+	err = wand.Composite(logoWand, x, y)
+	return err
 }
 
 //GetCustomLocation: get custom location by coordinate x,y

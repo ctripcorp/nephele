@@ -19,8 +19,8 @@ const (
 	QUALITY    string = "quality"
 	WATERMARK  string = "watermark"
 	SHARPEN    string = "sharpen"
-	STYLE      string = "style"
-	PANORAMA   string = "panorama"
+	// STYLE      string = "style"
+	// PANORAMA   string = "panorama"
 )
 
 var invalidInfoFormat = "The value: %s of parameter: %s is invalid."

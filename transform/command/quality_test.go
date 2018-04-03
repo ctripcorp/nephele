@@ -3,10 +3,18 @@ package command
 import (
 	"io/ioutil"
 	"testing"
+	"time"
 
 	"github.com/ctripcorp/nephele/context"
 	"github.com/ctripcorp/nephele/img4go/gm"
 )
+
+func TestVerify(t *testing.T) {
+	q := &Quality{}
+	if e := q.Verify(context.New("", time.Duration(time.Second*3)), map[string]string{"v": "10"}); e != nil {
+		t.Error(e)
+	}
+}
 
 func TestQuality(t *testing.T) {
 	var q Quality

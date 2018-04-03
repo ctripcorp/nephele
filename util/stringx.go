@@ -1,13 +1,12 @@
 package util
 
 import (
-	"bufio"
 	"bytes"
 	"strings"
 )
 
-//Substr sub string
-func Substr(str string, start, length int) string {
+//SubString sub string
+func SubString(str string, start, length int) string {
 	rs := []rune(str)
 	rl := len(rs)
 	end := 0
@@ -49,19 +48,6 @@ func Cover(s, converV string, length int) string {
 		s = converV + s
 	}
 	return s
-}
-
-// GetLines bytes to []string
-func GetLines(bts []byte) []string {
-	var plans []string
-	var buf bytes.Buffer
-	buf.Write(bts)
-	scanner := bufio.NewScanner(&buf)
-	for scanner.Scan() {
-		plan := scanner.Text()
-		plans = append(plans, plan)
-	}
-	return plans
 }
 
 //TrimPrefixSlash trim prefix /
