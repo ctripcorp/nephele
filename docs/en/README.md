@@ -1,6 +1,8 @@
 # Nephele
 
-## Introduction [C1](https://github.com/ctripcorp/nephele/blob/master/docs/cn/REQUIREMENT_CLASS.md)
+[English](https://github.com/ctripcorp/nephele/blob/master/docs/cn/README.md) [C1](https://github.com/ctripcorp/nephele/blob/master/docs/en/REQUIREMENT_CLASS.md)
+
+## Introduction
 
 Nephele is an open-source project created by Ctrip R&D to address image-related problems.
 
@@ -11,7 +13,7 @@ Nephele is an open-source project created by Ctrip R&D to address image-related 
   * a clear administration where users edit workflow and developers track server state
   * plenty of useful tools
 
-## Feature [C1](https://github.com/ctripcorp/nephele/blob/master/docs/cn/REQUIREMENT_CLASS.md)
+## Feature
 
 **features you may concern instinctively:**
 
@@ -25,7 +27,7 @@ Nephele is an open-source project created by Ctrip R&D to address image-related 
   * digit watermark
   * optimized image encoding
   	  	
-## Intention [C1](https://github.com/ctripcorp/nephele/blob/master/docs/cn/REQUIREMENT_CLASS.md)
+## Intention
 
   Read [The Example Nephele Program]() to start up from the nephele project and see what nephele can be.
 
