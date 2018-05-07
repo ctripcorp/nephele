@@ -1,12 +1,12 @@
 package neph
 
 import (
-    "fmt"
-    "testing"
+	"fmt"
+	"testing"
 )
 
 func TestNew(t *testing.T) {
-    s := New(map[string]string{
+	s := New(map[string]string{
 		"endpoint":        "oss-cn-hongkong.aliyuncs.com",
 		"bucketname":      "ctrip-nephele-file-hk",
 		"accessKeyId":     "LTAIB2Mh6vqyHL89",
