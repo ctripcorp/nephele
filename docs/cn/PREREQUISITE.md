@@ -6,6 +6,8 @@
 
 * [安装 Go (>=1.10.2)](#安装-go-1102)
 
+* [安装 Govendor](#安装-govendor)
+
 * [安装 GraphicsMaigck](#安装-graphicsmaigck)
 
 ## 安装 Go (>=1.10.2)
@@ -26,8 +28,18 @@
     export PATH=$PATH:/usr/local/go/bin
 ```
 
+## 安装 Govendor
+
+前往[github.com/kardianos/govendor](https://github.com/kardianos/govendor)了解详情。
+
+或者运行下面的命令。
+
+```bash
+    go get -u github.com/kardianos/govendor
+```
+
 ## 安装 GraphicsMaigck
 
 随着Nephele开源版本进度的推进，GraphicsMagick或将不再是必要的环境因子，转而作为一款插件存在。
     
-但目前，[安装GraphicsMagick](https://github.com/phyxdown/nephele/tree/deploy/thirdparty/graphicsmagick)依然是必要的，Nephele也将默认调用GraphicsMagick处理图片。
+但目前，[安装GraphicsMagick](https://github.com/ctripcorp/nephele/tree/master/thirdparty/graphicsmagick)依然是必要的，Nephele也将默认调用GraphicsMagick处理图片。

@@ -1,7 +1,7 @@
 package neph
 
 import (
-    . "github.com/ctripcorp/nephele/storage"
+	. "github.com/ctripcorp/nephele/storage"
 
 	"plugin"
 )
@@ -21,5 +21,5 @@ func init() {
 }
 
 func Configurate(config map[string]string) {
-    return
+	return
 }

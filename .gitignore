@@ -17,8 +17,8 @@ _test
 *.tmp
 
 #main
-/demo/*
-!/demo/*.go
+/example/*/*
+!/example/*/*.go
 
 #vendor
 /vendor/*
