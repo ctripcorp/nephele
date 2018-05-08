@@ -31,7 +31,7 @@ func (l *logger) Printf(ctx *context.Context, level string, format string, value
 			fmt.Fprintf(rb, "%s line:%d ", file[strings.LastIndex(file, "nephele"):], line)
 		}
 	}
-	fmt.Fprintf(rb, "[%s]", time.Now().Format(time.RFC3339))
+	fmt.Fprintf(rb, "[%s]", time.Now().Format(time.RFC3339Nano))
 	fmt.Fprintf(rb, "\t\""+format+"\"\n", values...)
 
 	for _, o := range l.outputs {
@@ -51,7 +51,7 @@ func (l *logger) Printw(ctx *context.Context, level string, message string, keys
 			fmt.Fprintf(rb, "%s line:%d ", file[strings.LastIndex(file, "nephele"):], line)
 		}
 	}
-	fmt.Fprintf(rb, "[%s]", time.Now().Format(time.RFC3339))
+	fmt.Fprintf(rb, "[%s]", time.Now().Format(time.RFC3339Nano))
 	for i := 0; i < len(keysAndValues)/2; i++ {
 		fmt.Fprintf(rb, "\t\"%v\"", keysAndValues[i*2])
 		fmt.Fprintf(rb, "\t%v", keysAndValues[i*2+1])
