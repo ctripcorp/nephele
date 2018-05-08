@@ -6,23 +6,23 @@ import (
 	"github.com/ctripcorp/nephele/log"
 )
 
-type Autoorient struct {
-	Autoorient string
+type AutoOrient struct {
+	AutoOrient string
 }
 
 const (
-	autoorientKeyA string = "autoorient"
+	autoOrientKeyA string = "autoOrient"
 )
 
 //Verify autoorient verify
-func (a *Autoorient) Verify(ctx *context.Context, params map[string]string) error {
-	log.Debugf(ctx, "autoorient verification")
+func (a *AutoOrient) Verify(ctx *context.Context, params map[string]string) error {
+	log.Debugf(ctx, "autoOrient verification")
 	return nil
 }
 
 //Exec autoorient exec
-func (a *Autoorient) Exec(ctx *context.Context, wand *gm.MagickWand) error {
-	log.TraceBegin(ctx, "", "URL.Command", "autoorient", "")
+func (a *AutoOrient) Exec(ctx *context.Context, wand *gm.MagickWand) error {
+	log.TraceBegin(ctx, "", "URL.Command", "autoOrient", "")
 	defer log.TraceEnd(ctx, nil)
 	return wand.AutoOrient()
 }
