@@ -38,6 +38,8 @@ func (t *Transformer) Accept(ctx *context.Context, name string, params map[strin
 		cmd = &command.Sharpen{}
 	case command.ROTATE:
 		cmd = &command.Rotate{}
+	case command.AUTOORIENT:
+		cmd = &command.AutoOrient{}
 	}
 
 	if cmd != nil {
