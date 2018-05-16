@@ -4,13 +4,13 @@
 
 ## 介绍
 
-基于[Nephele Pluggable Framework]()(NPF)，Nephele团队针对不同场景的需求的强弱，开发了多款**现成**的图片服务产品。我们把它们称为[The Example Nephele Program](https://github.com/ctripcorp/nephele/blob/master/example/README.md)。
+基于Nephele Pluggable Framework(NPF)，Nephele团队针对不同场景的需求的强弱，开发了多款**现成**的图片服务产品。我们把它们称为[The Example Nephele Program]。
 
 * 用户或开发者只需要通过简单的配置部署它们的预编译文件，无需进行二次开发，便可以享受到完整的图片处理功能。
 
 * 同时，它们又是NPF的示例代码，是使用NPF开发最好的参考。
 
-现在已有的两款分别是[Minimal](https://github.com/ctripcorp/nephele/blob/master/example/minimal/README.md)和[Pluggable](https://github.com/ctripcorp/nephele/blob/master/example/pluggable/README.md)。
+现在已有的两款分别是[Minimal](https://github.com/ctripcorp/nephele/blob/master/example/minimal/README.md)和[Pluggable]。
 
 ## 选择
 
