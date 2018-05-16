@@ -81,6 +81,44 @@
 
 同时，来到~/nephele/log下，你会看到Nephele Minimal生成的日志文件。
 
-## 试用
+## 简单实例
 
-(施工中，明天吧。)
+详细使用方法请参考[Nephele API]()。
+
+在~/nephele/image目录下添加一张名为1.jpg的图片。
+
+**查看原图 :8080/1.jpg**
+
+[原图](https://dimg08.c-ctrip.com/images/w20e0s000000hvulz1A96.jpg)
+
+**图片被等比缩放至目标区域区域内 :8080/1.jpg?x-nephele-process=image/resize,w_200,h_200**
+
+[保持长宽比不变，缩放至200X200的区域内的最大图片](https://dimg08.c-ctrip.com/images/w20h0s000000hufjr466E.jpg)
+
+**图片底部被裁剪，最终高为200 :8080/1.jpg?x-nephele-process=image/crop,m_b,h_200**
+
+[裁剪底部直至高为200](https://dimg08.c-ctrip.com/images/w2040s000000hrubd8B2F.jpg)
+
+**图片顺时针旋转90度 :8080/1.jpg?x-nephele-process=image/rotate,v_90**
+
+[顺时针旋转90度](https://dimg08.c-ctrip.com/images/w20q0s000000hued11162.jpg)
+
+**降低图片质量 :8080/1.jpg?x-nephele-process=image/quality,v_5**
+
+[图片质量降低至5](https://dimg08.c-ctrip.com/images/w20c0s000000hvr5p3621.jpg)
+
+**图片格式转换为png :8080/1.jpg?x-nephele-process=image/format,v_png**
+
+[图片格式转为png](https://dimg08.c-ctrip.com/images/w20m0s000000i2hswD841.png)
+
+**锐化图片 :8080/1.jpg?x-nephele-process=image/sharpen,r_44,s_3**
+
+[特定参数锐化](https://dimg08.c-ctrip.com/images/w2030s000000huu7l6749.jpg)
+
+**在~/nephele/image目录下添加用作水印的图片wm1.png**
+
+[用作水印的图片](https://dimg08.c-ctrip.com/images/w20u0s000000hteatB945.png)
+
+**图片打上水印（水印图片名字经base64编码处理） :8080/1.jpg?x-nephele-process=image/watermark,n_d20xLnBuZw==**
+
+[图片被打上水印](https://dimg08.c-ctrip.com/images/w20d0s000000hrxuf69D9.jpg)

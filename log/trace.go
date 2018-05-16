@@ -95,10 +95,12 @@ func (t *traceTree) end(state interface{}) {
 	}
 	trc := stk[current]
 	trc.end(state)
+	t.stack = stk[:current]
 }
 
 func (t *traceTree) endRoot(state interface{}) {
 	t.root.end(state)
+	t.stack = t.stack[:0]
 }
 
 func (t *traceTree) sum() (string, []interface{}) {
@@ -116,12 +118,20 @@ type trace struct {
 
 func (t *trace) begin(message string, keysAndValues ...interface{}) {
 	t.message = message
-	t.alias = fmt.Sprintf("%v-%v", keysAndValues...)
+	if len(keysAndValues) <= 2 {
+		t.alias = fmt.Sprintf("%v-%v", keysAndValues...)
+	} else {
+		t.alias = fmt.Sprintf("%v-%v", keysAndValues[0], keysAndValues[1])
+	}
 	t.startTime = time.Now()
 }
 
 func (t *trace) end(state interface{}) {
-	t.state = state
+	if state == nil {
+		t.state = "done"
+	} else {
+		t.state = state
+	}
 	t.endTime = time.Now()
 }
 
