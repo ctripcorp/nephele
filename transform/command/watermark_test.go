@@ -33,7 +33,6 @@ func TestExecWatermark(t *testing.T) {
 	if e := w.Exec(&ctx, wand); e != nil {
 		t.Error(e)
 	}
-
 	bt1, err := wand.WriteBlob()
 	if err != nil {
 		t.Error()
