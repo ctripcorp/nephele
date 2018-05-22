@@ -24,8 +24,6 @@
 
 **下载预编译文件**
 
-(暂时还下载不到，近期吧)
-
 * [Centos 7](http://file.c-ctrip.com/files/3/nep/zip/82f/2de/e47/671aab3821dd4dab9aec14bcad8c2fd4.zip)
 
 * [Centos 6](http://file.c-ctrip.com/files/3/nep/zip/88d/e2c/185/2158e329294346f4870aec40c630b4f9.zip)
