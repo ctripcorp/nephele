@@ -3,13 +3,11 @@ package command
 import "github.com/ctripcorp/nephele/context"
 import "github.com/ctripcorp/nephele/img4go/gm"
 
-//GMCommand verfiy param  and Exec image
-type GMCommand interface {
-	Verify(ctx *context.Context, params map[string]string) error
-	Exec(ctx *context.Context, wand *gm.MagickWand) error
+type GraphicsMagickCommand interface {
+	Wand(ctx *context.Context, params map[string]string) error
+	Blob(ctx *context.Context, wand *gm.MagickWand) error
 }
 
-//Command Name
 const (
 	RESIZE     string = "resize"
 	CROP       string = "crop"

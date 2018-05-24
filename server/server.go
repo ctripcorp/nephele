@@ -27,20 +27,20 @@ var Config struct {
 }
 
 func Recovery() gin.HandlerFunc {
-	return func(httpCtx *gin.Context) {
+	return func(c *gin.Context) {
 		defer func() {
 			if recover() != nil {
-				httpCtx.AbortWithStatus(500)
+				c.AbortWithStatus(500)
 			}
 		}()
-		httpCtx.Next()
+		c.Next()
 	}
 }
 
 func Entrance() gin.HandlerFunc {
-	return func(httpCtx *gin.Context) {
-		httpCtx.Next()
-    }
+	return func(c *gin.Context) {
+		c.Next()
+	}
 }
 
 func CORS() gin.HandlerFunc {
@@ -66,11 +66,11 @@ func Run() {
 	r.Use(Entrance())
 	r.Use(CORS())
 
-    r.GET("/ping", func(c *gin.Context) {
-        c.String(200, "pong")
-    })
+	r.GET("/ping", func(c *gin.Context) {
+		c.String(200, "pong")
+	})
 
-    r.GET("/image/:key", get)
+	r.GET("/image/:key", get)
 
 	r.Run(Config.Port)
 }

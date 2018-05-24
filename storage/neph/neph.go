@@ -1,39 +1,42 @@
 package neph
 
 import (
-	"github.com/ctripcorp/nephele/storage"
+	stor "github.com/ctripcorp/nephele/storage"
 
 	"plugin"
 )
 
 var Config map[string]string
 
-var instance storage.Storage
+var instance stor.Storage
 
 func Init() {
-    if instance != nil {
-        return
-    }
-    if Config["type"] == "inline" {
-        panic("inline storage not supported")
-    } 
-    if Config["type"] == "plugin" {
-        p, err := plugin.Open(Config["name"]+".so")
-        if err != nil {
-            panic(err)
-        }
-        s, err := p.Lookup("New")
-        if err != nil {
-        	panic(err)
-        }
-        instance = s.(func(config map[string]string) storage.Storage)(Config)
-    }
+	if instance != nil {
+		return
+	}
+	if Config["type"] == "inline" {
+		instance = &storage{
+			root: Config["root"],
+		}
+	}
+	if Config["type"] == "plugin" {
+        plugin.Open(Config["path"])
+		p, err := plugin.Open(Config["path"])
+		if err != nil {
+			panic(err)
+		}
+		s, err := p.Lookup("New")
+		if err != nil {
+			panic(err)
+		}
+		instance = s.(func(config map[string]string) stor.Storage)(Config)
+	}
 }
 
-func File(key string) storage.File {
-    return instance.File(key)
+func File(key string) stor.File {
+	return instance.File(key)
 }
 
-func StorageFile(key string, blob []byte, options ...storage.KV) (string, error) {
-    return instance.StoreFile(key, blob, options...)
+func StoreFile(key string, blob []byte, options ...stor.KV) (string, error) {
+	return instance.StoreFile(key, blob, options...)
 }

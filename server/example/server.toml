@@ -1,9 +1,5 @@
 port = ":8080"
 
-[entrance]
-request_buffer = 200
-request_timeout_milisecond = 3000
-
 [throttle]
 max_concurrency = 8
 
@@ -15,3 +11,7 @@ allowed_origins = ["http://foo.com"]
 allowed_methods = ["GET", "PUT"]
 allowed_headers = ["Origin"]
 exposed_headers = ["Content-Length"]
+
+[get]
+request_buffer = 200
+request_timeout_milisecond = 3000

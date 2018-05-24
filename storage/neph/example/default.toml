@@ -1,6 +1,6 @@
 [storage]
 type = "plugin"
-name = "oss"
+path = "oss.so"
 endpoint = "[endpoint]"
 bucketname = "[bucketname]"
 accessKeyId = "[access-key-id]"

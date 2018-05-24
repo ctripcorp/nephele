@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/giantpoplar/nephele/img4go/gm"
+	"github.com/ctripcorp/nephele/img4go/gm"
 	"io/ioutil"
+	_ "os"
 	"os"
 )
 
@@ -36,7 +37,7 @@ func main() {
 		panic(err)
 	}
 
-	err = mw.GWand().DisplayImage(os.Getenv("DISPLAY"))
+	err = mw.DisplayImage(os.Getenv("DISPLAY"))
 	if err != nil {
 		panic(err)
 	}

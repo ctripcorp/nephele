@@ -9,16 +9,16 @@
 			"revisionTime": "2017-06-26T11:06:00Z"
 		},
 		{
-			"checksumSHA1": "34xJvxE4UOiKFMPw7LczFEKq2qg=",
-			"path": "github.com/giantpoplar/gmagick",
-			"revision": "a6bfc027f7607229dd35dd757782c0f7e2fd28f3",
-			"revisionTime": "2018-03-26T09:01:45Z"
+			"checksumSHA1": "88ntCdB+fP/2EYKx+foTZ3Ja+rc=",
+			"path": "github.com/ctrip-nephele/gmagick",
+			"revision": "67ca701d3abae744bb5038485e42fa5e708002f0",
+			"revisionTime": "2018-05-28T14:47:05Z"
 		},
 		{
-			"checksumSHA1": "0kr4ecCBTPZNxNfQtLA834bFiUI=",
-			"path": "github.com/giantpoplar/gmagick/types",
-			"revision": "a6bfc027f7607229dd35dd757782c0f7e2fd28f3",
-			"revisionTime": "2018-03-26T09:01:45Z"
+			"checksumSHA1": "53b5mH+hdqwDzlzTMGAOx4MLROc=",
+			"path": "github.com/ctrip-nephele/gmagick/types",
+			"revision": "67ca701d3abae744bb5038485e42fa5e708002f0",
+			"revisionTime": "2018-05-28T14:47:05Z"
 		},
 		{
 			"checksumSHA1": "QeKwBtN2df+j+4stw3bQJ6yO4EY=",
