@@ -1,0 +1,17 @@
+port = ":8080"
+
+[entrance]
+request_buffer = 200
+request_timeout_milisecond = 3000
+
+[throttle]
+max_concurrency = 8
+
+[cors]
+allow_all_origins = false
+max_age = 30
+option_pass_through = true
+allowed_origins = ["http://foo.com"]
+allowed_methods = ["GET", "PUT"]
+allowed_headers = ["Origin"]
+exposed_headers = ["Content-Length"]

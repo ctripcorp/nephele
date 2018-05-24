@@ -1,0 +1,35 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+*.jpg
+*.png
+*.log
+
+# Folders
+*_bak
+_obj
+_test
+.idea/
+
+# executables
+*.test
+*.exe
+*.tmp
+
+#main
+/example/*/*
+!/example/*/*.go
+
+#vendor
+/vendor/*
+!/vendor/vendor.json
+
+# log file
+
+# config file
+
+# img4go
+/img4go/vendor/*
+!/img4go/vendor/vendor.json
+
