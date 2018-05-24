@@ -20,6 +20,7 @@ _test
 #main
 /example/*/*
 !/example/*/*.go
+!/example/*/*.md
 
 #vendor
 /vendor/*
