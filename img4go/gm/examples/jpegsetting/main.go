@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/giantpoplar/nephele/img4go/gm"
+	"github.com/ctripcorp/nephele/img4go/gm"
 	"io/ioutil"
 )
 
