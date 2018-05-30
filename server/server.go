@@ -3,17 +3,19 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	cors "github.com/rs/cors/wrapper/gin"
+	"github.com/satori/go.uuid"
+
+	"context"
+	"time"
 )
 
 var Config struct {
 	Port     string `toml:"port"`
 	Recovery struct{}
 	Entrance struct {
-		RequestBuffer            int `toml:"request_buffer"`
-		RequestTimeoutMilisecond int `toml:"request_timeout_milisecond"`
-	}
-	Throttle struct {
-		MaxConcurrency int `toml:"max_concurrency"`
+		RequestBuffer             int `toml:"request_buffer"`
+		RequestTimeoutMillisecond int `toml:"request_timeout_millisecond"`
+		MaxConcurrency            int `toml:"max_concurrency"`
 	}
 	CORS struct {
 		AllowAllOrigins   bool     `toml:"allow_all_origins"`
@@ -26,19 +28,37 @@ var Config struct {
 	}
 }
 
-func Recovery() gin.HandlerFunc {
+func Entrance() gin.HandlerFunc {
+	var conf = Config.Entrance
 	return func(c *gin.Context) {
-		defer func() {
-			if recover() != nil {
-				c.AbortWithStatus(500)
-			}
-		}()
+		var (
+			ctx      context.Context
+			cancel   context.CancelFunc
+			uuidUUID uuid.UUID
+			err      error
+		)
+		uuidUUID, err = uuid.NewV1()
+		if err != nil {
+			c.String(500, err.Error())
+			return
+		}
+		ctx = context.WithValue(context.Background(), "contextID", uuidUUID.String())
+		ctx = context.WithValue(ctx, "request", c.Request)
+		ctx, cancel = context.WithTimeout(ctx,
+			time.Duration(conf.RequestTimeoutMillisecond)*time.Millisecond)
+		c.Set("context", ctx)
 		c.Next()
+		cancel()
 	}
 }
 
-func Entrance() gin.HandlerFunc {
+func Recovery() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		defer func() {
+			if err := recover(); err != nil {
+				c.AbortWithStatus(500)
+			}
+		}()
 		c.Next()
 	}
 }
@@ -62,8 +82,8 @@ func CORS() gin.HandlerFunc {
 func Run() {
 	r := gin.New()
 
-	r.Use(Recovery())
 	r.Use(Entrance())
+	r.Use(Recovery())
 	r.Use(CORS())
 
 	r.GET("/ping", func(c *gin.Context) {

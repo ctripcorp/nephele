@@ -1,7 +1,0 @@
-[storage]
-type = "plugin"
-path = "oss.so"
-endpoint = "[endpoint]"
-bucketname = "[bucketname]"
-accessKeyId = "[access-key-id]"
-accessKeySecret = "[access-key-secret]"

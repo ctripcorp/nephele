@@ -2,9 +2,15 @@ package main
 
 import (
 	"github.com/ctripcorp/nephele/interpret"
+	"github.com/ctripcorp/nephele/interpret/neph"
+
+	"github.com/ctripcorp/nephele/storage"
+	_ "github.com/ctripcorp/nephele/storage/neph"
+
 	"github.com/ctripcorp/nephele/server"
-	storage "github.com/ctripcorp/nephele/storage/neph"
 	"github.com/ctripcorp/nephele/util"
+
+	"fmt"
 )
 
 var Config = struct {
@@ -20,6 +26,8 @@ func main() {
 
 	util.FromToml("default.toml", &Config)
 	util.FromToml(Config.ServerConfigPath, &server.Config)
+
+	fmt.Println(server.Config)
 
 	storage.Init()
 	interpret.Init()

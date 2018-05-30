@@ -1,14 +1,18 @@
 server_config_path = "server.toml"
+plugin_mode = "autoload"
+
+[interpret]
+type = "inline"
+
+#type = "plugin"
+#path = "[your-interpret].so"
 
 [storage]
 type = "inline"
 root = "/home/phyxdown/nephele/image/"
 
-#path = "oss.so"
+#path = "[your-storage].so"
 #endpoint = "[endpoint]"
 #bucketname = "[bucketname]"
 #accessKeyId = "[access-key-id]"
 #accessKeySecret = "[access-key-secret]"
-
-[interpret]
-type = "inline"

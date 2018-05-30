@@ -3,8 +3,8 @@ package main
 import (
 	"github.com/ctripcorp/nephele/img4go/gm"
 	"io/ioutil"
-	_ "os"
 	"os"
+	_ "os"
 )
 
 func main() {

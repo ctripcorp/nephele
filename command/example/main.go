@@ -1,11 +1,11 @@
 package main
 
 import (
-    _  "github.com/ctripcorp/nephele/command/format"
-    "github.com/ctripcorp/nephele/command"
-    "fmt"
+	"fmt"
+	"github.com/ctripcorp/nephele/command"
+	_ "github.com/ctripcorp/nephele/command/format"
 )
 
 func main() {
-    fmt.Println(command.List())
+	fmt.Println(command.List())
 }

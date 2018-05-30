@@ -5,23 +5,23 @@ import (
 	"github.com/ctrip-nephele/gmagick"
 )
 
-var list map[string]func()Command
+var list map[string]func() Command
 
 type Command interface {
-    Support() string
+	Support() string
 	Verify(context.Context, map[string]string) error
 	ExecuteOnBlob(context.Context, []byte) ([]byte, error)
 	ExecuteOnWand(context.Context, *gmagick.MagickWand) error
 }
 
-func List() map[string]func()Command {
+func List() map[string]func() Command {
 	return list
 }
 
-func SetCommand(name string, command func()Command) {
-    if list == nil {
-        list = make(map[string]func()Command)
-    }
+func Register(name string, command func() Command) {
+	if list == nil {
+		list = make(map[string]func() Command)
+	}
 	if _, ok := list[name]; ok {
 		panic("processer name conflict")
 	}

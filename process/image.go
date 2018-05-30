@@ -27,7 +27,7 @@ func (i *image) Bytes() ([]byte, error) {
 }
 
 func (i *image) SetBlob(blob []byte) {
-    i.blob = blob
+	i.blob = blob
 }
 
 func (i *image) Wand() (*gmagick.MagickWand, error) {
