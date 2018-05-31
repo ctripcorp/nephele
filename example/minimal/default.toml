@@ -1,11 +1,12 @@
 server_config_path = "server.toml"
-plugin_mode = "autoload"
 
 [interpret]
 type = "inline"
 
 #type = "plugin"
 #path = "[your-interpret].so"
+
+[process]
 
 [storage]
 type = "inline"

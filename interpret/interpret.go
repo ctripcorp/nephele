@@ -6,12 +6,14 @@ import (
 
 var Config map[string]string
 
-var interpreter func(*gin.Context) (string, string, error)
+var registeredInterpreter func(*gin.Context) (string, string, error)
 
-func Register(inter func(*gin.Context) (string, string, error)) {
-	interpreter = inter
+func Init() {}
+
+func Register(interpreter func(*gin.Context) (string, string, error)) {
+	registeredInterpreter = interpreter
 }
 
 func Do(c *gin.Context) (string, string, error) {
-	return interpreter(c)
+	return registeredInterpreter(c)
 }

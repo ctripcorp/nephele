@@ -86,11 +86,14 @@ func Run() {
 	r.Use(Recovery())
 	r.Use(CORS())
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(200, "pong")
-	})
+	registeredConfigurater(r)
 
 	r.GET("/image/:key", get)
-
 	r.Run(Config.Port)
+}
+
+var registeredConfigurater func(r *gin.Engine)
+
+func Register(configurater func(r *gin.Engine)) {
+	registeredConfigurater = configurater
 }

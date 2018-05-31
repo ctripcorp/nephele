@@ -9,6 +9,10 @@ import (
 	"strings"
 )
 
+var Config map[string]string
+
+func Init() {}
+
 // 1. processString: "image/format,v_png/resize,w_100,h_200"
 //
 // 2. commandString: "image" | "format,v_png" | "resize,w_100,h_200"

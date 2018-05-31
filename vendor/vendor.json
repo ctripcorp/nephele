@@ -51,6 +51,12 @@
 			"revisionTime": "2018-02-23T01:09:33Z"
 		},
 		{
+			"checksumSHA1": "Pyou8mceOASSFxc7GeXZuVdSMi0=",
+			"path": "github.com/golang/protobuf/proto",
+			"revision": "b4deda0973fb4c70b50d226b1af49f3da59f5265",
+			"revisionTime": "2018-04-30T18:52:41Z"
+		},
+		{
 			"checksumSHA1": "w5RcOnfv5YDr3j2bd1YydkPiZx4=",
 			"path": "github.com/mattn/go-isatty",
 			"revision": "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c",
@@ -85,6 +91,12 @@
 			"path": "github.com/urfave/cli",
 			"revision": "8e01ec4cd3e2d84ab2fe90d8210528ffbb06d8ff",
 			"revisionTime": "2018-02-26T03:02:53Z"
+		},
+		{
+			"checksumSHA1": "wTEYbLPmy1zPu/SwZcQeltRBDZ4=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "7dfd1290c7917b7ba22824b9d24954ab3002fe24",
+			"revisionTime": "2018-05-09T21:44:12Z"
 		},
 		{
 			"checksumSHA1": "Mr4ur60bgQJnQFfJY0dGtwWwMPE=",
