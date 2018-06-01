@@ -6,7 +6,15 @@ import (
 	"github.com/ctripcorp/nephele/storage"
 	"github.com/ctripcorp/nephele/util"
 
+	_ "github.com/ctripcorp/nephele/command/autoorient"
+	_ "github.com/ctripcorp/nephele/command/crop"
 	_ "github.com/ctripcorp/nephele/command/format"
+	_ "github.com/ctripcorp/nephele/command/quality"
+	_ "github.com/ctripcorp/nephele/command/resize"
+	_ "github.com/ctripcorp/nephele/command/rotate"
+	_ "github.com/ctripcorp/nephele/command/sharpen"
+	_ "github.com/ctripcorp/nephele/command/strip"
+	_ "github.com/ctripcorp/nephele/command/watermark"
 	_ "github.com/ctripcorp/nephele/interpret/neph"
 	_ "github.com/ctripcorp/nephele/storage/neph"
 )

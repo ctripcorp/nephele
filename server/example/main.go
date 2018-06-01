@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/ctripcorp/nephele/interpret"
-	"github.com/ctripcorp/nephele/interpret/neph"
 
 	"github.com/ctripcorp/nephele/storage"
 	_ "github.com/ctripcorp/nephele/storage/neph"

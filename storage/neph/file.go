@@ -2,10 +2,12 @@ package neph
 
 import (
 	"errors"
-	stor "github.com/ctripcorp/nephele/storage"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	stor "github.com/ctripcorp/nephele/storage"
 )
 
 type file struct {
@@ -42,6 +44,7 @@ func (f *file) Delete() (string, error) {
 
 func (f *file) Bytes() ([]byte, string, error) {
 	blob, err := ioutil.ReadFile(filepath.Join(f.root, f.key))
+	fmt.Println("file.go-Bytes", err)
 	return blob, "", err
 }
 

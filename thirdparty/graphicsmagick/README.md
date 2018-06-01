@@ -1,12 +1,12 @@
-## Nephele GraphicsMagick°²×°Ö¸ÄÏ
+## Nephele GraphicsMagickå®‰è£…æŒ‡å—
 
 
-### °²×°£º
-* unixÏµÍ³£¨centos,ubuntu,debian£©,Ö´ĞĞsetup_unix.sh
-* windowsÏµÍ³£¨win7¼°ÒÔÉÏ£©£¬Ö´ĞĞsetup_windows.bat
+### å®‰è£…
+* unixç³»ç»Ÿï¼ˆcentos,ubuntu,debianï¼‰ï¼Œæ‰§è¡Œsetup_unix.sh
+* windowsç³»ç»Ÿï¼ˆwin7åŠä»¥ä¸Šï¼‰ï¼Œæ‰§è¡Œsetup_windows.bat
 
-### ¼ì²é°²×°£º
-  ÔÚÃüÁî´°¿ÚÊäÈëgm,¿´µ½ÀàËÆÈçÏÂ½á¹û´ú±í°²×°³É¹¦£¬
+### æ£€æŸ¥å®‰è£…
+ åœ¨å‘½ä»¤çª—å£è¾“å…¥gm,çœ‹åˆ°ç±»ä¼¼å¦‚ä¸‹ç»“æœä»£è¡¨å®‰è£…æˆåŠŸ,
 ```
 GraphicsMagick 1.3.21 2015-02-28 Q8 http://www.GraphicsMagick.org/
 Copyright (C) 2002-2014 GraphicsMagick Group.
@@ -32,8 +32,5 @@ Where commands include:
     version - obtain release version
 ```
 
- ### °²×°Ê§°ÜÔõÃ´°ì£¿
- Èç¹ûÍ¨¹ı½Å±¾Î´ÄÜ³É¹¦°²×°£¬¿ÉÍ¨¹ıÔ´Âë±àÒë°²×°£¬http://www.graphicsmagick.org/README.html
-
- ### ×¢Òâ£º
- ½Å±¾Ö´ĞĞ»á½«ÏµÍ³¶ÔÓ¦µÄ°²×°Ô´ĞŞ¸ÄÎª°¢ÀïÔÆÔ´
+ ### å®‰è£…å¤±è´¥æ€ä¹ˆåŠï¼Ÿ
+ å¦‚æœæœªèƒ½é€šè¿‡è„šæœ¬æˆåŠŸå®‰è£…ï¼Œå¯ä»¥é€šè¿‡æºç ç¼–è¯‘å®‰è£…http://www.graphicsmagick.org/README.html
