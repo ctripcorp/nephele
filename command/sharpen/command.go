@@ -34,7 +34,6 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Radius = radius
-			return nil
 		}
 		if k == sharpenS {
 			sigma, e := strconv.ParseFloat(v, 64)
@@ -42,10 +41,9 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Sigma = sigma
-			return nil
 		}
 	}
-	return fmt.Errorf(command.ErrorInvalidOptionFormat, "sharpen", params)
+	return nil
 }
 
 func (c *Command) ExecuteOnBlob(ctx context.Context, blob []byte) ([]byte, error) {

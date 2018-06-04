@@ -53,7 +53,6 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf("name of watermark must be provided")
 			}
 			c.Name = string(vByte)
-			return nil
 		}
 		if k == watermarkKeyD {
 			dissolve, e := strconv.Atoi(v)
@@ -61,14 +60,12 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Dissolve = dissolve
-			return nil
 		}
 		if k == watermarkKeyL {
 			if !util.InArray(v, watermarkLocations) && v != "" {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Location = v
-			return nil
 		}
 		if k == watermarkKeyX {
 			x, e := strconv.Atoi(v)
@@ -76,7 +73,6 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.X = x
-			return nil
 		}
 		if k == watermarkKeyY {
 			y, e := strconv.Atoi(v)
@@ -84,7 +80,6 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Y = y
-			return nil
 		}
 		if k == watermarkKeyMW {
 			mw, e := strconv.Atoi(v)
@@ -92,7 +87,6 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Minwidth = uint(mw)
-			return nil
 		}
 		if k == watermarkKeyMH {
 			mh, e := strconv.Atoi(v)
@@ -100,10 +94,9 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Minheight = uint(mh)
-			return nil
 		}
 	}
-	return fmt.Errorf(command.ErrorInvalidOptionFormat, "watermark", params)
+	return nil
 }
 
 func (c *Command) ExecuteOnBlob(ctx context.Context, blob []byte) ([]byte, error) {
@@ -191,8 +184,7 @@ func watermarkGetLocation(location string, wand, logo *gmagick.MagickWand) (int,
 func watermarkGetLogoWand(ctx context.Context, watermarkName string, dissolve int) (*gmagick.MagickWand, error) {
 	bt, _, err := storage.Download(ctx, watermarkName)
 	if err != nil {
-		println("error on watermarkGetLogoWand-storage.Download")
-		fmt.Println("watermarkGetLogoWand error", err.Error())
+		fmt.Println("watermarkGetLogoWand-storage.Download error", err.Error())
 		return nil, err
 	}
 	logoWand := gmagick.NewMagickWand()

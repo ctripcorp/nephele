@@ -47,7 +47,6 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Width = uint(width)
-			return nil
 		}
 		if k == resizeKeyH {
 			height, e := strconv.Atoi(v)
@@ -55,21 +54,18 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Height = uint(height)
-			return nil
 		}
 		if k == resizeKeyM {
 			if v != resizeKeyMFIXED && v != resizeKeyMLFIT {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Method = v
-			return nil
 		}
 		if k == resizeKeyLimit {
 			if v != "0" && v != "1" {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Limit = v == "1"
-			return nil
 		}
 		if k == resizeKeyP {
 			p, e := strconv.Atoi(v)
@@ -77,7 +73,6 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Percentage = p
-			return nil
 		}
 	}
 	if c.Method == resizeKeyMFIXED && c.Width < 1 && c.Height < 1 {
@@ -86,7 +81,7 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 	if c.Width < 1 && c.Height < 1 && c.Percentage < 1 {
 		return errors.New("w,h,p is invalid.")
 	}
-	return fmt.Errorf(command.ErrorInvalidOptionFormat, "resize", params)
+	return nil
 }
 
 //ExecuteOnBlob

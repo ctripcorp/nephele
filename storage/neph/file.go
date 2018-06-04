@@ -2,7 +2,6 @@ package neph
 
 import (
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -44,7 +43,6 @@ func (f *file) Delete() (string, error) {
 
 func (f *file) Bytes() ([]byte, string, error) {
 	blob, err := ioutil.ReadFile(filepath.Join(f.root, f.key))
-	fmt.Println("file.go-Bytes", err)
 	return blob, "", err
 }
 
