@@ -2,10 +2,11 @@ package neph
 
 import (
 	"errors"
-	stor "github.com/ctripcorp/nephele/storage"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	stor "github.com/ctripcorp/nephele/storage"
 )
 
 type file struct {

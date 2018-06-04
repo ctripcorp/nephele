@@ -10,7 +10,7 @@ type = "inline"
 
 [storage]
 type = "inline"
-root = "/home/phyxdown/nephele/image/"
+root = "[to-your-path]"
 
 #path = "[your-storage].so"
 #endpoint = "[endpoint]"
