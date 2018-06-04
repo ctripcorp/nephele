@@ -21,6 +21,7 @@ _test
 /example/*/*
 !/example/*/*.go
 !/example/*/*.md
+!/example/*/*.toml
 
 #vendor
 /vendor/*

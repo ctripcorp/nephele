@@ -1,0 +1,15 @@
+server_config_path = "server.toml"
+
+[storage]
+type = "inline"
+root = "/home/zhuwh/nephele/image/"
+
+
+#path = "oss.so"
+#endpoint = "[endpoint]"
+#bucketname = "[bucketname]"
+#accessKeyId = "[access-key-id]"
+#accessKeySecret = "[access-key-secret]"
+
+[interpret]
+type = "inline"

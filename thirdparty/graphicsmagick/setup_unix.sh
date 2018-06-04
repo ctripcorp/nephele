@@ -4,16 +4,22 @@ echo `uname -a`
 os=`uname -a`
 
 centos(){
+sudo yum clean all
 sudo yum makecache
-sudo yum install -y GraphicsMagick-devel --enablerepo=epel 
+sudo yum install -y GraphicsMagick-devel --enablerepo=epel
+sudo rm /etc/yum.repos.d/epel-aliyun.repo
 }
 
 centos7(){
-sudo wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo 
+sudo wget  http://mirrors.aliyun.com/repo/epel-7.repo 
+sudo mv epel-7.repo /etc/yum.repos.d/epel-aliyun.repo
+sudo chmod +x /etc/yum.repos.d/epel-aliyun.repo
 }
 
 centos6(){
-sudo wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-6.repo 
+sudo wget  http://mirrors.aliyun.com/repo/epel-6.repo 
+sudo mv epel-6.repo /etc/yum.repos.d/epel-aliyun.repo
+sudo chmod +x /etc/yum.repos.d/epel-aliyun.repo
 }
 
 ubuntu_debian(){

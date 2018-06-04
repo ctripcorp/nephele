@@ -264,8 +264,7 @@ Class ZipCompressor
 End Class
 
 Dim zip
-Set zip = New ZipCompressor
-    ' 需要在D盘建立文件夹extract
+Set zip = New ZipCompressor    
     zip.decompress "gm.zip", "gm"
 Set zip = Nothing
 
