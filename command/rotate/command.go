@@ -16,7 +16,7 @@ type Command struct {
 }
 
 const (
-	rotateV string = "v"
+	commandKeyV string = "v"
 )
 
 func (c *Command) Support() string {
@@ -27,7 +27,7 @@ func (c *Command) Support() string {
 func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 	//log.Debugf(ctx, "rotate verification")
 	for k, v := range params {
-		if k == rotateV {
+		if k == commandKeyV {
 			degree, e := strconv.Atoi(v)
 			if e != nil || degree < 0 || degree > 360 {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)

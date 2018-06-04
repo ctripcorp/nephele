@@ -25,13 +25,13 @@ type Command struct {
 }
 
 const (
-	watermarkKeyN  string = "n"
-	watermarkKeyD  string = "d"
-	watermarkKeyL  string = "l"
-	watermarkKeyX  string = "x"
-	watermarkKeyY  string = "y"
-	watermarkKeyMW string = "mw"
-	watermarkKeyMH string = "mh"
+	commandKeyN  string = "n"
+	commandKeyD  string = "d"
+	commandKeyL  string = "l"
+	commandKeyX  string = "x"
+	commandKeyY  string = "y"
+	commandKeyMW string = "mw"
+	commandKeyMH string = "mh"
 )
 
 var watermarkLocations = []string{"nw", "north", "ne", "west", "center", "east", "sw", "south", "se"}
@@ -44,7 +44,7 @@ func (c *Command) Support() string {
 func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 	//log.Debugf(ctx, "watermark verification")
 	for k, v := range params {
-		if k == watermarkKeyN {
+		if k == commandKeyN {
 			vByte, e := base64.StdEncoding.DecodeString(v)
 			if e != nil {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
@@ -54,41 +54,41 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 			}
 			c.Name = string(vByte)
 		}
-		if k == watermarkKeyD {
+		if k == commandKeyD {
 			dissolve, e := strconv.Atoi(v)
 			if e != nil || dissolve < 0 || dissolve > 100 {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Dissolve = dissolve
 		}
-		if k == watermarkKeyL {
+		if k == commandKeyL {
 			if !util.InArray(v, watermarkLocations) && v != "" {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Location = v
 		}
-		if k == watermarkKeyX {
+		if k == commandKeyX {
 			x, e := strconv.Atoi(v)
 			if e != nil || x < 0 {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.X = x
 		}
-		if k == watermarkKeyY {
+		if k == commandKeyY {
 			y, e := strconv.Atoi(v)
 			if e != nil || y < 0 {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Y = y
 		}
-		if k == watermarkKeyMW {
+		if k == commandKeyMW {
 			mw, e := strconv.Atoi(v)
 			if e != nil || mw < 0 {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Minwidth = uint(mw)
 		}
-		if k == watermarkKeyMH {
+		if k == commandKeyMH {
 			mh, e := strconv.Atoi(v)
 			if e != nil || mh < 0 {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
@@ -184,7 +184,6 @@ func watermarkGetLocation(location string, wand, logo *gmagick.MagickWand) (int,
 func watermarkGetLogoWand(ctx context.Context, watermarkName string, dissolve int) (*gmagick.MagickWand, error) {
 	bt, _, err := storage.Download(ctx, watermarkName)
 	if err != nil {
-		fmt.Println("watermarkGetLogoWand-storage.Download error", err.Error())
 		return nil, err
 	}
 	logoWand := gmagick.NewMagickWand()

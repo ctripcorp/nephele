@@ -22,25 +22,25 @@ type Command struct {
 }
 
 const (
-	cropKeyW     string = "w"
-	cropKeyH     string = "h"
-	cropKeyM     string = "m"
-	cropKeyP     string = "p"
-	cropKeyX     string = "x"
-	cropKeyY     string = "y"
-	cropKeyLimit string = "limit"
+	commandKeyW     string = "w"
+	commandKeyH     string = "h"
+	commandKeyM     string = "m"
+	commandKeyP     string = "p"
+	commandKeyX     string = "x"
+	commandKeyY     string = "y"
+	commandKeyLimit string = "limit"
 )
 
 const (
-	cropKeyMT      string = "t"
-	cropKeyMB      string = "b"
-	cropKeyML      string = "l"
-	cropKeyMR      string = "r"
-	cropKeyMWC     string = "wc"
-	cropKeyMHC     string = "hc"
-	cropKeyMC      string = "c"
-	cropKeyMRESIZE string = "resize"
-	cropKeyMCROP   string = "crop"
+	commandKeyMT      string = "t"
+	commandKeyMB      string = "b"
+	commandKeyML      string = "l"
+	commandKeyMR      string = "r"
+	commandKeyMWC     string = "wc"
+	commandKeyMHC     string = "hc"
+	commandKeyMC      string = "c"
+	commandKeyMRESIZE string = "resize"
+	commandKeyMCROP   string = "crop"
 )
 
 func (c *Command) Support() string {
@@ -51,48 +51,48 @@ func (c *Command) Support() string {
 func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 	//log.Debugf(ctx, "crop verification")
 	for k, v := range params {
-		if k == cropKeyW {
+		if k == commandKeyW {
 			width, e := strconv.Atoi(v)
 			if e != nil {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Width = uint(width)
 		}
-		if k == cropKeyH {
+		if k == commandKeyH {
 			height, e := strconv.Atoi(v)
 			if e != nil {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Height = uint(height)
 		}
-		if k == cropKeyM {
-			if v != cropKeyMT && v != cropKeyMB && v != cropKeyMC && v != cropKeyMCROP &&
-				v != cropKeyMHC && v != cropKeyML && v != cropKeyMR && v != cropKeyMRESIZE && v != cropKeyMWC {
+		if k == commandKeyM {
+			if v != commandKeyMT && v != commandKeyMB && v != commandKeyMC && v != commandKeyMCROP &&
+				v != commandKeyMHC && v != commandKeyML && v != commandKeyMR && v != commandKeyMRESIZE && v != commandKeyMWC {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Method = v
 		}
-		if k == cropKeyLimit {
+		if k == commandKeyLimit {
 			if v != "0" && v != "1" {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Limit = v == "1"
 		}
-		if k == cropKeyP {
+		if k == commandKeyP {
 			p, e := strconv.Atoi(v)
 			if e != nil || p < 0 || p > 10000 {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Percentage = p
 		}
-		if k == cropKeyX {
+		if k == commandKeyX {
 			x, e := strconv.Atoi(v)
 			if e != nil {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.X = x
 		}
-		if k == cropKeyY {
+		if k == commandKeyY {
 			y, e := strconv.Atoi(v)
 			if e != nil {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
@@ -101,20 +101,20 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 		}
 	}
 	if c.Percentage < 0 || c.Percentage >= 100 {
-		return fmt.Errorf(command.ErrorInvalidOptionFormat, cropKeyP, c.Percentage)
+		return fmt.Errorf(command.ErrorInvalidOptionFormat, commandKeyP, c.Percentage)
 	}
-	if (c.Method == cropKeyMT || c.Method == cropKeyMB || c.Method == cropKeyMHC) &&
+	if (c.Method == commandKeyMT || c.Method == commandKeyMB || c.Method == commandKeyMHC) &&
 		c.Height < 1 && c.Percentage < 1 {
 		return errors.New("m,h,p is invalid.")
 	}
-	if (c.Method == cropKeyML || c.Method == cropKeyMR || c.Method == cropKeyMWC) &&
+	if (c.Method == commandKeyML || c.Method == commandKeyMR || c.Method == commandKeyMWC) &&
 		c.Width < 1 && c.Percentage < 1 {
 		return errors.New("m,w,p is invalid.")
 	}
-	if c.Method == cropKeyMC && c.Percentage < 1 && c.Width < 1 && c.Height < 1 {
+	if c.Method == commandKeyMC && c.Percentage < 1 && c.Width < 1 && c.Height < 1 {
 		return errors.New("m,w,h,p is invalid.")
 	}
-	if (c.Method == cropKeyMRESIZE || c.Method == cropKeyMCROP) &&
+	if (c.Method == commandKeyMRESIZE || c.Method == commandKeyMCROP) &&
 		c.Percentage < 1 && (c.Width < 1 || c.Height < 1) {
 		return errors.New("m,w,h,p is invalid.")
 	}
@@ -134,7 +134,7 @@ func (c *Command) ExecuteOnWand(ctx context.Context, wand *gmagick.MagickWand) e
 	srcW, srcH := wand.GetImageWidth(), wand.GetImageHeight()
 	var width, height uint
 	var x, y int
-	if c.Method == cropKeyMRESIZE {
+	if c.Method == commandKeyMRESIZE {
 		var isResize bool
 		width, height, x, y, isResize = cropMRE(c.Width, c.Height, srcW, srcH, c.Limit)
 		if width == 0 && height == 0 && x == 0 && y == 0 {
@@ -156,22 +156,22 @@ func (c *Command) ExecuteOnWand(ctx context.Context, wand *gmagick.MagickWand) e
 	}
 
 	switch c.Method {
-	case cropKeyMB:
+	case commandKeyMB:
 		width, height, x, y = cropMB(c.Height, srcW, srcH, c.Percentage)
-	case cropKeyMC:
+	case commandKeyMC:
 		width, height, x, y = cropMC(c.Width, c.Height, srcW, srcH, c.Percentage)
-	case cropKeyMCROP:
+	case commandKeyMCROP:
 		width, height = cropMCR(c.Width, c.Height, srcW, srcH, c.Percentage)
 		x, y = c.X, c.Y
-	case cropKeyMHC:
+	case commandKeyMHC:
 		width, height, x, y = cropMHC(c.Height, srcW, srcH, c.Percentage)
-	case cropKeyML:
+	case commandKeyML:
 		width, height, x, y = cropML(c.Width, srcW, srcH, c.Percentage)
-	case cropKeyMR:
+	case commandKeyMR:
 		width, height, x, y = cropMR(c.Width, srcW, srcH, c.Percentage)
-	case cropKeyMT:
+	case commandKeyMT:
 		width, height, x, y = cropMT(c.Height, srcW, srcH, c.Percentage)
-	case cropKeyMWC:
+	case commandKeyMWC:
 		width, height, x, y = cropMWC(c.Width, srcW, srcH, c.Percentage)
 	}
 	if width < 1 || height < 1 || x >= int(srcW) || y >= int(srcH) {

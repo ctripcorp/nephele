@@ -16,8 +16,8 @@ type Command struct {
 }
 
 const (
-	sharpenR string = "r"
-	sharpenS string = "s"
+	commandKeyR string = "r"
+	commandKeyS string = "s"
 )
 
 func (c *Command) Support() string {
@@ -28,14 +28,14 @@ func (c *Command) Support() string {
 func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 	//log.Debugf(ctx, "sharpen verification")
 	for k, v := range params {
-		if k == sharpenR {
+		if k == commandKeyR {
 			radius, e := strconv.ParseFloat(v, 64)
 			if e != nil {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Radius = radius
 		}
-		if k == sharpenS {
+		if k == commandKeyS {
 			sigma, e := strconv.ParseFloat(v, 64)
 			if e != nil {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)

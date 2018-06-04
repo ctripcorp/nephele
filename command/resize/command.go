@@ -26,48 +26,48 @@ func (c *Command) Support() string {
 }
 
 const (
-	resizeKeyW     string = "w"
-	resizeKeyH     string = "h"
-	resizeKeyM     string = "m"
-	resizeKeyP     string = "p"
-	resizeKeyLimit string = "limit"
+	commandKeyW     string = "w"
+	commandKeyH     string = "h"
+	commandKeyM     string = "m"
+	commandKeyP     string = "p"
+	commandKeyLimit string = "limit"
 )
 const (
-	resizeKeyMFIXED string = "fixed"
-	resizeKeyMLFIT  string = "lfit"
+	commandKeyMFIXED string = "fixed"
+	commandKeyMLFIT  string = "lfit"
 )
 
 //Verify resize Verify
 func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 	//log.Debugf(ctx, "resize verification")
 	for k, v := range params {
-		if k == resizeKeyW {
+		if k == commandKeyW {
 			width, e := strconv.Atoi(v)
 			if e != nil {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Width = uint(width)
 		}
-		if k == resizeKeyH {
+		if k == commandKeyH {
 			height, e := strconv.Atoi(v)
 			if e != nil {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Height = uint(height)
 		}
-		if k == resizeKeyM {
-			if v != resizeKeyMFIXED && v != resizeKeyMLFIT {
+		if k == commandKeyM {
+			if v != commandKeyMFIXED && v != commandKeyMLFIT {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Method = v
 		}
-		if k == resizeKeyLimit {
+		if k == commandKeyLimit {
 			if v != "0" && v != "1" {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
 			}
 			c.Limit = v == "1"
 		}
-		if k == resizeKeyP {
+		if k == commandKeyP {
 			p, e := strconv.Atoi(v)
 			if e != nil || p < 0 || p > 10000 {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)
@@ -75,7 +75,7 @@ func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 			c.Percentage = p
 		}
 	}
-	if c.Method == resizeKeyMFIXED && c.Width < 1 && c.Height < 1 {
+	if c.Method == commandKeyMFIXED && c.Width < 1 && c.Height < 1 {
 		return errors.New("m, w, h is invalid.")
 	}
 	if c.Width < 1 && c.Height < 1 && c.Percentage < 1 {
@@ -95,7 +95,7 @@ func (c *Command) ExecuteOnWand(ctx context.Context, wand *gmagick.MagickWand) e
 	//log.TraceBegin(ctx, "", "URL.Command", "resize", "method", c.Method, "width", c.Width, "height", c.Height, "percentage", c.Percentage, "limit", c.Limit)
 	//defer log.TraceEnd(ctx, err)
 	if (c.Width > wand.GetImageWidth() && c.Height > wand.GetImageHeight() && !c.Limit) ||
-		(c.Method != resizeKeyMFIXED && c.Percentage > 100 && !c.Limit) {
+		(c.Method != commandKeyMFIXED && c.Percentage > 100 && !c.Limit) {
 		return nil
 	}
 	srcW, srcH := wand.GetImageWidth(), wand.GetImageHeight()
@@ -103,7 +103,7 @@ func (c *Command) ExecuteOnWand(ctx context.Context, wand *gmagick.MagickWand) e
 		return nil
 	}
 	var width, height uint
-	if c.Method == resizeKeyMFIXED {
+	if c.Method == commandKeyMFIXED {
 		width, height = resizeFixed(c.Width, c.Height, srcW, srcH)
 	} else if c.Percentage != 0 {
 		width, height = resizePercentage(c.Percentage, srcW, srcH)

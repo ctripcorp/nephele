@@ -11,7 +11,7 @@ type Command struct {
 }
 
 const (
-	autoOrientKeyA string = "autoOrient"
+	commandKeyA string = "autoOrient"
 )
 
 func (c *Command) Support() string {

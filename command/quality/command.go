@@ -15,7 +15,7 @@ type Command struct {
 }
 
 const (
-	qualityKeyV string = "v"
+	commandKeyV string = "v"
 )
 
 func (c *Command) Support() string {
@@ -26,7 +26,7 @@ func (c *Command) Support() string {
 func (c *Command) Verify(ctx context.Context, params map[string]string) error {
 	//log.Debugf(ctx, "quality verification")
 	for k, v := range params {
-		if k == qualityKeyV {
+		if k == commandKeyV {
 			quality, e := strconv.Atoi(v)
 			if e != nil || quality < 0 || quality > 100 {
 				return fmt.Errorf(command.ErrorInvalidOptionFormat, k, v)

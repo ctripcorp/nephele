@@ -34,3 +34,6 @@ Where commands include:
 
  ### 安装失败怎么办？
  如果未能通过脚本成功安装，可以通过源码编译安装http://www.graphicsmagick.org/README.html
+
+ ### 注意：
+     脚本执行过程中如果被终止，那么临时文件epel-aliyun.repo可能会留在/etc/yum.repos.d/目录。
